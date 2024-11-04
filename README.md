@@ -1,10 +1,9 @@
 # AlgoHealth
 CSC207 Final Project
-Group Members: 
-<<<<<<< HEAD
+Group Members:
 Matthew Simpson (Github username: matts1mpson),
 Haoming (Tony) Qi (Github username: TonyQi25), 
- Erin Chen (Github username: chenerin29),
+Erin Chen (Github username: chenerin29),
 
 Team User Story: Food logging
 Josiah wishes to track the food he consumed in a day. He logs in to the nutrition tracker program and selects a day 
