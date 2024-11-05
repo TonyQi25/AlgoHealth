@@ -55,5 +55,5 @@ public class FoodDatabase {
         }
     }
 
-    public getInfo // keep going
+    //public getInfo // keep going
 }
