@@ -13,8 +13,28 @@ class Food {
         this.name = name;
         this.weight = weight;
         this.calories = calories;
-        this.microNuitrients = new HashMap<>();
-        this.macroNuitrients = new HashMap<>();
+        this.microNuitrients = new HashMap<>();  // could also just put in the nutrients right from the constructor
+        this.macroNuitrients = new HashMap<>();  // depends on how API calls work! Check back after API calls do smth
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public float getWeight() {
+        return this.weight;
+    }
+
+    public float getCalories() {
+        return this.calories;
+    }
+
+    public HashMap<String, Float> getMicroNuitrients() {
+        return this.microNuitrients;
+    }
+
+    public HashMap<String, Float> getMacroNuitrients() {
+        return this.macroNuitrients;
     }
 
     public void addMicro(String key, Float value) {
