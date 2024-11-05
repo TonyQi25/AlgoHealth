@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 class DayInfo {
     private final LocalDateTime date;
-    private final float totalCalories;
+    private float totalCalories;
     private final List<Food> foodLog;
 
     public DayInfo(LocalDateTime date) {

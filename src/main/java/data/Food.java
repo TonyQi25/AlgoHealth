@@ -16,4 +16,12 @@ class Food {
         this.microNuitrients = new HashMap<>();
         this.macroNuitrients = new HashMap<>();
     }
+
+    public void addMicro(String key, Float value) {
+        this.microNuitrients.put(key, value);
+    }
+
+    public void addMacro(String key, Float value) {
+        this.macroNuitrients.put(key, value);
+    }
 }
