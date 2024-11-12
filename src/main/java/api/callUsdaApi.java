@@ -7,7 +7,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+
+
 import java.io.IOException;
+import java.util.HashMap;
+
 
 public class callUsdaApi {
     public String apiKey;
@@ -32,12 +36,58 @@ public class callUsdaApi {
             final Response response = client.newCall(request).execute();
             final JSONObject responseBody = new JSONObject(response.body().string());
             JSONArray foodsArray = responseBody.getJSONArray("foods");
-            // Consider modifying function to use the Strategy Design Pattern. At current, the function uses the
-            // algo/strategy of returning the first result corresponding to the query. A better algo would return a
-            // list of results that ultimately would be displayed to the user. Then the user could select the best
-            // match from the list. Nov 8th, 24 (Matt).
+            // Consider modifying function to use the Strategy Design Pattern.
             JSONObject firstResult = (JSONObject) foodsArray.get(0);
             return firstResult;
+        } catch (IOException | JSONException event) {
+            throw new RuntimeException(event);
+        }
+    }
+
+    public JSONObject getFoodByFdcId(Integer fdcId) {
+        final OkHttpClient client = new OkHttpClient().newBuilder()
+                .build();
+        final Request request = new Request.Builder()
+                .url("https://api.nal.usda.gov/fdc/v1/foods/search?api_key=" + apiKey + "&query=" +
+                        String.valueOf(fdcId))
+                .build();
+        try {
+            final Response response = client.newCall(request).execute();
+            final JSONObject responseBody = new JSONObject(response.body().string());
+            JSONArray foodsArray = responseBody.getJSONArray("foods");
+            JSONObject firstResult = (JSONObject) foodsArray.get(0);
+            return firstResult;
+        } catch (IOException | JSONException event) {
+            throw new RuntimeException(event);
+        }
+    }
+
+    /**
+     * Returns up to 10 results from FDC Api based on query. All results correspond to foundation category foods.
+     * @param food The food query.
+     * @return A HashMap where the key, value pairs are description, fdcId.
+     */
+    public HashMap<String, Integer> first10FoundationFoods(String food) {
+        final OkHttpClient client = new OkHttpClient().newBuilder()
+                .build();
+        final Request request = new Request.Builder()
+                .url("https://api.nal.usda.gov/fdc/v1/foods/search?api_key=" + apiKey + "&query=" + food + "&dataType="
+                        + "Foundation")
+                .build();
+
+        try {
+            final Response response = client.newCall(request).execute();
+            final JSONObject responseBody = new JSONObject(response.body().string());
+            JSONArray foodsArray = responseBody.getJSONArray("foods");
+            HashMap<String, Integer> description2fdcId = new HashMap<>();
+            int i = 0;
+            while (i < 10 && i < foodsArray.length()) {
+                String key1 = ((JSONObject) foodsArray.get(i)).getString("description");
+                Integer value1 = ((JSONObject) foodsArray.get(i)).getInt("fdcId");
+                description2fdcId.put(key1, value1);
+                i += 1;
+            }
+            return description2fdcId;
         } catch (IOException | JSONException event) {
             throw new RuntimeException(event);
         }
