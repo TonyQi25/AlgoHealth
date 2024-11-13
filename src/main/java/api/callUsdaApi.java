@@ -8,9 +8,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Scanner;
 
 
 public class callUsdaApi {
@@ -18,6 +21,20 @@ public class callUsdaApi {
 
     public callUsdaApi(String apiKey) {
         this.apiKey = apiKey;
+    }
+
+    /**
+     * Reads API key from an untracked text file.
+     * @param textFile the file path. The file itself must contain the API key as first line.
+     * @return API key in text file.
+     */
+    public static String genMyApiKey(String textFile) {
+        try {
+            Scanner envVar = new Scanner(new FileReader(textFile));
+            return envVar.nextLine();
+        } catch (FileNotFoundException ev) {
+            return "File not found";
+        }
     }
 
     /**
@@ -91,6 +108,9 @@ public class callUsdaApi {
         } catch (IOException | JSONException event) {
             throw new RuntimeException(event);
         }
+    }
+
+    public static void main(String[] args) {
     }
 }
 // Citation: lab-4 code https://github.com/CSC207-2024F-UofT/lab-4

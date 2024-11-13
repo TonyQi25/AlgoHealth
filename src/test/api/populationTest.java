@@ -4,16 +4,20 @@ import data.Food;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.*;
 
 import static api.populateFromUsda.foodFromResultUsda;
+import static api.callUsdaApi.genMyApiKey;
 import static org.junit.Assert.assertEquals;
 
 public class populationTest {
 
     // Use your USDA FDC API key. Using DEMO_KEY at any point causes problems to do with API rate limit.
-    final String apiKey = "XvPqN0cJ8vl9zEdUk3cdHXwd1GMQ0lZCUNuwEIun";
-
+    final String apiKey = genMyApiKey("myFDCApiKey.txt");
+    int i = 0;
     // Running tests individually is recommended for understandability of System.out (printed) data.
 
     @Test

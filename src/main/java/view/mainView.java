@@ -11,14 +11,11 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.chrono.ChronoLocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 
+import static api.callUsdaApi.genMyApiKey;
 import static api.populateFromUsda.foodFromFirstResultUsda;
-import static java.awt.Component.LEFT_ALIGNMENT;
+import static api.populateFromUsda.foodFromResultUsda;
 
 public class mainView {
 
@@ -149,7 +146,7 @@ public class mainView {
         mainView mV = new mainView();
         DayInfo mockDay = new DayInfo(LocalDate.now());
         ArrayList<Food> foodList = new ArrayList<>();
-        String apiKey = "DEMO_KEY";
+        String apiKey = genMyApiKey("myFDCApiKey.txt");
         callUsdaApi usdaObj = new callUsdaApi(apiKey);
         Food result = foodFromFirstResultUsda("whole milk", usdaObj);
         foodList.add(result);
