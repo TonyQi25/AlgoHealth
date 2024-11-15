@@ -7,9 +7,9 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
-public class populateFromUsda {
+public class FoodDataCentralPopulateDAO {
 
-    public static Food foodFromFirstResultUsda(String food, callUsdaApi usdaObj) {
+    public static Food foodFromFirstResultUsda(String food, FoodDataCentralSearchDAO usdaObj) {
             JSONObject firstResult = usdaObj.callUsdaSearch(food);
             String standardUnit = firstResult.getString("servingSizeUnit");
             String description = firstResult.getString("description");
@@ -57,7 +57,7 @@ public class populateFromUsda {
             foodTbc.setMacroNutrients(macros);
             return foodTbc;
     }
-    public static Food foodFromResultUsda(JSONObject result, callUsdaApi usdaObj) {
+    public static Food foodFromResultUsda(JSONObject result, FoodDataCentralSearchDAO usdaObj) {
         String description = result.getString("description");
         JSONArray fresNutrients = result.getJSONArray("foodNutrients");
         // foodTbc is short for foodToBeCreated.

@@ -4,13 +4,10 @@ import data.Food;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.*;
 
-import static api.populateFromUsda.foodFromResultUsda;
-import static api.callUsdaApi.genMyApiKey;
+import static api.FoodDataCentralPopulateDAO.foodFromResultUsda;
+import static api.FoodDataCentralSearchDAO.genMyApiKey;
 import static org.junit.Assert.assertEquals;
 
 public class populationTest {
@@ -23,7 +20,7 @@ public class populationTest {
     @Test
     void first10FoundationSpecificFDCidTest() {
         // List of 10 foods generated from FDC Api.
-        callUsdaApi usdaObj = new callUsdaApi(apiKey);
+        FoodDataCentralSearchDAO usdaObj = new FoodDataCentralSearchDAO(apiKey);
         HashMap<String, Integer> descriptionToFDCid = usdaObj.first10FoundationFoods("pork");
 
         // User is shown list of 10 foundation foods and prompted to choose one by entering the corresponding fdcId.
@@ -66,7 +63,7 @@ public class populationTest {
 
     @Test
     void first10FoundationRandomFDCidFromListCeleryTest() {
-        callUsdaApi usdaObj = new callUsdaApi(apiKey);
+        FoodDataCentralSearchDAO usdaObj = new FoodDataCentralSearchDAO(apiKey);
         HashMap<String, Integer> descriptionToFDCid = usdaObj.first10FoundationFoods("celery");
 
         // User is shown list of 10 foundation foods and prompted to choose one by entering the corresponding fdcId.
@@ -96,7 +93,7 @@ public class populationTest {
 
     @Test
     void first10FoundationRandomFDCidFromListCarrotTest() {
-        callUsdaApi usdaObj = new callUsdaApi(apiKey);
+        FoodDataCentralSearchDAO usdaObj = new FoodDataCentralSearchDAO(apiKey);
         HashMap<String, Integer> descriptionToFDCid = usdaObj.first10FoundationFoods("carrot");
 
         // User is shown list of 10 foundation foods and prompted to choose one by entering the corresponding fdcId.
@@ -126,7 +123,7 @@ public class populationTest {
 
     @Test
     void first10FoundationRandomFDCidFromListRiceTest() {
-        callUsdaApi usdaObj = new callUsdaApi(apiKey);
+        FoodDataCentralSearchDAO usdaObj = new FoodDataCentralSearchDAO(apiKey);
         HashMap<String, Integer> descriptionToFDCid = usdaObj.first10FoundationFoods("rice");
 
         // User is shown list of 10 foundation foods and prompted to choose one by entering the corresponding fdcId.
@@ -160,7 +157,7 @@ public class populationTest {
      * Not meant to function on complex foods such as granola bar, Kellog's Frosted Flakes, bulgogi etc.
      */
     void first10FoundationRandomFDCidFromListCustomTest() {
-        callUsdaApi usdaObj = new callUsdaApi(apiKey);
+        FoodDataCentralSearchDAO usdaObj = new FoodDataCentralSearchDAO(apiKey);
 
         HashMap<String, Integer> descriptionToFDCid = usdaObj.first10FoundationFoods("YOUR FAVOURITE SIMPLE FOOD HERE");
 
@@ -195,7 +192,7 @@ public class populationTest {
      * Not meant to function on complex foods such as Nature Valley granola bar, Kellog's Frosted Flakes, bulgogi etc.
      */
     void first10FoundationRandomFDCidFromListCustomTest2() {
-        callUsdaApi usdaObj = new callUsdaApi(apiKey);
+        FoodDataCentralSearchDAO usdaObj = new FoodDataCentralSearchDAO(apiKey);
 
         HashMap<String, Integer> descriptionToFDCid = usdaObj.first10FoundationFoods("grapes");
 

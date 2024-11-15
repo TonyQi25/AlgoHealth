@@ -1,6 +1,6 @@
 package use_case.food_logging;
-import api.populateFromUsda;
-import api.callUsdaApi;
+import api.FoodDataCentralPopulateDAO;
+import api.FoodDataCentralSearchDAO;
 import data.Food;
 
 import java.util.ArrayList;
@@ -9,20 +9,20 @@ import java.util.HashMap;
 public class LogFoodInteractor implements LogFoodInputBoundary {
     private final LogFoodDataAccessInterface logFoodDataAccessObject;
     private final LogFoodOutputBoundary logFoodPresenter;
-    private final populateFromUsda foodConstruct;
+    private final FoodDataCentralPopulateDAO foodConstruct;
 
 
     public LogFoodInteractor(LogFoodDataAccessInterface logFoodDataAccessObject, LogFoodOutputBoundary logFoodPresenter,
-                             populateFromUsda foodConstruct) {
+                             FoodDataCentralPopulateDAO foodConstruct) {
         this.logFoodDataAccessObject = logFoodDataAccessObject;
         this.logFoodPresenter = logFoodPresenter;
         this.foodConstruct = foodConstruct;
     }
 
-    @Override
+   //@Override
     public void execute(LogFoodInputData logFoodInputData) {
-        final callUsdaApi usdaObject = new callUsdaApi("DEMO_KEY");
-        final Food food = populateFromUsda.foodFromFirstResultUsda(logFoodInputData.getFood(), usdaObject);
+        final FoodDataCentralSearchDAO usdaObject = new FoodDataCentralSearchDAO("DEMO_KEY");
+        final Food food = FoodDataCentralPopulateDAO.foodFromFirstResultUsda(logFoodInputData.getFood(), usdaObject);
         final HashMap<String, Object> calories = food.getCalories();
         final HashMap<String, HashMap<String, Object>> macroNutrients = food.getMacroNutrients();
         final HashMap<String, Object> protein = macroNutrients.get("Protein");

@@ -8,7 +8,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -16,10 +15,10 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 
-public class callUsdaApi {
+public class FoodDataCentralSearchDAO {
     public String apiKey;
 
-    public callUsdaApi(String apiKey) {
+    public FoodDataCentralSearchDAO(String apiKey) {
         this.apiKey = apiKey;
     }
 
