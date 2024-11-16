@@ -1,12 +1,12 @@
-/*package interface_adapter.food_logging;
+package interface_adapter.food_logging;
 import view.MainView.mainView;
 import use_case.food_logging.LogFoodOutputData;
 import use_case.food_logging.LogFoodOutputBoundary;
 
 public class LogFoodPresenter implements LogFoodOutputBoundary {
-    private final mainView foodLogView;
+    private final LogFoodViewModel foodLogView;
 
-    public LogFoodPresenter(mainView foodLogView) {
+    public LogFoodPresenter(LogFoodViewModel foodLogView) {
         this.foodLogView = foodLogView;
     }
 
@@ -16,4 +16,4 @@ public class LogFoodPresenter implements LogFoodOutputBoundary {
         foodLogView.setProtein(foodOutputData.getProtein());
         foodLogView.setCarbs(foodOutputData.getCarbs());
     }
-}*/
+}
