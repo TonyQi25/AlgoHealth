@@ -10,6 +10,16 @@ public class Food {
     private HashMap<String, HashMap<String, Object>> microNutrients;
     private HashMap<String, HashMap<String, Object>> macroNutrients;
 
+    public float getTotalFat() {
+        return totalFat;
+    }
+
+    private float totalCalories;
+    private float totalProtein;
+
+    private float totalCarb;
+    private float totalFat;
+
     public Food() {
         description = "";
         weight = 0;
@@ -72,5 +82,36 @@ public class Food {
 
     public String getStandardUnit() {
         return standardUnit;
+    }
+
+    public void setTotalCalories() {
+        this.totalCalories = (Integer) calories.get("amount per 100" + this.getStandardUnit())/100*this.weight;
+    }
+
+    public void setTotalProtein() {
+        this.totalProtein = (Integer) this.getMacroNutrients().get("Protein").get(
+                "amount per 100" + this.getStandardUnit())/100*this.weight;
+    }
+
+    public void setTotalCarb() {
+        this.totalCarb = (Integer) this.getMacroNutrients().get("Carbohydrates").get(
+                "amount per 100" + this.getStandardUnit())/100*this.weight;
+    }
+
+    public void setTotalFat() {
+        this.totalFat = (Integer) this.getMacroNutrients().get("Fat").get(
+                "amount per 100" + this.getStandardUnit())/100*this.weight;;
+    }
+
+    public float getTotalCalories() {
+        return totalCalories;
+    }
+
+    public float getTotalProtein() {
+        return totalProtein;
+    }
+
+    public float getTotalCarb() {
+        return totalCarb;
     }
 }
