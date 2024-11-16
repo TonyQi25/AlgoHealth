@@ -4,6 +4,7 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.daily_value_recs.DailyValueRecsController;
 import interface_adapter.daily_value_recs.DailyValueRecsPresenter;
 import interface_adapter.daily_value_recs.MainViewModel;
+import interface_adapter.food_logging.LogFoodViewModel;
 import use_case.daily_value_recs.DailyValueRecsInputBoundary;
 import use_case.daily_value_recs.DailyValueRecsInteractor;
 import use_case.daily_value_recs.DailyValueRecsOutputBoundary;
@@ -24,12 +25,15 @@ public class AppBuilder {
 
     private MainViewModel mainViewModel;
 
+    private LogFoodViewModel logFoodViewModel;
+
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
     }
     public AppBuilder addMainView() {
         mainViewModel = new MainViewModel();
-        mainView = new mainView(mainViewModel);
+        logFoodViewModel = new LogFoodViewModel();
+        mainView = new mainView(mainViewModel, logFoodViewModel);
         cardPanel.add(mainView, mainView.getViewName());
         return this;
     }

@@ -4,6 +4,8 @@ package view.MainView;
 import interface_adapter.daily_value_recs.DailyValueRecsController;
 import interface_adapter.daily_value_recs.MainViewModel;
 import interface_adapter.daily_value_recs.MainViewState;
+import interface_adapter.food_logging.LogFoodState;
+import interface_adapter.food_logging.LogFoodViewModel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -15,6 +17,7 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
 
     private final String viewName = "main view";
     private final MainViewModel mainViewModel;
+    private final LogFoodViewModel logFoodViewModel;
 
     private JLabel dailyValueCaloriesText = new JLabel();
     private JLabel dailyValueProteinText = new JLabel();
@@ -28,9 +31,10 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
 
     private DailyValueRecsController dailyValueRecsController;
 
-    public mainView(MainViewModel mainViewModel) {
+    public mainView(MainViewModel mainViewModel, LogFoodViewModel logFoodViewModel) {
 
         this.mainViewModel = mainViewModel;
+        this.logFoodViewModel = logFoodViewModel;
         this.mainViewModel.addPropertyChangeListener(this);
 
         // Input fields and labels part.
@@ -132,6 +136,7 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         final MainViewState state = (MainViewState) evt.getNewValue();
+        final LogFoodState logFoodState = (LogFoodState) evt.getNewValue();
         dailyValueCaloriesText.setText("is " + String.valueOf(state.getCalories()) +
                 "% of the recommended Daily Value.");
         dailyValueProteinText.setText("is " + String.valueOf(state.getProtein()) +
@@ -140,6 +145,10 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
                 "% of the recommended Daily Value.");
         dailyValueFatText.setText("is " + String.valueOf(state.getFat()) +
                 "% of the recommended Daily Value.");
+        totalCalories.setText("Total calories" + String.valueOf(logFoodState.getTotalCalories()) +"Kcal");
+        totalProtein.setText("Total proteing" + String.valueOf(logFoodState.getTotalProtein()) + "g");
+        totalCarbs.setText("Total carbohydrates" + String.valueOf(logFoodState.getTotalCarbs()) + "g");
+        totalFat.setText("Total caybohydrates" + String.valueOf(logFoodState.getTotalFat()) + "g");
     }
 
     public void setDailyValueRecsController(DailyValueRecsController dailyValueRecsController) {
