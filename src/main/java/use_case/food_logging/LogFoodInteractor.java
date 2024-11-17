@@ -7,16 +7,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class LogFoodInteractor implements LogFoodInputBoundary {
-    private final LogFoodDataAccessInterface logFoodDataAccessObject;
+    //private final FoodDataCentralPopulateDAO logFoodDataAccessObject;
     private final LogFoodOutputBoundary logFoodPresenter;
-    private final FoodDataCentralPopulateDAO foodConstruct;
 
 
-    public LogFoodInteractor(LogFoodDataAccessInterface logFoodDataAccessObject, LogFoodOutputBoundary logFoodPresenter,
-                             FoodDataCentralPopulateDAO foodConstruct) {
-        this.logFoodDataAccessObject = logFoodDataAccessObject;
+    public LogFoodInteractor(LogFoodOutputBoundary logFoodPresenter) {
         this.logFoodPresenter = logFoodPresenter;
-        this.foodConstruct = foodConstruct;
     }
 
    //@Override

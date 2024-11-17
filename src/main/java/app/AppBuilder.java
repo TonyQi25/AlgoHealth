@@ -4,10 +4,15 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.daily_value_recs.DailyValueRecsController;
 import interface_adapter.daily_value_recs.DailyValueRecsPresenter;
 import interface_adapter.daily_value_recs.MainViewModel;
+import interface_adapter.food_logging.LogFoodController;
+import interface_adapter.food_logging.LogFoodPresenter;
 import interface_adapter.food_logging.LogFoodViewModel;
 import use_case.daily_value_recs.DailyValueRecsInputBoundary;
 import use_case.daily_value_recs.DailyValueRecsInteractor;
 import use_case.daily_value_recs.DailyValueRecsOutputBoundary;
+import use_case.food_logging.LogFoodInputBoundary;
+import use_case.food_logging.LogFoodInteractor;
+import use_case.food_logging.LogFoodOutputBoundary;
 import view.ViewManager;
 import view.MainView.mainView;
 
@@ -58,6 +63,14 @@ public class AppBuilder {
 
         final DailyValueRecsController dailyValueRecsController = new DailyValueRecsController(dailyValueRecsInteractor);
         mainView.setDailyValueRecsController(dailyValueRecsController);
+        return this;
+    }
+
+    public AppBuilder addFoodLoggingUseCase(){
+        final LogFoodOutputBoundary logFoodOutputBoundary = new LogFoodPresenter(logFoodViewModel, viewManagerModel);
+        final LogFoodInputBoundary logFoodInteractor = new LogFoodInteractor(logFoodOutputBoundary);
+        final LogFoodController logFoodController = new LogFoodController(logFoodInteractor);
+        mainView.setLogFoodController(logFoodController);
         return this;
     }
 }

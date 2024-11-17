@@ -13,6 +13,7 @@ public class Main {
         final JFrame application = appBuilder
                 .addMainView()
                 .addDailyValueRecsUseCase()
+                .addFoodLoggingUseCase()
                 .build();
 
         application.pack();

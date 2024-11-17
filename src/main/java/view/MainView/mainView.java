@@ -4,10 +4,13 @@ package view.MainView;
 import interface_adapter.daily_value_recs.DailyValueRecsController;
 import interface_adapter.daily_value_recs.MainViewModel;
 import interface_adapter.daily_value_recs.MainViewState;
+import interface_adapter.food_logging.LogFoodController;
 import interface_adapter.food_logging.LogFoodState;
 import interface_adapter.food_logging.LogFoodViewModel;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -29,7 +32,13 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
     private JLabel totalCarbs = new JLabel("Total carbohydrates: 0g");
     private JLabel totalFat = new JLabel("Total fat: 0g");
 
+    private JTextField foodInputField = new JTextField(15);
+    private JTextField foodAmountField = new JTextField(15);
+    private JTextField unitInputField = new JTextField(15);
+
     private DailyValueRecsController dailyValueRecsController;
+
+    private LogFoodController logFoodController;
 
     public mainView(MainViewModel mainViewModel, LogFoodViewModel logFoodViewModel) {
 
@@ -39,12 +48,27 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
 
         // Input fields and labels part.
         JLabel enterFood = new JLabel("Enter food:");
-        JTextField foodInputField = new JTextField(15);
         JLabel enterAmountNumber = new JLabel("Enter weight number:");
-        JTextField foodAmountField = new JTextField(15);
         JLabel enterAmountUnits = new JLabel("Enter weight units:");
-        JTextField unitInputField = new JTextField(15);
         JButton submitButton = new JButton("Submit");
+
+        //Listeners for inputting food information
+
+        submitButton.addActionListener(
+                evt -> {
+                    if (evt.getSource().equals(submitButton)) {
+                        final LogFoodState currentState = logFoodViewModel.getState();
+
+                        this.logFoodController.execute(currentState.getFoodName(),
+                                (float) currentState.getWeightNumber(),
+                                currentState.getWeightUnit());
+                    }
+                }
+        );
+
+        addFoodListener();
+        addFoodAmountListener();
+        addUnitInputFieldListener();
 
         // Macronutrient and calories values display.
         JPanel jp1 = new JPanel();
@@ -129,14 +153,14 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-
+    public void actionPerformed(ActionEvent evt) {
+        System.out.println("Click " + evt.getActionCommand());
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         final MainViewState state = (MainViewState) evt.getNewValue();
-        final LogFoodState logFoodState = (LogFoodState) evt.getNewValue();
+//        final LogFoodState logFoodState = (LogFoodState) evt.getNewValue();
         dailyValueCaloriesText.setText("is " + String.valueOf(state.getCalories()) +
                 "% of the recommended Daily Value.");
         dailyValueProteinText.setText("is " + String.valueOf(state.getProtein()) +
@@ -145,14 +169,90 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
                 "% of the recommended Daily Value.");
         dailyValueFatText.setText("is " + String.valueOf(state.getFat()) +
                 "% of the recommended Daily Value.");
-        totalCalories.setText("Total calories" + String.valueOf(logFoodState.getTotalCalories()) +"Kcal");
-        totalProtein.setText("Total proteing" + String.valueOf(logFoodState.getTotalProtein()) + "g");
-        totalCarbs.setText("Total carbohydrates" + String.valueOf(logFoodState.getTotalCarbs()) + "g");
-        totalFat.setText("Total caybohydrates" + String.valueOf(logFoodState.getTotalFat()) + "g");
+//        totalCalories.setText("Total calories" + String.valueOf(logFoodState.getTotalCalories()) +"Kcal");
+//        totalProtein.setText("Total proteing" + String.valueOf(logFoodState.getTotalProtein()) + "g");
+//        totalCarbs.setText("Total carbohydrates" + String.valueOf(logFoodState.getTotalCarbs()) + "g");
+//        totalFat.setText("Total caybohydrates" + String.valueOf(logFoodState.getTotalFat()) + "g");
     }
 
     public void setDailyValueRecsController(DailyValueRecsController dailyValueRecsController) {
         this.dailyValueRecsController = dailyValueRecsController;
+    }
+
+    public void setLogFoodController(LogFoodController logFoodController) {
+        this.logFoodController = logFoodController;
+    }
+    private void addFoodListener (){
+        foodInputField.getDocument().addDocumentListener(new DocumentListener() {private void documentListenerHelper() {
+            final LogFoodState currentState = logFoodViewModel.getState();
+            logFoodViewModel.setState(currentState);
+        }
+
+        @Override
+        public void insertUpdate(DocumentEvent e) {
+            documentListenerHelper();
+        }
+
+        @Override
+        public void removeUpdate(DocumentEvent e) {
+            documentListenerHelper();
+        }
+
+        @Override
+        public void changedUpdate(DocumentEvent e) {
+            documentListenerHelper();
+        }
+    });}
+
+    private void addFoodAmountListener(){
+        foodAmountField.getDocument().addDocumentListener(new DocumentListener() {
+
+            private void documentListenerHelper() {
+                final LogFoodState currentState = logFoodViewModel.getState();
+                logFoodViewModel.setState(currentState);
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
+        });
+    }
+
+    private void addUnitInputFieldListener(){
+        unitInputField.getDocument().addDocumentListener(new DocumentListener() {
+
+            private void documentListenerHelper() {
+                final LogFoodState currentState = logFoodViewModel.getState();
+                logFoodViewModel.setState(currentState);
+                System.out.println(currentState);
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
+        });
     }
 }
 // Citation: lab-5 code https://github.com/CSC207-2024F-UofT/lab-5
