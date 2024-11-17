@@ -70,6 +70,7 @@ public class FoodDataCentralPopulateDAO {
         HashMap<String, HashMap<String, Object>> macros = new HashMap<>();
         while (i < fresNutrients.length() && j < 4) {
             String nutrientName = fresNutrients.getJSONObject(i).getJSONObject("nutrient").getString("name");
+            String unitName = fresNutrients.getJSONObject(i).getJSONObject("nutrient").getString("unitName");
             if (nutrientName.equals("Protein")) {
                 HashMap<String, Object> temp = tempGenerator(fresNutrients, i);
                 macros.put("Protein", temp);
@@ -82,7 +83,7 @@ public class FoodDataCentralPopulateDAO {
                 i += 1;
                 j += 1;
             }
-            else if (nutrientName.equals("Energy") || nutrientName.contains("Energy")) {
+            else if (unitName.equals("kcal") && (nutrientName.equals("Energy") || nutrientName.contains("Energy"))) {
                 HashMap<String, Object> temp = tempGenerator(fresNutrients, i);
                 foodTbc.setCalories(temp);
                 i += 1;
