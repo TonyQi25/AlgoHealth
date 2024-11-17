@@ -1,15 +1,23 @@
 package view.MainView;
 
 
+import api.FoodDataCentralSearchDAO;
 import interface_adapter.daily_value_recs.DailyValueRecsController;
 import interface_adapter.daily_value_recs.MainViewModel;
 import interface_adapter.daily_value_recs.MainViewState;
+import interface_adapter.display_food_options.DisplayFoodOptionsController;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Collection;
+import java.util.HashMap;
+
+import static api.FoodDataCentralSearchDAO.genMyApiKey;
 
 public class mainView extends JPanel implements ActionListener, PropertyChangeListener {
 
@@ -27,6 +35,7 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
     private JLabel totalFat = new JLabel("Total fat: 0g");
 
     private DailyValueRecsController dailyValueRecsController;
+    private DisplayFoodOptionsController displayFoodOptionsController;
 
     public mainView(MainViewModel mainViewModel) {
 
@@ -36,11 +45,63 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
         // Input fields and labels part.
         JLabel enterFood = new JLabel("Enter food:");
         JTextField foodInputField = new JTextField(15);
+
         JLabel enterAmountNumber = new JLabel("Enter weight number:");
         JTextField foodAmountField = new JTextField(15);
         JLabel enterAmountUnits = new JLabel("Enter weight units:");
         JTextField unitInputField = new JTextField(15);
         JButton submitButton = new JButton("Submit");
+        JButton searchFoodButton = new JButton("Search");
+
+        foodInputField.getDocument().addDocumentListener(new DocumentListener() {
+
+            private void documentListenerHelper() {
+                final MainViewState currentMVState = mainViewModel.getState();
+                currentMVState.setFoodSearchInput(foodInputField.getText());
+                mainViewModel.setState(currentMVState);
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
+        });
+
+        searchFoodButton.addActionListener(
+            new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent evt) {
+                    if (evt.getSource().equals(searchFoodButton)) {
+                        final MainViewState currentState = mainViewModel.getState();
+                        // displayFoodOptionsController.execute(currentState.getFoodSearchInput());
+                        ;
+                        FoodDataCentralSearchDAO usdaObj = new FoodDataCentralSearchDAO(genMyApiKey(
+                                "myFDCApiKey.txt"));
+                        HashMap<String, Integer> foodMap = usdaObj.first10FoundationFoods(currentState
+                                .getFoodSearchInput());
+                        Collection<String> foodMapKeys = foodMap.keySet();
+                        String[] foodList = new String[foodMap.values().size()];
+                        int i = 0;
+                        for (String item : foodMapKeys) {
+                            foodList[i] = item;
+                            i += 1;
+                        }
+                        currentState.setFoodOptionsMap(foodMap);
+                        selectFromListPopup popUp = new selectFromListPopup(currentState,foodList);
+                        }
+                    }
+                });
+
 
         // Macronutrient and calories values display.
         JPanel jp1 = new JPanel();
@@ -84,6 +145,7 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
         panel1.add(enterFood);
         panel1.add(enterAmountNumber);
         panel1.add(foodInputField);
+        panel1.add(searchFoodButton);
         panel1.add(enterAmountNumber);
         panel1.add(foodAmountField);
         panel1.add(enterAmountUnits);
@@ -142,8 +204,8 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
                 "% of the recommended Daily Value.");
     }
 
+
     public void setDailyValueRecsController(DailyValueRecsController dailyValueRecsController) {
         this.dailyValueRecsController = dailyValueRecsController;
     }
 }
-// Citation: lab-5 code https://github.com/CSC207-2024F-UofT/lab-5

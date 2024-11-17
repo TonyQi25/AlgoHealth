@@ -1,5 +1,7 @@
 package interface_adapter.daily_value_recs;
 
+import java.util.HashMap;
+
 public class MainViewState {
 
     private double percent_cals = 0;
@@ -11,6 +13,11 @@ public class MainViewState {
     private double protein = 0;
     private double carbs = 0;
     private double fat = 0;
+
+    private HashMap<String, Integer> foodOptionsMap;
+    private int fdcIDofSelection;
+
+    private String foodSearchInput;
 
     public double getPercent_cals() {
         return percent_cals;
@@ -74,5 +81,29 @@ public class MainViewState {
 
     public void setFat(double fat) {
         this.fat = fat;
+    }
+
+    public void setFoodSearchInput(String foodSearchInput) {
+        this.foodSearchInput = foodSearchInput;
+    }
+
+    public String getFoodSearchInput() {
+        return foodSearchInput;
+    }
+
+    public HashMap<String, Integer> getFoodOptionsMap() {
+        return foodOptionsMap;
+    }
+
+    public void setFoodOptionsMap(HashMap<String, Integer> foodOptionsMap) {
+        this.foodOptionsMap = foodOptionsMap;
+    }
+
+    public int getFdcIDofSelection() {
+        return fdcIDofSelection;
+    }
+
+    public void setFdcIDofSelection(int fdcIDofSelection) {
+        this.fdcIDofSelection = fdcIDofSelection;
     }
 }
