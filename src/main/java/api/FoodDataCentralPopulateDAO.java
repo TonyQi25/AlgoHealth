@@ -32,7 +32,7 @@ public class FoodDataCentralPopulateDAO {
                     i += 1;
                     j += 1;
                 }
-                else if (nutrientName.equals("Carbohydrate, by difference")) {
+                else if (nutrientName.equals("Carbohydrate, by difference") || nutrientName.equals("Starch")) {
                     HashMap<String, Object> temp = tempWithAmountAndUnits(standardUnit, fresNutrients, i);
                     macros.put("Carbohydrate", temp);
                 i += 1;
@@ -69,7 +69,7 @@ public class FoodDataCentralPopulateDAO {
         int j = 0;
         HashMap<String, HashMap<String, Object>> macros = new HashMap<>();
         while (i < fresNutrients.length() && j < 4) {
-            String nutrientName = fresNutrients.getJSONObject(i).getString("nutrientName");
+            String nutrientName = fresNutrients.getJSONObject(i).getJSONObject("nutrient").getString("name");
             if (nutrientName.equals("Protein")) {
                 HashMap<String, Object> temp = tempGenerator(fresNutrients, i);
                 macros.put("Protein", temp);
@@ -115,8 +115,8 @@ public class FoodDataCentralPopulateDAO {
     @NotNull
     public static HashMap<String, Object> tempGenerator(JSONArray fresNutrients, int i) {
         HashMap<String, Object> temp = new HashMap<>();
-        temp.put("amount per 100", fresNutrients.getJSONObject(i).getDouble("value"));
-        temp.put("unitName", fresNutrients.getJSONObject(i).getString("unitName"));
+        temp.put("amount per 100", fresNutrients.getJSONObject(i).getDouble("amount"));
+        //temp.put("unitName", fresNutrients.getJSONObject(i).getString("unitName"));
         return temp;
     }
 

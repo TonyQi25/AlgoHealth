@@ -222,7 +222,8 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         // final MainViewState state = (MainViewState) evt.getNewValue();
-        final LogFoodState logFoodState = (LogFoodState) evt.getNewValue();
+        if (evt.getSource() instanceof LogFoodViewModel) {
+            final LogFoodState logFoodState = (LogFoodState) evt.getNewValue();
        /* dailyValueCaloriesText.setText("is " + String.valueOf(state.getCalories()) +
                 "% of the recommended Daily Value.");
         dailyValueProteinText.setText("is " + String.valueOf(state.getProtein()) +
@@ -231,10 +232,11 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
                 "% of the recommended Daily Value.");
         dailyValueFatText.setText("is " + String.valueOf(state.getFat()) +
                 "% of the recommended Daily Value.");*/
-        totalCalories.setText("Total calories: " + String.valueOf(logFoodState.getTotalCalories()) +"Kcal");
-        totalProtein.setText("Total protein: " + String.valueOf(logFoodState.getTotalProtein()) + "g");
-        totalCarbs.setText("Total carbohydrates" + String.valueOf(logFoodState.getTotalCarbs()) + "g");
-        totalFat.setText("Total fat: " + String.valueOf(logFoodState.getTotalFat()) + "g");
+            totalCalories.setText("Total calories: " + String.valueOf(logFoodState.getTotalCalories()) + "Kcal");
+            totalProtein.setText("Total protein: " + String.valueOf(logFoodState.getTotalProtein()) + "g");
+            totalCarbs.setText("Total carbohydrates" + String.valueOf(logFoodState.getTotalCarbs()) + "g");
+            totalFat.setText("Total fat: " + String.valueOf(logFoodState.getTotalFat()) + "g");
+        }
     }
 
 

@@ -94,8 +94,14 @@ public class Food {
     }
 
     public void setTotalCarb() {
-        this.totalCarb = (double) this.getMacroNutrients().get("Carbohydrate").get(
-                "amount per 100")/100*this.weight;
+        if (this.getMacroNutrients().containsKey("Carbohydrate")) {
+            this.totalCarb = (double) this.getMacroNutrients().get("Carbohydrate").get(
+                    "amount per 100") / 100 * this.weight;
+        }
+        else if (this.getMacroNutrients().containsKey("Starch")) {
+            this.totalCarb = (double) this.getMacroNutrients().get("Starch").get(
+                    "amount per 100") / 100 * this.weight;
+        }
     }
 
     public void setTotalFat() {

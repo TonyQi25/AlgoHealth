@@ -64,15 +64,14 @@ public class FoodDataCentralSearchDAO {
         final OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         final Request request = new Request.Builder()
-                .url("https://api.nal.usda.gov/fdc/v1/foods/search?api_key=" + apiKey + "&query=" +
-                        String.valueOf(fdcId))
+                .url("https://api.nal.usda.gov/fdc/v1/food/" + String.valueOf(fdcId) + "?api_key=" + apiKey)
                 .build();
         try {
             final Response response = client.newCall(request).execute();
             final JSONObject responseBody = new JSONObject(response.body().string());
-            JSONArray foodsArray = responseBody.getJSONArray("foods");
-            JSONObject firstResult = (JSONObject) foodsArray.get(0);
-            return firstResult;
+            // JSONArray foodsArray = responseBody.getJSONArray("foods");
+            //JSONObject firstResult = (JSONObject) foodsArray.get(0);
+            return responseBody;
         } catch (IOException | JSONException event) {
             throw new RuntimeException(event);
         }
@@ -112,4 +111,4 @@ public class FoodDataCentralSearchDAO {
     public static void main(String[] args) {
     }
 }
-// Citation: lab-4 code https://github.com/CSC207-2024F-UofT/lab-4
+
