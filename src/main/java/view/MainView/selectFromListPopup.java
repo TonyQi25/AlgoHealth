@@ -11,7 +11,10 @@ public class selectFromListPopup extends JFrame {
     public selectFromListPopup(MainViewState currentState, String[] foodList) {
         JPanel popUpPanel = new JPanel();
         JComboBox dropdown = new JComboBox(foodList);
+        JButton selectAndReturn = new JButton("Select and Return");
         popUpPanel.add(dropdown);
+        popUpPanel.add(selectAndReturn);
+
         JFrame jframe1 = new JFrame();
         jframe1.setContentPane(popUpPanel);
         jframe1.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -31,5 +34,17 @@ public class selectFromListPopup extends JFrame {
 
                     }
                 });
+        selectAndReturn.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if (e.getSource().equals(selectAndReturn)) {
+                            System.out.println(currentState.getFdcIDofSelection());
+                            jframe1.dispose();
+
+                        }
+                    }
+                }
+        );
     }
     }
