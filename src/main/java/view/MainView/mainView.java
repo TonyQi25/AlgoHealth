@@ -51,7 +51,7 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
 
         this.mainViewModel = mainViewModel;
         this.logFoodViewModel = logFoodViewModel;
-        // this.mainViewModel.addPropertyChangeListener(this);
+        this.mainViewModel.addPropertyChangeListener(this);
         this.logFoodViewModel.addPropertyChangeListener(this);
 
         // Input fields and labels part.
@@ -221,21 +221,29 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        // final MainViewState state = (MainViewState) evt.getNewValue();
+
         if (evt.getSource() instanceof LogFoodViewModel) {
             final LogFoodState logFoodState = (LogFoodState) evt.getNewValue();
-       /* dailyValueCaloriesText.setText("is " + String.valueOf(state.getCalories()) +
-                "% of the recommended Daily Value.");
-        dailyValueProteinText.setText("is " + String.valueOf(state.getProtein()) +
-                "% of the recommended Daily Value.");
-        dailyValueCarbsText.setText("is " + String.valueOf(state.getCarbs()) +
-                "% of the recommended Daily Value.");
-        dailyValueFatText.setText("is " + String.valueOf(state.getFat()) +
-                "% of the recommended Daily Value.");*/
             totalCalories.setText("Total calories: " + String.valueOf(logFoodState.getTotalCalories()) + "Kcal");
             totalProtein.setText("Total protein: " + String.valueOf(logFoodState.getTotalProtein()) + "g");
             totalCarbs.setText("Total carbohydrates" + String.valueOf(logFoodState.getTotalCarbs()) + "g");
             totalFat.setText("Total fat: " + String.valueOf(logFoodState.getTotalFat()) + "g");
+
+            dailyValueCaloriesText.setText("");
+            dailyValueProteinText.setText("");
+            dailyValueCarbsText.setText("");
+            dailyValueFatText.setText("");
+        }
+        else if (evt.getSource() instanceof MainViewModel) {
+            final MainViewState state = (MainViewState) evt.getNewValue();
+            dailyValueCaloriesText.setText("is " + String.valueOf(state.getCalories()) +
+                    "% of the recommended Daily Value.");
+            dailyValueProteinText.setText("is " + String.valueOf(state.getProtein()) +
+                    "% of the recommended Daily Value.");
+            dailyValueCarbsText.setText("is " + String.valueOf(state.getCarbs()) +
+                    "% of the recommended Daily Value.");
+            dailyValueFatText.setText("is " + String.valueOf(state.getFat()) +
+                    "% of the recommended Daily Value.");
         }
     }
 

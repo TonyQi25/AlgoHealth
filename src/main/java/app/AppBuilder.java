@@ -67,7 +67,8 @@ public class AppBuilder {
     }
 
     public AppBuilder addFoodLoggingUseCase(){
-        final LogFoodOutputBoundary logFoodOutputBoundary = new LogFoodPresenter(logFoodViewModel, viewManagerModel);
+        final LogFoodOutputBoundary logFoodOutputBoundary = new LogFoodPresenter(logFoodViewModel, mainViewModel,
+                viewManagerModel);
         final LogFoodInputBoundary logFoodInteractor = new LogFoodInteractor(logFoodOutputBoundary);
         final LogFoodController logFoodController = new LogFoodController(logFoodInteractor);
         mainView.setLogFoodController(logFoodController);
