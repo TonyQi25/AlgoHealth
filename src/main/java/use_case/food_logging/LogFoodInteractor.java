@@ -2,6 +2,7 @@ package use_case.food_logging;
 import api.FoodDataCentralPopulateDAO;
 import api.FoodDataCentralSearchDAO;
 import data.Food;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,9 +18,13 @@ public class LogFoodInteractor implements LogFoodInputBoundary {
 
    //@Override
     public void execute(LogFoodInputData logFoodInputData) {
-        final FoodDataCentralSearchDAO usdaObject = new FoodDataCentralSearchDAO("DEMO_KEY");
-        final Food food = FoodDataCentralPopulateDAO.foodFromFirstResultUsda(
-                logFoodInputData.getFoodName(), usdaObject);
+        final FoodDataCentralSearchDAO usdaObject = new FoodDataCentralSearchDAO(FoodDataCentralSearchDAO
+                .genMyApiKey("myFDCApiKey.txt"));
+        JSONObject result = usdaObject.getFoodByFdcId(logFoodInputData.getFdcId());
+        // final Food food = FoodDataCentralPopulateDAO.foodFromFirstResultUsda(
+                // logFoodInputData.getFoodName(), usdaObject);
+        final Food food = FoodDataCentralPopulateDAO.foodFromResultUsda(
+                result, usdaObject);
         food.setWeight(logFoodInputData.getFoodWeight());
         food.setTotalCarb();
         food.setTotalProtein();

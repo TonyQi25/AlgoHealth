@@ -1,6 +1,7 @@
 package view.MainView;
 
 import interface_adapter.daily_value_recs.MainViewState;
+import interface_adapter.food_logging.LogFoodState;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -8,7 +9,7 @@ import java.awt.event.ActionListener;
 
 public class selectFromListPopup extends JFrame {
 
-    public selectFromListPopup(MainViewState currentState, String[] foodList) {
+    public selectFromListPopup(LogFoodState currentState, String[] foodList) {
         JPanel popUpPanel = new JPanel();
         JComboBox dropdown = new JComboBox(foodList);
         JButton selectAndReturn = new JButton("Select and Return");

@@ -10,15 +10,15 @@ public class Food {
     private HashMap<String, HashMap<String, Object>> microNutrients;
     private HashMap<String, HashMap<String, Object>> macroNutrients;
 
-    public float getTotalFat() {
+    public double getTotalFat() {
         return totalFat;
     }
 
-    private float totalCalories;
-    private float totalProtein;
+    private double totalCalories;
+    private double totalProtein;
 
-    private float totalCarb;
-    private float totalFat;
+    private double totalCarb;
+    private double totalFat;
 
     public Food() {
         description = "";
@@ -85,33 +85,33 @@ public class Food {
     }
 
     public void setTotalCalories() {
-        this.totalCalories = (Integer) calories.get("amount per 100" + this.getStandardUnit())/100*this.weight;
+        this.totalCalories = (double) calories.get("amount per 100")/100*this.weight;
     }
 
     public void setTotalProtein() {
-        this.totalProtein = (Integer) this.getMacroNutrients().get("Protein").get(
-                "amount per 100" + this.getStandardUnit())/100*this.weight;
+        this.totalProtein = (double) this.getMacroNutrients().get("Protein").get(
+                "amount per 100")/100*this.weight;
     }
 
     public void setTotalCarb() {
-        this.totalCarb = (Integer) this.getMacroNutrients().get("Carbohydrates").get(
-                "amount per 100" + this.getStandardUnit())/100*this.weight;
+        this.totalCarb = (double) this.getMacroNutrients().get("Carbohydrate").get(
+                "amount per 100")/100*this.weight;
     }
 
     public void setTotalFat() {
-        this.totalFat = (Integer) this.getMacroNutrients().get("Fat").get(
-                "amount per 100" + this.getStandardUnit())/100*this.weight;;
+        this.totalFat = (double) this.getMacroNutrients().get("Fat").get(
+                "amount per 100")/100*this.weight;
     }
 
-    public float getTotalCalories() {
+    public double getTotalCalories() {
         return totalCalories;
     }
 
-    public float getTotalProtein() {
+    public double getTotalProtein() {
         return totalProtein;
     }
 
-    public float getTotalCarb() {
+    public double getTotalCarb() {
         return totalCarb;
     }
 }

@@ -17,10 +17,10 @@ public class LogFoodPresenter implements LogFoodOutputBoundary {
         logFoodState.setFoodName(logFoodOutputData.getFoodName());
         logFoodState.setWeightNumber(logFoodOutputData.getFoodWeight());
         logFoodState.setWeightUnit(logFoodOutputData.getWeightUnit());
-        logFoodState.setTotalCarbs((float)logFoodOutputData.getCarbs().get(0));
-        logFoodState.setTotalCalories((float) logFoodOutputData.getCalories().get(0));
-        logFoodState.setTotalFat((float) logFoodOutputData.getFat().get(0));
-        logFoodState.setTotalProtein((float) logFoodOutputData.getProtein().get(0));
+        logFoodState.setTotalCarbs(Double.valueOf((String) logFoodOutputData.getCarbs().get(0)));
+        logFoodState.setTotalCalories(Double.valueOf((String) logFoodOutputData.getCalories().get(0)));
+        logFoodState.setTotalFat(Double.valueOf((String)logFoodOutputData.getFat().get(0)));
+        logFoodState.setTotalProtein(Double.valueOf((String) logFoodOutputData.getProtein().get(0)));
         this.foodLogViewModel.setState(logFoodState);
         this.foodLogViewModel.firePropertyChanged();
         this.viewManagerModel.setState(foodLogViewModel.getViewName());

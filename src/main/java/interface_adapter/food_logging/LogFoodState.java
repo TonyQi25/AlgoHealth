@@ -1,16 +1,20 @@
 package interface_adapter.food_logging;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class LogFoodState {
     private String foodName = "";
     private float weightNumber = 0;
     private String weightUnit = "";
 
-    private float totalCalories;
-    private float totalProtein;
-    private float totalCarbs;
-    private float totalFat;
+    private HashMap<String, Integer> foodOptionsMap;
+    private int fdcIDofSelection;
+    private String foodSearchInput;
+
+    private double totalCalories;
+    private double totalProtein;
+    private double totalCarbs;
+    private double totalFat;
 
     public String getFoodName() {
         return foodName;
@@ -24,19 +28,19 @@ public class LogFoodState {
         return weightUnit;
     }
 
-    public float getTotalCalories() {
+    public double getTotalCalories() {
         return totalCalories;
     }
 
-    public float getTotalProtein() {
+    public double getTotalProtein() {
         return totalProtein;
     }
 
-    public float getTotalCarbs() {
+    public double getTotalCarbs() {
         return totalCarbs;
     }
 
-    public float getTotalFat() {
+    public double getTotalFat() {
         return totalFat;
     }
 
@@ -52,19 +56,19 @@ public class LogFoodState {
         this.weightUnit = weightUnit;
     }
 
-    public void setTotalCalories(float totalCalories) {
+    public void setTotalCalories(double totalCalories) {
         this.totalCalories = totalCalories;
     }
 
-    public void setTotalProtein(float totalProtein) {
+    public void setTotalProtein(double totalProtein) {
         this.totalProtein = totalProtein;
     }
 
-    public void setTotalCarbs(float totalCarbs) {
+    public void setTotalCarbs(double totalCarbs) {
         this.totalCarbs = totalCarbs;
     }
 
-    public void setTotalFat(float totalFat) {
+    public void setTotalFat(double totalFat) {
         this.totalFat = totalFat;
     }
 
@@ -74,5 +78,29 @@ public class LogFoodState {
                 + ", foodWeight='" + weightNumber + '\''
                 + ", weightUnit='" + weightUnit + '\''
                 + '}';
+    }
+
+    public HashMap<String, Integer> getFoodOptionsMap() {
+        return foodOptionsMap;
+    }
+
+    public void setFoodOptionsMap(HashMap<String, Integer> foodOptionsMap) {
+        this.foodOptionsMap = foodOptionsMap;
+    }
+
+    public int getFdcIDofSelection() {
+        return fdcIDofSelection;
+    }
+
+    public void setFdcIDofSelection(int fdcIDofSelection) {
+        this.fdcIDofSelection = fdcIDofSelection;
+    }
+
+    public String getFoodSearchInput() {
+        return foodSearchInput;
+    }
+
+    public void setFoodSearchInput(String foodSearchInput) {
+        this.foodSearchInput = foodSearchInput;
     }
 }

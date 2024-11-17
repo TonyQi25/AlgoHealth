@@ -51,7 +51,8 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
 
         this.mainViewModel = mainViewModel;
         this.logFoodViewModel = logFoodViewModel;
-        this.mainViewModel.addPropertyChangeListener(this);
+        // this.mainViewModel.addPropertyChangeListener(this);
+        this.logFoodViewModel.addPropertyChangeListener(this);
 
         // Input fields and labels part.
         JLabel enterFood = new JLabel("Enter food:");
@@ -65,9 +66,9 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
         foodInputField.getDocument().addDocumentListener(new DocumentListener() {
 
             private void documentListenerHelper() {
-                final MainViewState currentMVState = mainViewModel.getState();
+                final LogFoodState currentMVState = logFoodViewModel.getState();
                 currentMVState.setFoodSearchInput(foodInputField.getText());
-                mainViewModel.setState(currentMVState);
+                logFoodViewModel.setState(currentMVState);
             }
 
             @Override
@@ -91,7 +92,7 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
                 @Override
                 public void actionPerformed(ActionEvent evt) {
                     if (evt.getSource().equals(searchFoodButton)) {
-                        final MainViewState currentState = mainViewModel.getState();
+                        final LogFoodState currentState = logFoodViewModel.getState();
                         // displayFoodOptionsController.execute(currentState.getFoodSearchInput());
                         ;
                         FoodDataCentralSearchDAO usdaObj = new FoodDataCentralSearchDAO(genMyApiKey(
@@ -119,14 +120,14 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
                     if (evt.getSource().equals(submitButton)) {
                         final LogFoodState currentState = logFoodViewModel.getState();
 
-                        this.logFoodController.execute(currentState.getFoodName(),
+                        logFoodController.execute(currentState.getFdcIDofSelection(),
                                 (float) currentState.getWeightNumber(),
                                 currentState.getWeightUnit());
                     }
                 }
         );
 
-        addFoodListener();
+        //addFoodListener();
         addFoodAmountListener();
         addUnitInputFieldListener();
 
@@ -220,20 +221,20 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        final MainViewState state = (MainViewState) evt.getNewValue();
-//        final LogFoodState logFoodState = (LogFoodState) evt.getNewValue();
-        dailyValueCaloriesText.setText("is " + String.valueOf(state.getCalories()) +
+        // final MainViewState state = (MainViewState) evt.getNewValue();
+        final LogFoodState logFoodState = (LogFoodState) evt.getNewValue();
+       /* dailyValueCaloriesText.setText("is " + String.valueOf(state.getCalories()) +
                 "% of the recommended Daily Value.");
         dailyValueProteinText.setText("is " + String.valueOf(state.getProtein()) +
                 "% of the recommended Daily Value.");
         dailyValueCarbsText.setText("is " + String.valueOf(state.getCarbs()) +
                 "% of the recommended Daily Value.");
         dailyValueFatText.setText("is " + String.valueOf(state.getFat()) +
-                "% of the recommended Daily Value.");
-//        totalCalories.setText("Total calories" + String.valueOf(logFoodState.getTotalCalories()) +"Kcal");
-//        totalProtein.setText("Total proteing" + String.valueOf(logFoodState.getTotalProtein()) + "g");
-//        totalCarbs.setText("Total carbohydrates" + String.valueOf(logFoodState.getTotalCarbs()) + "g");
-//        totalFat.setText("Total caybohydrates" + String.valueOf(logFoodState.getTotalFat()) + "g");
+                "% of the recommended Daily Value.");*/
+        totalCalories.setText("Total calories: " + String.valueOf(logFoodState.getTotalCalories()) +"Kcal");
+        totalProtein.setText("Total protein: " + String.valueOf(logFoodState.getTotalProtein()) + "g");
+        totalCarbs.setText("Total carbohydrates" + String.valueOf(logFoodState.getTotalCarbs()) + "g");
+        totalFat.setText("Total fat: " + String.valueOf(logFoodState.getTotalFat()) + "g");
     }
 
 
@@ -244,7 +245,7 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
     public void setLogFoodController(LogFoodController logFoodController) {
         this.logFoodController = logFoodController;
     }
-    private void addFoodListener (){
+/*    private void addFoodListener (){
         foodInputField.getDocument().addDocumentListener(new DocumentListener() {private void documentListenerHelper() {
             final LogFoodState currentState = logFoodViewModel.getState();
             logFoodViewModel.setState(currentState);
@@ -264,13 +265,14 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
         public void changedUpdate(DocumentEvent e) {
             documentListenerHelper();
         }
-    });}
+    });}*/
 
     private void addFoodAmountListener(){
         foodAmountField.getDocument().addDocumentListener(new DocumentListener() {
 
             private void documentListenerHelper() {
                 final LogFoodState currentState = logFoodViewModel.getState();
+                currentState.setWeightNumber(Float.valueOf(foodAmountField.getText()));
                 logFoodViewModel.setState(currentState);
             }
 
