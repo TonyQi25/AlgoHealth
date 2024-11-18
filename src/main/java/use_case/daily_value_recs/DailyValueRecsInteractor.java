@@ -20,6 +20,12 @@ public class DailyValueRecsInteractor implements DailyValueRecsInputBoundary {
     public DailyValueRecsInteractor(DailyValueRecsOutputBoundary dailyValueRecsPresenter) {
         this.dailyValueRecsPresenter = dailyValueRecsPresenter;
     }
+
+/*    public static double roundTo1decimalPlace(double num) {
+        StringBuilder stringBversion = new StringBuilder(String.valueOf(num));
+        stringBversion.getChars(0, stringBversion.length() + 1, new char[stringBversion.length() + 1], 0);
+
+    }*/
     @Override
     public void execute(DailyValueRecsIntakeData dailyValueRecsIntakeData) {
         double percent_cals = (dailyValueRecsIntakeData.getCalories() / DVcals) * 100;
@@ -29,7 +35,10 @@ public class DailyValueRecsInteractor implements DailyValueRecsInputBoundary {
         DailyValueRecsOutputData dailyValueRecsOutputData = new DailyValueRecsOutputData(percent_cals, percent_prot,
         percent_carbs, percent_fat);
         dailyValueRecsPresenter.prepareSuccessView(dailyValueRecsOutputData);
+    }
 
-
+    public static void main(String[] args) {
+       /* roundTo1decimalPlace(20.4);
+        int i = 0;*/
     }
 }
