@@ -6,6 +6,7 @@ Haoming (Tony) Qi (Github username: TonyQi25),
 Erin Chen (Github username: chenerin29),
 Daniel Xie (Github username: DanielXie1795)
 
+## **Project Week 1 Timeline Tasks:** 
 ## **Use Cases:**
 
 **User logs in:**
@@ -60,4 +61,28 @@ will write and use a Recipe entity.
 
 In package "api", a method in class callUsdaApi calls the USDA FoodData Central API and searches the database by
 keyword. It returns the first result of the search. A method in populateFromUsda successfully creates a food entity
-from this data under certain conditions relating to uniformity of data retrieved from the API. 
+from this data under certain conditions relating to uniformity of data retrieved from the API.
+
+## **Project Week 2 Timeline Tasks:** 
+
+## **Video Links:**
+
+Demo video: https://www.dropbox.com/scl/fi/guh3lchz26b2x2b3un4nz/CSC207-Demo-Project-Week-2.mov?rlkey=38gqvd6ow24nukwqzhfm1axb7&st=0ji61qzz&dl=0
+
+## **View and View Model Code:**
+
+View and view models for the food logging and Daily Value recommendations use cases have been written.
+
+## ** In-Memory Data Access Objects:**
+
+Some code has been factored out into an in-memory data access object for the food logging use case.
+The class is not yet in use. 
+
+## **Appbuilder:**
+
+Appbuilder has been written and is at current connected to code related to the Daily Value recommendations and 
+food logging use cases. 
+
+## **Interactor Unit Tests:**
+
+A test for the Daily Value use case interactor has been written. 
