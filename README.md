@@ -71,18 +71,19 @@ Demo video: https://www.dropbox.com/scl/fi/guh3lchz26b2x2b3un4nz/CSC207-Demo-Pro
 
 ## **View and View Model Code:**
 
-View and view models for the food logging and Daily Value recommendations use cases have been written.
+- View and view models for the food logging and Daily Value recommendations use cases have been written.
+  Branch: erinrui.chen+ms.rework. 
 
 ## **In-Memory Data Access Objects:**
 
-Some code has been factored out into an in-memory data access object for the food logging use case.
-The class is not yet in use. 
+- Some code has been factored out into an in-memory data access object for the food logging use case.
+  The class is not yet in use. Branch: erinrui.chen+ms.rework.
 
 ## **Appbuilder:**
 
-Appbuilder has been written and is at current connected to code related to the Daily Value recommendations and 
-food logging use cases. 
+- Appbuilder has been written and is at current connected to code related to the Daily Value recommendations and 
+  food logging use cases.Branch: erinrui.chen+ms.rework.
 
 ## **Interactor Unit Tests:**
 
-A test for the Daily Value use case interactor has been written. 
+- A test for the Daily Value use case interactor has been written. Branch: erinrui.chen+ms.rework.
