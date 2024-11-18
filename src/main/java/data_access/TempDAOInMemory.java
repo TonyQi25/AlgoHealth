@@ -14,8 +14,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class TempDAOInMemory implements LoginDataAccessInterface, LogoutDataAccessInterface, SignupDataAccessInterface,
-        LogFoodDataAccessInterface {
+public class TempDAOInMemory implements LoginDataAccessInterface, LogoutDataAccessInterface, SignupDataAccessInterface
+{
 
     private final Map<String, AccountInfo> accounts = new HashMap<>();
     private String currentUsername;
