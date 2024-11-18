@@ -10,7 +10,6 @@ public class LogFoodState {
     private HashMap<String, Integer> foodOptionsMap;
     private int fdcIDofSelection;
     private String foodSearchInput;
-    private boolean iChanged = false;
 
     private double totalCalories;
     private double totalProtein;
@@ -103,9 +102,5 @@ public class LogFoodState {
 
     public void setFoodSearchInput(String foodSearchInput) {
         this.foodSearchInput = foodSearchInput;
-    }
-
-    public void setiChanged(boolean iChanged) {
-        this.iChanged = iChanged;
     }
 }

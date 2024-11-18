@@ -2,6 +2,7 @@ package view.MainView;
 
 
 import api.FoodDataCentralSearchDAO;
+import data_access.UserFoodSearchInMemoryDAO;
 import interface_adapter.daily_value_recs.DailyValueRecsController;
 import interface_adapter.daily_value_recs.MainViewModel;
 import interface_adapter.daily_value_recs.MainViewState;
@@ -47,6 +48,8 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
 
     private LogFoodController logFoodController;
 
+    private UserFoodSearchInMemoryDAO userFoodSearchInMemoryDAO = new UserFoodSearchInMemoryDAO();
+
     public mainView(MainViewModel mainViewModel, LogFoodViewModel logFoodViewModel) {
 
         this.mainViewModel = mainViewModel;
@@ -67,7 +70,9 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
 
             private void documentListenerHelper() {
                 final LogFoodState currentMVState = logFoodViewModel.getState();
+                //final UserFoodSearchInMemoryDAO foodSearchDAO = userFoodSearchInMemoryDAO;
                 currentMVState.setFoodSearchInput(foodInputField.getText());
+                // foodSearchDAO.setFoodSearchInput(foodInputField.getText());
                 logFoodViewModel.setState(currentMVState);
             }
 
@@ -92,13 +97,15 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
                 @Override
                 public void actionPerformed(ActionEvent evt) {
                     if (evt.getSource().equals(searchFoodButton)) {
+                        //final LogFoodState currentState = logFoodViewModel.getState();
                         final LogFoodState currentState = logFoodViewModel.getState();
-                        // displayFoodOptionsController.execute(currentState.getFoodSearchInput());
-                        ;
+                        final UserFoodSearchInMemoryDAO foodSearchDAO = userFoodSearchInMemoryDAO;
                         FoodDataCentralSearchDAO usdaObj = new FoodDataCentralSearchDAO(genMyApiKey(
                                 "myFDCApiKey.txt"));
                         HashMap<String, Integer> foodMap = usdaObj.first10FoundationFoods(currentState
                                 .getFoodSearchInput());
+                        /*HashMap<String, Integer> foodMap = usdaObj.first10FoundationFoods(foodSearchDAO
+                                .getFoodSearchInput());*/
                         Collection<String> foodMapKeys = foodMap.keySet();
                         String[] foodList = new String[foodMap.values().size()];
                         int i = 0;
@@ -107,7 +114,10 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
                             i += 1;
                         }
                         currentState.setFoodOptionsMap(foodMap);
+                        // foodSearchDAO.setFoodOptionsMap(foodMap);
                         selectFromListPopup popUp = new selectFromListPopup(currentState,foodList);
+                        // String stringy = JOptionPane.showInputDialog(new JComboBox(foodList), JOptionPane.PLAIN_MESSAGE);
+
                         }
                     }
                 });
@@ -236,13 +246,13 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
         }
         else if (evt.getSource() instanceof MainViewModel) {
             final MainViewState state = (MainViewState) evt.getNewValue();
-            dailyValueCaloriesText.setText("is " + String.valueOf(state.getCalories()) +
+            dailyValueCaloriesText.setText("is " + String.valueOf(state.getPercent_cals()) +
                     "% of the recommended Daily Value.");
-            dailyValueProteinText.setText("is " + String.valueOf(state.getProtein()) +
+            dailyValueProteinText.setText("is " + String.valueOf(state.getPercent_prot()) +
                     "% of the recommended Daily Value.");
-            dailyValueCarbsText.setText("is " + String.valueOf(state.getCarbs()) +
+            dailyValueCarbsText.setText("is " + String.valueOf(state.getPercent_carbs()) +
                     "% of the recommended Daily Value.");
-            dailyValueFatText.setText("is " + String.valueOf(state.getFat()) +
+            dailyValueFatText.setText("is " + String.valueOf(state.getPercent_fat()) +
                     "% of the recommended Daily Value.");
         }
     }

@@ -1,5 +1,6 @@
 package app;
 
+import data_access.UserFoodSearchInMemoryDAO;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.daily_value_recs.DailyValueRecsController;
 import interface_adapter.daily_value_recs.DailyValueRecsPresenter;
@@ -29,8 +30,8 @@ public class AppBuilder {
     private mainView mainView;
 
     private MainViewModel mainViewModel;
-
     private LogFoodViewModel logFoodViewModel;
+
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);

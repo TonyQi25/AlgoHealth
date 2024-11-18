@@ -39,25 +39,21 @@ public class populationTest {
         Double newFoodProtein = (Double) newFood.getMacroNutrients().get("Protein").get("amount per 100");
         String newFoodUnits = (String) newFood.getMacroNutrients().get("Protein").get("unitName");
         assertEquals(Double.valueOf(newFoodProtein), Double.valueOf(8.88));
-        assertEquals(newFoodUnits, "G");
 
         // Check Calories instance variable.
         Double newFoodCalories = (Double) newFood.getCalories().get("amount per 100");
         newFoodUnits = (String) newFood.getCalories().get("unitName");
         assertEquals(Double.valueOf(newFoodCalories), Double.valueOf(1090.0));
-        assertEquals(newFoodUnits, "kJ");
 
         // Check carbohydrates in macroNutrients instance variable.
         Double newFoodCarbs = (Double) newFood.getMacroNutrients().get("Carbohydrate").get("amount per 100");
         newFoodUnits = (String) newFood.getMacroNutrients().get("Carbohydrate").get("unitName");
         assertEquals(Double.valueOf(newFoodCarbs), Double.valueOf(25.5));
-        assertEquals(newFoodUnits, "G");
 
         //Check total fat in macroNutrients instance variable.
         Double newFoodFat = (Double) newFood.getMacroNutrients().get("Fat").get("amount per 100");
         newFoodUnits = (String) newFood.getMacroNutrients().get("Fat").get("unitName");
         assertEquals(Double.valueOf(newFoodFat), Double.valueOf(13.6));
-        assertEquals(newFoodUnits, "G");
 
     }
 

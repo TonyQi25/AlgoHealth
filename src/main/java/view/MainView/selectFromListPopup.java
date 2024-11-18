@@ -9,6 +9,8 @@ import java.awt.event.ActionListener;
 
 public class selectFromListPopup extends JFrame {
 
+
+
     public selectFromListPopup(LogFoodState currentState, String[] foodList) {
         JPanel popUpPanel = new JPanel();
         JComboBox dropdown = new JComboBox(foodList);

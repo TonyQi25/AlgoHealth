@@ -25,7 +25,6 @@ public class LogFoodPresenter implements LogFoodOutputBoundary {
         logFoodState.setTotalCalories(Double.valueOf((String) logFoodOutputData.getCalories().get(0)));
         logFoodState.setTotalFat(Double.valueOf((String)logFoodOutputData.getFat().get(0)));
         logFoodState.setTotalProtein(Double.valueOf((String) logFoodOutputData.getProtein().get(0)));
-        logFoodState.setiChanged(true);
 
         final MainViewState mainViewState = mainViewModel.getState();
         mainViewState.setCalories(logFoodState.getTotalCalories());
