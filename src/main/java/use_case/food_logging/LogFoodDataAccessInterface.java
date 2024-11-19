@@ -4,7 +4,7 @@ import data.Food;
 import org.json.JSONObject;
 
 public interface LogFoodDataAccessInterface {
-    JSONObject saveFood (AccountInfo user, Food foodIntake) throws DataAccessException;
+    JSONObject saveFood (String userName, String password, Food foodIntake) throws DataAccessException;
 
-    JSONObject loadFoodInfo(AccountInfo user) throws DataAccessException;
+    JSONObject loadFoodInfo(String userName) throws DataAccessException;
 }
