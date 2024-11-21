@@ -8,21 +8,24 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class HistoryInteractor {
+public class HistoryInteractor implements HistoryInputBoundary{
+
     private final HistoryInputData historyInputData;
     private final HistoryOutputBoundary historyOutputBoundary;
+    private final HistoryOutputData historyOutputData;
     private final HistoryDataAccessInterface historyDataAccessInterface;
 
     public HistoryInteractor(HistoryInputData historyInputData, HistoryOutputBoundary historyOutputBoundary,
-                             HistoryDataAccessInterface dataAccessInterface) {
+                             HistoryOutputData outputData, HistoryDataAccessInterface dataAccessInterface) {
 
         this.historyInputData = historyInputData;
         this.historyOutputBoundary = historyOutputBoundary;
+        this.historyOutputData = outputData;
         this.historyDataAccessInterface = dataAccessInterface;
     }
 
     public void execute() {
-        List<DayInfo> sample = new ArrayList<>();
+        HashMap<String, DayInfo> sample = new HashMap<>();
         DayInfo day1 = new DayInfo(LocalDate.now());
         HashMap<String,Object> cal1 = new HashMap<>();
         HashMap<String,Object> cal2 = new HashMap<>();
@@ -30,9 +33,13 @@ public class HistoryInteractor {
         cal2.put("amount per 100",12);
         day1.addToFoodLog(new Food("apple", 200.0F, cal1));
         day1.addToFoodLog(new Food("banana", 200.0F, cal2));
-        sample.add(day1);
+        sample.put(day1.getDate().toString(), day1);
 
-        // historyOutputBoundary.execute
+        System.out.println(day1.getDate().toString());
+
+        historyOutputData.setDayInfo(day1);
+
+        historyOutputBoundary.prepareSuccessView(historyOutputData);
 
 
     }

@@ -14,17 +14,16 @@ import javax.swing.*;
 public class HistoryController {
 
     private final HistoryInputBoundary historyUseCaseInteractor;
-    private final LocalDate date;
+    private final HistoryInputData historyInputData;
 
-    public HistoryController(HistoryInputBoundary historyUseCaseInteractor, LocalDate date) {
+    public HistoryController(HistoryInputBoundary historyUseCaseInteractor, HistoryInputData inputData) {
         this.historyUseCaseInteractor = historyUseCaseInteractor;
-        this.date = date;
+        this.historyInputData = inputData;
     }
 
-    public void execute(JFrame historyFrame, LocalDate date) {
-        final HistoryInputData historyInputData = new HistoryInputData(date);
+    public void execute(JFrame historyFrame) {
 
-
+        //historyUseCaseInteractor.execute
 
     }
 }

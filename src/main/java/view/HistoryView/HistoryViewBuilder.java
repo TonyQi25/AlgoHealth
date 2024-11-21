@@ -17,7 +17,6 @@ public class HistoryViewBuilder {
         this.historyFrame = historyFrame;
         resetDate();
         this.historyPanel.setLayout(new BoxLayout(this.historyPanel, BoxLayout.Y_AXIS));
-        //this.historyPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         this.historyFrame.setLayout(new BoxLayout(this.historyFrame.getContentPane(), BoxLayout.Y_AXIS));
     }
 
@@ -63,20 +62,25 @@ public class HistoryViewBuilder {
 
     public void setDataPanel() {
         dataPanel = new JPanel();
+
+    }
+
+    public JList<String> createDataList() {
+        JList<String> list = new JList<String>();
+
+
+
+        return list;
     }
 
     public JFrame build() {
+        historyFrame.setContentPane(historyPanel);
+        historyFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         setHeaderPanel();
         return historyFrame;
     }
 
     public static void main(String[] args) {
-        HistoryViewBuilder builder = new HistoryViewBuilder(new JPanel(), new JFrame());
-        builder.resetDate();
-        builder.historyFrame.add(builder.historyPanel);
-        builder.historyFrame.setSize(800,600);
-        builder.historyFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        builder.setHeaderPanel();
-        builder.historyFrame.setVisible(true);
     }
 }
