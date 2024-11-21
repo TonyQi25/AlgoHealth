@@ -23,11 +23,12 @@ public class FoodLoggingStorageDAO implements LogFoodDataAccessInterface, Signup
     private static final String PASSWORD = "password";
     private static final String MESSAGE = "message";
 
+    //make and saves an usesr in the system by calling Create a User Object POST method from grade api
     public void saveUser(String userName, String password) {
         final OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
 
-        // POST METHOD
+        // POST METHOD from grade api
         final MediaType mediaType = MediaType.parse(CONTENT_TYPE_JSON);
         final JSONObject requestBody = new JSONObject();
         requestBody.put(USERNAME, userName);
@@ -55,6 +56,9 @@ public class FoodLoggingStorageDAO implements LogFoodDataAccessInterface, Signup
         }
     }
 
+    //saves food information associated with the user
+    //stores in JSONObject with keys: username, password, info, where info is an JsonObject that stores the food
+    // information recorded by the user
     @Override
     public JSONObject saveFood(String userName, String password, Food foodIntake) throws DataAccessException {
         final OkHttpClient client = new OkHttpClient().newBuilder()
@@ -102,6 +106,8 @@ public class FoodLoggingStorageDAO implements LogFoodDataAccessInterface, Signup
         }
     }
 
+    // gets the food info associated with the user by providing the username and calling the GET USER OBJECT FROM DB
+    // method from grade api
     @Override
     public JSONObject loadFoodInfo(String userName) throws DataAccessException {
         // Make an API call to get the user object.
@@ -139,9 +145,25 @@ public class FoodLoggingStorageDAO implements LogFoodDataAccessInterface, Signup
 
     }
 
+    // calls CheckIfUsernameExists method from grade api
     @Override
     public boolean existsByName(String username) {
-        return false;
+        final OkHttpClient client = new OkHttpClient().newBuilder()
+                .build();
+        final Request request = new Request.Builder()
+                .url(String.format("http://vm003.teach.cs.toronto.edu:20112/checkIfUserExists?username=%s", username))
+                .addHeader(CONTENT_TYPE_LABEL, CONTENT_TYPE_JSON)
+                .build();
+        try {
+            final Response response = client.newCall(request).execute();
+
+            final JSONObject responseBody = new JSONObject(response.body().string());
+
+            return responseBody.getInt(STATUS_CODE_LABEL) == SUCCESS_CODE;
+        }
+        catch (IOException | JSONException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     @Override
