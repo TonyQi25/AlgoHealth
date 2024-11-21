@@ -1,12 +1,27 @@
 package use_case.food_logging;
-import data.Food;
 
 public class LogFoodInputData {
-    private final String food;
 
-    public LogFoodInputData(String food) {
-        this.food = food;
+    private final Integer fdcId;
+    private final float foodWeight;
+    private final String weightUnit;
+
+    public LogFoodInputData(Integer fdcId, float foodWeight, String weightUnit) {
+        this.fdcId = fdcId;
+        this.foodWeight = foodWeight;
+        this.weightUnit = weightUnit;
     }
 
-    String getFood() {return food;}
+
+    public float getFoodWeight() {
+        return foodWeight;
+    }
+
+    public String getWeightUnit() {
+        return weightUnit;
+    }
+
+    public Integer getFdcId() {
+        return fdcId;
+    }
 }

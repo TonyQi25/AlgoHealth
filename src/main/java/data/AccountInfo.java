@@ -7,15 +7,15 @@ public class AccountInfo {
     private final LocalDate dateOfBirth;  // change this to date of birth
     private final float height;
     private float weight;
-    private String diet;
+    private String[] diet;
     private String goal;
     private String username;
     private String password;
     private List<DayInfo> days;
-    private List<Food> dietaryRestrictions;
+    private List<String> dietaryRestrictions;
 
-    public AccountInfo(LocalDate dateOfBirth, float height, float weight, String diet, String goal,
-                       String username, String password, List<Food> dietaryRestrictions) {
+    public AccountInfo(LocalDate dateOfBirth, float height, float weight, String[] diet, String goal,
+                       String username, String password, List<String> dietaryRestrictions) {
         this.dateOfBirth = dateOfBirth;
         this.height = height;
         this.weight = weight;
@@ -38,7 +38,7 @@ public class AccountInfo {
         return weight;
     }
 
-    public String getDiet() {
+    public String[] getDiet() {
         return diet;
     }
 
@@ -58,7 +58,7 @@ public class AccountInfo {
         return days;
     }
 
-    public List<Food> getDietaryRestrictions() {
+    public List<String> getDietaryRestrictions() {
         return dietaryRestrictions;
     }
 
@@ -66,7 +66,7 @@ public class AccountInfo {
         this.weight = weight;
     }
 
-    public void setDiet(String diet) {
+    public void setDiet(String[] diet) {
         this.diet = diet;
     }
 
@@ -86,7 +86,7 @@ public class AccountInfo {
         this.days = days;
     }
 
-    public void setDietaryRestrictions(List<Food> dietaryRestrictions) {
+    public void setDietaryRestrictions(List<String> dietaryRestrictions) {
         this.dietaryRestrictions = dietaryRestrictions;
     }
 }

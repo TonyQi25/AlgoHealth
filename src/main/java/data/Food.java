@@ -10,6 +10,16 @@ public class Food {
     private HashMap<String, HashMap<String, Object>> microNutrients;
     private HashMap<String, HashMap<String, Object>> macroNutrients;
 
+    public double getTotalFat() {
+        return totalFat;
+    }
+
+    private double totalCalories;
+    private double totalProtein;
+
+    private double totalCarb;
+    private double totalFat;
+
     public Food() {
         description = "";
         weight = 0;
@@ -72,5 +82,42 @@ public class Food {
 
     public String getStandardUnit() {
         return standardUnit;
+    }
+
+    public void setTotalCalories() {
+        this.totalCalories = (double) calories.get("amount per 100")/100*this.weight;
+    }
+
+    public void setTotalProtein() {
+        this.totalProtein = (double) this.getMacroNutrients().get("Protein").get(
+                "amount per 100")/100*this.weight;
+    }
+
+    public void setTotalCarb() {
+        if (this.getMacroNutrients().containsKey("Carbohydrate")) {
+            this.totalCarb = (double) this.getMacroNutrients().get("Carbohydrate").get(
+                    "amount per 100") / 100 * this.weight;
+        }
+        else if (this.getMacroNutrients().containsKey("Starch")) {
+            this.totalCarb = (double) this.getMacroNutrients().get("Starch").get(
+                    "amount per 100") / 100 * this.weight;
+        }
+    }
+
+    public void setTotalFat() {
+        this.totalFat = (double) this.getMacroNutrients().get("Fat").get(
+                "amount per 100")/100*this.weight;
+    }
+
+    public double getTotalCalories() {
+        return totalCalories;
+    }
+
+    public double getTotalProtein() {
+        return totalProtein;
+    }
+
+    public double getTotalCarb() {
+        return totalCarb;
     }
 }

@@ -1,7 +1,5 @@
 package use_case.signup;
 
-import data.Food;
-
 import java.time.LocalDate;
 import java.util.List;
 
@@ -10,15 +8,15 @@ public class SignupInputData {
     private final LocalDate dateOfBirth;
     private final float height;
     private final float weight;
-    private final String diet;
+    private final String[] diet;
     private final String goal;
     private final String username;
     private final String password;
-    private final List<Food> dietaryRestrictions;
+    private final List<String> dietaryRestrictions;
 
     public SignupInputData(LocalDate dateOfBirth, float height, float weight,
-                           String diet, String goal, String username, String password,
-                           List<Food> dietaryRestrictions) {
+                           String[] diet, String goal, String username, String password,
+                           List<String> dietaryRestrictions) {
         this.dateOfBirth = dateOfBirth;
         this.height = height;
         this.weight = weight;
@@ -41,7 +39,7 @@ public class SignupInputData {
         return weight;
     }
 
-    public String getDiet() {
+    public String[] getDiet() {
         return diet;
     }
 
@@ -57,7 +55,7 @@ public class SignupInputData {
         return password;
     }
 
-    public List<Food> getDietaryRestrictions() {
+    public List<String> getDietaryRestrictions() {
         return dietaryRestrictions;
     }
 }

@@ -2,7 +2,6 @@ package use_case.login;
 
 import data.AccountInfo;
 import data.DayInfo;
-import data.Food;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -35,7 +34,7 @@ public class LoginInteractor implements LoginInputBoundary {
             }
             else {
 
-                final AccountInfo account = new AccountInfo(LocalDate.now(), 0, 0 ,"", "", "", "", new ArrayList<>());// loginDataAccessInterface.get(loginInputData.getUsername());
+                final AccountInfo account = new AccountInfo(LocalDate.now(), 0, 0 , new String[]{""}, "", "", "", new ArrayList<>());// loginDataAccessInterface.get(loginInputData.getUsername());
                 System.out.println("reached interactor");
                 loginDataAccessInterface.setCurrentUsername(account.getUsername());
                 //final LoginOutputData loginOutputData = new LoginOutputData(account.getUsername(),

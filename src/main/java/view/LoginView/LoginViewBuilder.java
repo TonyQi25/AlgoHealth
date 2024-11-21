@@ -1,4 +1,4 @@
-package view.LoginView;
+/*package view.LoginView;
 
 import data_access.TempDAOInMemory;
 import interface_adapter.login.LoginController;
@@ -8,17 +8,17 @@ import use_case.login.LoginDataAccessInterface;
 import use_case.login.LoginInputBoundary;
 import use_case.login.LoginInteractor;
 import use_case.login.LoginOutputBoundary;
-import view.mainView;
+import view.MainView.mainView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class LoginViewBuilder {
+public class LoginViewBuilder {   // maybe more of the methods should have getters to generate for SRP in SOLID
 
     private final JFrame loginFrame;
     private final JPanel loginPanel;
-    private JLabel welcomeLabel;
+    private JPanel welcomePanel;
     private JPanel usernamePanel;
     private JPanel passwordPanel;
     private JPanel buttonPanel;
@@ -29,17 +29,26 @@ public class LoginViewBuilder {
         this.loginPanel.setLayout(new BoxLayout(this.loginPanel, BoxLayout.Y_AXIS));
     }
 
+    public JPanel getWelcomePanel() {
+        JPanel welcomePanel = new JPanel();
+        JLabel welcomeLabel = new JLabel("Welcome to AlgoHealth's Nutrition Tracker!");
+
+        welcomePanel.add(welcomeLabel);
+
+        return welcomePanel;
+    }
+
     public void setWelcomeLabel() {
-        this.welcomeLabel = new JLabel("Welcome to AlgoHealth's Nutrition Tracker!");
+        this.welcomePanel = this.getWelcomePanel();
     }
 
     public LoginViewBuilder addWelcomeLabel() {
         this.setWelcomeLabel();
-        this.loginPanel.add(welcomeLabel);
+        this.loginPanel.add(welcomePanel);
         return this;
     }
 
-    public void setUsernamePanel() {
+    public JPanel getUsernamePanel() {
         JPanel usernamePanel = new JPanel();
         JLabel usernameText = new JLabel("Username:");
         JTextField usernameField = new JTextField(15);
@@ -47,7 +56,11 @@ public class LoginViewBuilder {
         usernamePanel.add(usernameText);
         usernamePanel.add(usernameField);
 
-        this.usernamePanel = usernamePanel;
+        return usernamePanel;
+    }
+
+    public void setUsernamePanel() {
+        this.usernamePanel = this.getUsernamePanel();
     }
 
     public LoginViewBuilder addUsernamePanel() {
@@ -56,15 +69,49 @@ public class LoginViewBuilder {
         return this;
     }
 
-    public void setPasswordPanel() {
+    public JButton getPasswordToggleButton(JTextField passwordShowField,
+                                           JPasswordField passwordHideField) {
+        String SHOW_MESSAGE = "Show";
+        String HIDE_MESSAGE = "Hide";
+        JButton togglePasswordButton = new JButton(SHOW_MESSAGE);
+
+        togglePasswordButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (passwordPanel.getComponent(1) instanceof JPasswordField) {
+                    String hideText = new String(passwordHideField.getPassword());
+                    passwordPanel.remove(1);
+                    passwordShowField.setText(hideText);
+                    passwordPanel.add(passwordShowField, 1);
+                    togglePasswordButton.setText(HIDE_MESSAGE);
+                } else {
+                    String showText = passwordShowField.getText();
+                    passwordPanel.remove(1);
+                    passwordHideField.setText(showText);
+                    passwordPanel.add(passwordHideField, 1);
+                    togglePasswordButton.setText(SHOW_MESSAGE);
+                }
+            }
+        });
+        return togglePasswordButton;
+    }
+
+    public JPanel getPasswordPanel() {
         JPanel passwordPanel = new JPanel();
-        JLabel passwordText = new JLabel("Password:");
-        JPasswordField passwordField = new JPasswordField(15);
+        JLabel passwordLabel = new JLabel("Password:");
+        JTextField passwordShowField = new JTextField(15);
+        JPasswordField passwordHideField = new JPasswordField(15);
+        JButton togglePasswordButton = this.getPasswordToggleButton(passwordShowField, passwordHideField);
 
-        passwordPanel.add(passwordText);
-        passwordPanel.add(passwordField);
+        passwordPanel.add(passwordLabel);
+        passwordPanel.add(passwordHideField);
+        passwordPanel.add(togglePasswordButton);
 
-        this.passwordPanel = passwordPanel;
+        return passwordPanel;
+    }
+
+    public void setPasswordPanel() {
+        this.passwordPanel = this.getPasswordPanel();
     }
 
     public LoginViewBuilder addPasswordPanel() {
@@ -94,14 +141,9 @@ public class LoginViewBuilder {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String username = usernameField.getText();
-                char[] passwordChars = passwordField.getPassword();
-                StringBuilder password = new StringBuilder();
+                String password = new String(passwordField.getPassword());
 
-                for (char passwordChar : passwordChars) {
-                    password.append(passwordChar);
-                }
-                System.out.println("clicked log in");
-                loginController.execute(username, password.toString(), loginFrame);
+                loginController.execute(username, password, loginFrame);
                 System.out.println(username);
                 System.out.println(password);
             }
@@ -110,7 +152,7 @@ public class LoginViewBuilder {
     }
 
     public JButton getSignupButton() {
-        JButton signupButton = new JButton("Sign Up");
+        JButton signupButton = new JButton("Go to Sign Up");
         signupButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -120,7 +162,7 @@ public class LoginViewBuilder {
         return signupButton;
     }
 
-    public void setButtonPanel() {
+    public JPanel getButtonPanel() {
         JTextField usernameField = (JTextField) this.usernamePanel.getComponent(1); // maybe bad practice
         JPasswordField passwordField = (JPasswordField) this.passwordPanel.getComponent(1);
 
@@ -131,7 +173,11 @@ public class LoginViewBuilder {
         buttonPanel.add(loginButton);
         buttonPanel.add(signupButton);
 
-        this.buttonPanel = buttonPanel;
+        return buttonPanel;
+    }
+
+    public void setButtonPanel() {
+        this.buttonPanel = this.getButtonPanel();
     }
 
     public LoginViewBuilder addButtonPanel() {
@@ -146,4 +192,4 @@ public class LoginViewBuilder {
 
         return loginFrame;
     }
-}
+}*/
