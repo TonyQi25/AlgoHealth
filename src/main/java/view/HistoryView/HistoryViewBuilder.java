@@ -31,7 +31,7 @@ public class HistoryViewBuilder {
         JLabel dateLabel = new JLabel("Date ...");
 
     }
-
+    /*
     public JButton getPrevDayButton(LocalDate date) {
         return createPrevDayButton(date);
     }
@@ -47,7 +47,7 @@ public class HistoryViewBuilder {
     private JButton createNextDayButton() {
 
     }
-
+    */
     public void setDataPanel() {
 
     }

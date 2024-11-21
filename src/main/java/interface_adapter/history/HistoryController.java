@@ -18,6 +18,6 @@ public class HistoryController {
 
     public void execute(JFrame historyFrame, LocalDate date) {
         final HistoryInputData historyInputData = new HistoryInputData(historyFrame, date);
-        historyUseCaseInteractor.execute(historyInputData);
+        //historyUseCaseInteractor.execute(historyInputData);
     }
 }
