@@ -1,8 +1,13 @@
 package interface_adapter.history;
 
+import data.DayInfo;
 import use_case.history.HistoryInputBoundary;
 import use_case.history.HistoryInputData;
+
+import java.awt.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.*;
 
@@ -17,7 +22,9 @@ public class HistoryController {
     }
 
     public void execute(JFrame historyFrame, LocalDate date) {
-        final HistoryInputData historyInputData = new HistoryInputData(historyFrame, date);
-        //historyUseCaseInteractor.execute(historyInputData);
+        final HistoryInputData historyInputData = new HistoryInputData(date);
+
+
+
     }
 }

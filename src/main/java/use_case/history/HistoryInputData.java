@@ -8,9 +8,10 @@ import java.time.LocalDate;
  */
 public class HistoryInputData {
 
+    LocalDate date;
 
-    public HistoryInputData(JFrame historyFrame, LocalDate date) {
-
+    public HistoryInputData(LocalDate date) {
+        this.date = date;
     }
 
 }
