@@ -1,11 +1,18 @@
 package data;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AccountInfo {
-    private final LocalDate dateOfBirth;  // change this to date of birth
-    private final float height;
+
+    public static final String USERNAME_PREFIX = "ALGOHEALTH_";
+
+    private LocalDate dateOfBirth;  // change this to date of birth
+    private float height;
     private float weight;
     private String[] diet;
     private String goal;
@@ -24,6 +31,9 @@ public class AccountInfo {
         this.username = username;
         this.password = password;
         this.dietaryRestrictions = dietaryRestrictions;
+
+        this.days = new ArrayList<>();
+        this.days.add(new DayInfo(LocalDate.now()));
     }
 
     public LocalDate getDateOfBirth() {
@@ -62,6 +72,14 @@ public class AccountInfo {
         return dietaryRestrictions;
     }
 
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public void setHeight(float height) {
+        this.height = height;
+    }
+
     public void setWeight(float weight) {
         this.weight = weight;
     }
@@ -88,5 +106,58 @@ public class AccountInfo {
 
     public void setDietaryRestrictions(List<String> dietaryRestrictions) {
         this.dietaryRestrictions = dietaryRestrictions;
+    }
+
+    public String toString() {
+        JSONObject accountStringObject = new JSONObject();
+
+        accountStringObject.put("date of birth", this.getDateOfBirth());
+        accountStringObject.put("height", this.getHeight());
+        accountStringObject.put("weight", this.getWeight());
+        accountStringObject.put("diet", this.getDiet());
+        accountStringObject.put("goal", this.getGoal());
+        accountStringObject.put("username", this.getUsername());
+        accountStringObject.put("password", this.getPassword());
+        accountStringObject.put("restrictions", this.getDietaryRestrictions());
+
+        return accountStringObject.toString();
+    }
+
+    public static AccountInfo fromJSONString(String accountString) {
+        System.out.println(accountString);
+
+        AccountInfo newAccount = new AccountInfo(LocalDate.now(), 0, 0, new String[0],
+                "", "", "", new ArrayList<>());
+        JSONObject accountObject = new JSONObject(accountString);
+
+        String dobString = (String) accountObject.get("date of birth");
+        String[] dobStrings = dobString.split("-");
+        int yearOfBirth = Integer.parseInt(dobStrings[0]);
+        int monthOfBirth = Integer.parseInt(dobStrings[1]);
+        int dayOfBirth = Integer.parseInt(dobStrings[2]);
+        newAccount.setDateOfBirth(LocalDate.of(yearOfBirth, monthOfBirth, dayOfBirth));
+
+        float height = ((Integer) accountObject.get("height")).floatValue();
+        newAccount.setHeight(height);
+
+        float weight = ((Integer) accountObject.get("weight")).floatValue();
+        newAccount.setWeight(weight);
+
+        JSONArray dietJSONArray = (JSONArray) accountObject.get("diet");
+        String[] diet = dietJSONArray.toList().toArray(new String[0]);       // I do not like the yellow squiggle!!
+        newAccount.setDiet(diet);
+
+        newAccount.setGoal((String) accountObject.get("goal"));
+        newAccount.setUsername((String) accountObject.get("username"));
+        newAccount.setPassword((String) accountObject.get("password"));
+
+        // converting from list to array to list??? probably bad
+        JSONArray restrictionsJSONArray = (JSONArray) accountObject.get("restrictions");
+        List<String> restrictions = List.of(restrictionsJSONArray.toList().toArray(new String[0]));
+        newAccount.setDietaryRestrictions(restrictions);
+
+        System.out.println(newAccount);
+
+        return newAccount;
     }
 }

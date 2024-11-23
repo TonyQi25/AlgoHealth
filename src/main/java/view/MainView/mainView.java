@@ -9,7 +9,8 @@ import interface_adapter.daily_value_recs.MainViewState;
 import interface_adapter.food_logging.LogFoodController;
 import interface_adapter.food_logging.LogFoodState;
 import interface_adapter.food_logging.LogFoodViewModel;
-import interface_adapter.display_food_options.DisplayFoodOptionsController;
+import interface_adapter.login.LoginController;
+//import interface_adapter.display_food_options.DisplayFoodOptionsController;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -44,7 +45,7 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
     private JTextField unitInputField = new JTextField(15);
 
     private DailyValueRecsController dailyValueRecsController;
-    private DisplayFoodOptionsController displayFoodOptionsController;
+    //private DisplayFoodOptionsController displayFoodOptionsController;
 
     private LogFoodController logFoodController;
 
