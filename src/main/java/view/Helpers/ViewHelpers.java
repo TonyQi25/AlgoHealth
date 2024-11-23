@@ -14,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -106,6 +107,10 @@ public class ViewHelpers {
 
     @NotNull
     public static JButton getDietDropDownButton(SignupViewModel signupViewModel, JList<String> dietList) {// why are we able to extract this
+
+        dietList.setSelectedIndex(0);
+        signupViewModel.getState().setDiet(dietList.getSelectedValuesList().toArray(new String[0]));
+
         JButton dietDropDownButton = new JButton("Click to see list of diets!");
         JScrollPane dietScrollList = new JScrollPane(dietList);
         JPopupMenu dietListMenu = new JPopupMenu();
@@ -130,9 +135,13 @@ public class ViewHelpers {
         return dietDropDownButton;
     }
 
+    // maybe instead of manually adding "None" as an option, just adding None to the front of whatever list there is could be an option
     @NotNull
     public static JButton getRestrictionDropDownButton(SignupViewModel signupViewModel,
                                                        JList<String> restrictionList) {
+        restrictionList.setSelectedIndex(0);
+        signupViewModel.getState().setDietaryRestrictions(restrictionList.getSelectedValuesList());
+
         JButton restrictionDropDownButton = new JButton("Click to see list of dietary restrictions!");
         JScrollPane restrictionScrollList = new JScrollPane(restrictionList);
         JPopupMenu restrictionListMenu = new JPopupMenu();
