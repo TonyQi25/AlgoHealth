@@ -133,7 +133,7 @@ public class LoginView extends JPanel implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
 
         final LoginState loginState = (LoginState) evt.getNewValue();
-        //this.setFields(loginState);        // is this even needed?
+        this.setFields(loginState);
 
         if (loginState.getLoginError() != null) {
             JDialog failedLoginFrame = ViewHelpers.getFailedDialog(loginState.getLoginError());
@@ -142,10 +142,17 @@ public class LoginView extends JPanel implements PropertyChangeListener {
     }
 
     public void setFields(LoginState loginState) {
-        JTextField usernameField = (JTextField) this.usernamePanel.getComponent(1);
-        usernameField.setText(loginState.getUsername());
+        String setUsername = loginState.getUsername();
+        String setPassword = loginState.getPassword();
 
+        JTextField usernameField = (JTextField) this.usernamePanel.getComponent(1);
+        usernameField.setText(setUsername);
+
+        JButton passwordToggleButton = (JButton) this.passwordPanel.getComponent(2);
+        if (!(this.passwordPanel.getComponent(1) instanceof JPasswordField)) {
+            passwordToggleButton.doClick();
+        }
         JPasswordField passwordField = (JPasswordField) this.passwordPanel.getComponent(1);
-        passwordField.setText(loginState.getPassword());
+        passwordField.setText(setPassword);
     }
 }

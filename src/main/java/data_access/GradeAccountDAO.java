@@ -5,11 +5,13 @@ import data.AccountInfo;
 import okhttp3.*;
 import org.json.JSONObject;
 import use_case.login.LoginDataAccessInterface;
+import use_case.logout.LogoutDataAccessInterface;
 import use_case.signup.SignupDataAccessInterface;
 
 import java.io.IOException;
 
-public class GradeAccountDAO implements SignupDataAccessInterface, LoginDataAccessInterface {
+public class GradeAccountDAO implements SignupDataAccessInterface, LoginDataAccessInterface,
+        LogoutDataAccessInterface {
 
     public void createAccount(String username, String password) {
         GradeHelper.postUser(username, password);
@@ -32,7 +34,7 @@ public class GradeAccountDAO implements SignupDataAccessInterface, LoginDataAcce
 
     @Override
     public void save(AccountInfo account) {
-
+        GradeHelper.setUserInfo(account.getUsername(), account.getPassword(), account);
     }
 
     @Override

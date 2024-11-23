@@ -16,6 +16,7 @@ public class Main {
                 .addSignupView()
                 .addDailyValueRecsUseCase()
                 .addFoodLoggingUseCase()
+                .addLogoutUseCase()
                 .build();
 
         application.pack();

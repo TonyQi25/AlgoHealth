@@ -1,22 +1,18 @@
 package view.Helpers;
 
-import interface_adapter.signup.SignupState;
 import interface_adapter.signup.SignupViewModel;
-import view.SignupView.SignupView;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import java.util.Objects;
 
 public class NumericFilter implements DocumentListener {
 
-    private SignupViewModel signupViewModel;
+    private final SignupViewModel signupViewModel;
 
     private final String fieldName;
     private final JTextField textField;
     private final int maxLength;
-    private final int[] changeLength = new int[1];     // hard dependency, is this a problem?
 
     public NumericFilter(SignupViewModel signupViewModel, String fieldName,
                          JTextField textField, int maxLength) {
@@ -28,17 +24,6 @@ public class NumericFilter implements DocumentListener {
 
     @Override
     public void insertUpdate(DocumentEvent e) {
-//        String currText = this.textField.getText();
-//        int textLength = currText.length();
-//        int addedIndex = e.getOffset();
-//        char addedChar = currText.charAt(addedIndex);
-//        int added
-//
-//        System.out.println(e.getLength());
-//
-//        if (!Character.isDigit(addedChar) || textLength > this.maxLength) {
-//            this.maintainField(textField, addedIndex);
-//        }
 
         String currText = this.textField.getText();
         int textLength = currText.length();
