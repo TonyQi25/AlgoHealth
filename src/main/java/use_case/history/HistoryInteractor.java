@@ -37,9 +37,9 @@ public class HistoryInteractor implements HistoryInputBoundary{
 
         System.out.println(day1.getDate().toString());
 
-        historyOutputData.setDayInfo(day1);
 
-        historyOutputBoundary.prepareSuccessView(historyOutputData);
+        historyOutputData.setDayInfo(day1);
+        historyOutputBoundary.prepareSuccessView();
 
 
     }

@@ -21,9 +21,15 @@ public class HistoryController {
         this.historyInputData = inputData;
     }
 
-    public void execute(JFrame historyFrame) {
+    public void execute(JFrame historyFrame, LocalDate viewingDate, int offset) {
+        if (offset == -1) {
+            historyInputData.setDate(viewingDate.minusDays(1));
+        }   else if (offset == 1) {
+            historyInputData.setDate(viewingDate.plusDays(1));
+        }   else {
+            historyInputData.setDate(viewingDate);
+        }
 
-        //historyUseCaseInteractor.execute
-
+        historyUseCaseInteractor.execute();
     }
 }
