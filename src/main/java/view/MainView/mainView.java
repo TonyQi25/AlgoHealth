@@ -29,10 +29,16 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
     private final MainViewModel mainViewModel;
     private final LogFoodViewModel logFoodViewModel;
 
-    private JLabel dailyValueCaloriesText = new JLabel();
+    // private JLabel dailyValueCaloriesText = new JLabel();
+    private JProgressBar progressBarCalories = new JProgressBar(0, 100);
+    private JProgressBar progressBarProtein = new JProgressBar(0, 100);
+    private JProgressBar progressBarCarbs = new JProgressBar(0, 100);
+    private JProgressBar progressBarFat = new JProgressBar(0, 100);
+
     private JLabel dailyValueProteinText = new JLabel();
     private JLabel dailyValueCarbsText = new JLabel();
     private JLabel dailyValueFatText = new JLabel();
+
 
     private JLabel totalCalories = new JLabel("Total calories: 0Kcal");
     private JLabel totalProtein = new JLabel("Total protein: 0g");
@@ -116,7 +122,7 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
                         currentState.setFoodOptionsMap(foodMap);
                         // foodSearchDAO.setFoodOptionsMap(foodMap);
                         selectFromListPopup popUp = new selectFromListPopup(currentState,foodList);
-                        // String stringy = JOptionPane.showInputDialog(new JComboBox(foodList), JOptionPane.PLAIN_MESSAGE);
+                        // String stringy = JOptionPane.showInputDialog(new JComboBox(foodList));
 
                         }
                     }
@@ -144,19 +150,23 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
         // Macronutrient and calories values display.
         JPanel jp1 = new JPanel();
         jp1.add(totalCalories);
-        jp1.add(dailyValueCaloriesText);
+        //jp1.add(dailyValueCaloriesText);
+        jp1.add(progressBarCalories);
 
         JPanel jp2 = new JPanel();
         jp2.add(totalProtein);
-        jp2.add(dailyValueProteinText);
+        // jp2.add(dailyValueProteinText);
+        jp2.add(progressBarProtein);
 
         JPanel jp3 = new JPanel();
         jp3.add(totalCarbs);
-        jp3.add(dailyValueCarbsText);
+        // jp3.add(dailyValueCarbsText);
+        jp3.add(progressBarCarbs);
 
         JPanel jp4 = new JPanel();
         jp4.add(totalFat);
-        jp4.add(dailyValueFatText);
+        // jp4.add(dailyValueFatText);
+        jp4.add(progressBarFat);
 
         JButton getDVrecs = new JButton("Daily Value Assessment");
 
@@ -239,21 +249,39 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
             totalCarbs.setText("Total carbohydrates" + String.valueOf(logFoodState.getTotalCarbs()) + "g");
             totalFat.setText("Total fat: " + String.valueOf(logFoodState.getTotalFat()) + "g");
 
-            dailyValueCaloriesText.setText("");
+            //dailyValueCaloriesText.setText("");
             dailyValueProteinText.setText("");
             dailyValueCarbsText.setText("");
             dailyValueFatText.setText("");
         }
         else if (evt.getSource() instanceof MainViewModel) {
             final MainViewState state = (MainViewState) evt.getNewValue();
-            dailyValueCaloriesText.setText("is " + String.valueOf(state.getPercent_cals()) +
-                    "% of the recommended Daily Value.");
-            dailyValueProteinText.setText("is " + String.valueOf(state.getPercent_prot()) +
+            // dailyValueCaloriesText.setText("is " + String.valueOf(state.getPercent_cals()) +
+                    //"% of the recommended Daily Value.");
+            //progressBarCalories.setString(String.valueOf(state.getPercent_cals()));
+            progressBarCalories.setValue((int) Math.floor(state.getPercent_cals()));
+            progressBarCalories.setString(String.valueOf(Math.floor(state.getPercent_cals()) + "% of DV"));
+            progressBarCalories.setStringPainted(true);
+
+            progressBarProtein.setValue((int) Math.floor(state.getPercent_prot()));
+            progressBarProtein.setString(String.valueOf(Math.floor(state.getPercent_prot()) + "% of DV"));
+            progressBarProtein.setStringPainted(true);
+
+            progressBarCarbs.setValue((int) Math.floor(state.getPercent_carbs()));
+            progressBarCarbs.setString(String.valueOf(Math.floor(state.getPercent_carbs()) + "% of DV"));
+            progressBarCarbs.setStringPainted(true);
+
+            progressBarFat.setValue((int) Math.floor(state.getPercent_fat()));
+            progressBarFat.setString(String.valueOf(Math.floor(state.getPercent_fat()) + "% of DV"));
+            progressBarFat.setStringPainted(true);
+
+
+            /*dailyValueProteinText.setText("is " + String.valueOf(state.getPercent_prot()) +
                     "% of the recommended Daily Value.");
             dailyValueCarbsText.setText("is " + String.valueOf(state.getPercent_carbs()) +
                     "% of the recommended Daily Value.");
             dailyValueFatText.setText("is " + String.valueOf(state.getPercent_fat()) +
-                    "% of the recommended Daily Value.");
+                    "% of the recommended Daily Value.");*/
         }
     }
 
