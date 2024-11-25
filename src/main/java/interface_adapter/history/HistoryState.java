@@ -3,24 +3,35 @@ package interface_adapter.history;
 import data.DayInfo;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HistoryState {
-    private LocalDate date;
-    private DayInfo dayInfo;
+    private List<String> dayDetails = new ArrayList<>();
+    private String date;
+    private String historyError;
 
-    public LocalDate getDate() {
-        return date;
+    public void setDayDetails(List<String> dayDetails) {
+        this.dayDetails = dayDetails;
     }
 
-    public DayInfo getDayInfo() {
-        return dayInfo;
+    public List<String> getDayDetails() {
+        return dayDetails;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
-    public void setDayInfo(DayInfo dayInfo) {
-        this.dayInfo = dayInfo;
+    public String getDate() {
+        return date;
+    }
+
+    public void setHistoryError(String loginError) {
+        this.historyError = loginError;
+    }
+
+    public String getHistoryError() {
+        return historyError;
     }
 }

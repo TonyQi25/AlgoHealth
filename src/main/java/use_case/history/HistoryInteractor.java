@@ -10,21 +10,19 @@ import java.util.List;
 
 public class HistoryInteractor implements HistoryInputBoundary{
 
-    private final HistoryInputData historyInputData;
     private final HistoryOutputBoundary historyOutputBoundary;
-    private final HistoryOutputData historyOutputData;
     private final HistoryDataAccessInterface historyDataAccessInterface;
 
-    public HistoryInteractor(HistoryInputData historyInputData, HistoryOutputBoundary historyOutputBoundary,
-                             HistoryOutputData outputData, HistoryDataAccessInterface dataAccessInterface) {
+    public HistoryInteractor(HistoryOutputBoundary historyOutputBoundary,
+                             HistoryDataAccessInterface dataAccessInterface) {
 
-        this.historyInputData = historyInputData;
         this.historyOutputBoundary = historyOutputBoundary;
-        this.historyOutputData = outputData;
         this.historyDataAccessInterface = dataAccessInterface;
     }
 
-    public void execute() {
+    public void execute(HistoryInputData input) {
+        final LocalDate date = input.getDate();
+
         HashMap<String, DayInfo> sample = new HashMap<>();
         DayInfo day1 = new DayInfo(LocalDate.now());
         HashMap<String,Object> cal1 = new HashMap<>();
@@ -37,9 +35,21 @@ public class HistoryInteractor implements HistoryInputBoundary{
 
         System.out.println(day1.getDate().toString());
 
+        //get the day info from the DAO
 
-        historyOutputData.setDayInfo(day1);
-        historyOutputBoundary.prepareSuccessView();
+        List<String> returning = new ArrayList<>();
+
+        for (Food food : day1.getFoodLog()) {
+            String info = "";
+            info += food.getDescription() + ":";
+            info += food.getTotalCalories() + " calories";
+            // blah blah blah
+
+            returning.add(info);
+        }
+
+        final HistoryOutputData output = new HistoryOutputData(returning, day1.getDate().toString(), false);
+        historyOutputBoundary.prepareSuccessView(output);
 
 
     }

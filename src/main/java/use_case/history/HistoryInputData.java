@@ -1,6 +1,5 @@
 package use_case.history;
 
-import javax.swing.*;
 import java.time.LocalDate;
 
 /**
@@ -8,13 +7,9 @@ import java.time.LocalDate;
  */
 public class HistoryInputData {
 
-    LocalDate date;
+    private final LocalDate date;
 
     public HistoryInputData(LocalDate date) {
-        this.date = date;
-    }
-
-    public void setDate(LocalDate date) {
         this.date = date;
     }
 

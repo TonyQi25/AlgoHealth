@@ -2,17 +2,25 @@ package use_case.history;
 
 import data.DayInfo;
 
+import java.util.List;
+
 public class HistoryOutputData {
 
-    DayInfo dayInfo;
+    List<String> foodInfo;
+    String date;
+    private final boolean useCaseFailed;
 
-    public HistoryOutputData() {}
-
-    public void setDayInfo (DayInfo day) {
-        this.dayInfo = day;
+    public HistoryOutputData(List<String> data, String date, boolean useCaseFailed) {
+        this.foodInfo = data;
+        this.date = date;
+        this.useCaseFailed = useCaseFailed;
     }
 
-    public DayInfo getDayInfo() {
-        return dayInfo;
+    public List<String> getFoodList() {
+        return foodInfo;
+    }
+
+    public String getDate() {
+        return date;
     }
 }

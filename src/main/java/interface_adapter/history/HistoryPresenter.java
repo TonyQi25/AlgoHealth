@@ -1,40 +1,41 @@
 package interface_adapter.history;
 
-import data.DayInfo;
-import data.Food;
+import interface_adapter.ViewManagerModel;
 import use_case.history.HistoryOutputBoundary;
 import use_case.history.HistoryOutputData;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 public class HistoryPresenter implements HistoryOutputBoundary {
-    private HistoryViewModel viewModel;
-    private HistoryOutputData outputData;
+    private final HistoryViewModel viewModel;
+    private final ViewManagerModel viewManagerModel;
 
-    public HistoryPresenter(HistoryViewModel viewModel, HistoryOutputData outputData) {
-        this.outputData = outputData;
+    public HistoryPresenter(HistoryViewModel viewModel,
+                            ViewManagerModel viewManagerModel) {
         this.viewModel = viewModel;
+        this.viewManagerModel = viewManagerModel;
     }
 
     @Override
-    public void prepareSuccessView() {
-        DayInfo dayInfo = outputData.getDayInfo();
-        List<Food> foods = dayInfo.getFoodLog();
-        List<String> returning = new ArrayList<>();
+    public void prepareSuccessView(HistoryOutputData response) {
+        final HistoryState historyState = viewModel.getState();
+        historyState.setDate(response.getDate());
+        historyState.setDayDetails(response.getFoodList());
 
-        for (Food food : foods) {
-            String info = "";
-            info += food.getDescription() + ":";
-            info += food.getTotalCalories() + " calories";
-            // blah blah blah
+        System.out.println(response.getFoodList());
 
-            returning.add(info);
-        }
+        this.viewModel.setState(historyState);
+        this.viewModel.firePropertyChanged();
 
-        viewModel.setDate(dayInfo.getDate().toString());
-        viewModel.setDayDetails(returning);
-        viewModel.setState(new HistoryState());
+        this.viewManagerModel.setState(viewModel.getViewName());
+        this.viewManagerModel.firePropertyChanged();
     }
+
+    @Override
+    public void prepareFailView(String errorMessage) {
+        final HistoryState historyState = viewModel.getState();
+        historyState.setHistoryError(errorMessage);
+        viewModel.firePropertyChanged();
+    }
+
+
 }

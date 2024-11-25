@@ -14,22 +14,21 @@ import javax.swing.*;
 public class HistoryController {
 
     private final HistoryInputBoundary historyUseCaseInteractor;
-    private final HistoryInputData historyInputData;
 
-    public HistoryController(HistoryInputBoundary historyUseCaseInteractor, HistoryInputData inputData) {
+    public HistoryController(HistoryInputBoundary historyUseCaseInteractor) {
         this.historyUseCaseInteractor = historyUseCaseInteractor;
-        this.historyInputData = inputData;
     }
 
-    public void execute(JFrame historyFrame, LocalDate viewingDate, int offset) {
+    public void execute(LocalDate viewingDate, int offset) {
+        final HistoryInputData input;
         if (offset == -1) {
-            historyInputData.setDate(viewingDate.minusDays(1));
+            input = new HistoryInputData(viewingDate.minusDays(1));
         }   else if (offset == 1) {
-            historyInputData.setDate(viewingDate.plusDays(1));
+            input = new HistoryInputData(viewingDate.plusDays(1));
         }   else {
-            historyInputData.setDate(viewingDate);
+            input = new HistoryInputData(viewingDate);
         }
 
-        historyUseCaseInteractor.execute();
+        historyUseCaseInteractor.execute(input);
     }
 }
