@@ -20,6 +20,8 @@ public class HistoryPresenter implements HistoryOutputBoundary {
         final HistoryState historyState = viewModel.getState();
         historyState.setDate(response.getDate());
         historyState.setDayDetails(response.getFoodList());
+        historyState.setViewingDate(response.getViewingDate());
+        historyState.setHistoryError("");
 
         System.out.println(response.getFoodList());
 
@@ -28,6 +30,8 @@ public class HistoryPresenter implements HistoryOutputBoundary {
 
         this.viewManagerModel.setState(viewModel.getViewName());
         this.viewManagerModel.firePropertyChanged();
+
+        System.out.println("firePropertyChanged called");
     }
 
     @Override

@@ -9,6 +9,7 @@ import java.util.List;
 public class HistoryState {
     private List<String> dayDetails = new ArrayList<>();
     private String date;
+    private LocalDate viewingDate;
     private String historyError;
 
     public void setDayDetails(List<String> dayDetails) {
@@ -21,6 +22,14 @@ public class HistoryState {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public void setViewingDate(LocalDate viewingDate) {
+        this.viewingDate = viewingDate;
+    }
+
+    public LocalDate getViewingDate() {
+        return viewingDate;
     }
 
     public String getDate() {

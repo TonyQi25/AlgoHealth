@@ -4,11 +4,11 @@ import app.HistoryUseCaseFactory;
 import data_access.TempHistoryDAO;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.history.HistoryController;
-import interface_adapter.history.HistoryPresenter;
+import interface_adapter.history.HistoryState;
 import interface_adapter.history.HistoryViewModel;
-import use_case.history.*;
 import view.ViewManager;
 
+import java.util.List;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -16,6 +16,7 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class HistoryView extends JPanel implements ActionListener, PropertyChangeListener {
 
@@ -24,16 +25,26 @@ public class HistoryView extends JPanel implements ActionListener, PropertyChang
 
     private JPanel headerPanel;
     private JPanel dataPanel;
+
     private LocalDate viewingDate;
+    private JList<String> list;
+    private JLabel dateLabel;
+    private JLabel errorLabel;
+
+    private JButton prevButton;
+    private JButton nextButton;
 
     private HistoryController historyController;
 
     public HistoryView(HistoryViewModel viewModel, HistoryController historyController) {
         this.historyViewModel = viewModel;
         this.historyController = historyController;
+        this.historyViewModel.addPropertyChangeListener(this);
+
         resetDate();
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         build();
+        historyController.execute(viewingDate, 0);
     }
 
 
@@ -41,15 +52,17 @@ public class HistoryView extends JPanel implements ActionListener, PropertyChang
         this.viewingDate = LocalDate.now();
     }
 
-    public void loadInfo() {
+    public void loadInfo(List<String> info) {
 
     }
 
     public void setHeaderPanel() {
         headerPanel = new JPanel();
-        JLabel dateLabel = new JLabel("Date: " + this.viewingDate.toString());
+        dateLabel = new JLabel("Date: " + this.viewingDate.toString());
+        errorLabel = new JLabel("");
         headerPanel.setLayout(new BoxLayout(headerPanel, BoxLayout.X_AXIS));
         headerPanel.add(getPrevDayButton(viewingDate.minusDays(1)));
+        this.add(errorLabel);
         headerPanel.add(dateLabel);
         headerPanel.add(getNextDayButton(viewingDate.plusDays(1)));
         headerPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -64,15 +77,15 @@ public class HistoryView extends JPanel implements ActionListener, PropertyChang
 
     private JButton createPrevDayButton(LocalDate date) {
         // calls to controller
-        JButton returning = new JButton("Previous Day");
-        returning.setAlignmentX(Component.CENTER_ALIGNMENT);
-        returning.addActionListener(new ActionListener() {
+        prevButton = new JButton("Previous Day");
+        prevButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        prevButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 historyController.execute(viewingDate, -1);
             }
         });
-        return returning;
+        return prevButton;
     }
 
     public JButton getNextDayButton(LocalDate date) {
@@ -80,16 +93,16 @@ public class HistoryView extends JPanel implements ActionListener, PropertyChang
     }
 
     private JButton createNextDayButton(LocalDate date) {
-        JButton returning = new JButton("Next Day");
-        returning.setAlignmentX(Component.CENTER_ALIGNMENT);
-        returning.addActionListener(new ActionListener() {
+        nextButton = new JButton("Next Day");
+        nextButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        nextButton.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 historyController.execute(viewingDate, 1);
             }
         });
-        return returning;
+        return nextButton;
     }
 
     public void setDataPanel() {
@@ -105,7 +118,7 @@ public class HistoryView extends JPanel implements ActionListener, PropertyChang
         DefaultListModel<String> listModel = new DefaultListModel<>();
         listModel.addElement("Hello3");
 
-        JList<String> list = new JList<>(listModel);
+        list = new JList<>(listModel);
         list.setFixedCellWidth(300);
         return list;
     }
@@ -140,16 +153,6 @@ public class HistoryView extends JPanel implements ActionListener, PropertyChang
 
         views.add(historyView, historyView.getViewName());
 
-//        //main
-//        HistoryInputData input = new HistoryInputData(LocalDate.now());
-//        HistoryOutputData output = new HistoryOutputData();
-//        HistoryViewModel viewModel = new HistoryViewModel("history view");
-//        HistoryPresenter presenter = new HistoryPresenter(viewModel, output);
-//        HistoryDataAccessInterface historyDAO = new TempHistoryDAO();
-//        HistoryInteractor useCaseInteractor = new HistoryInteractor(input, presenter, output, historyDAO);
-//        HistoryController controller = new HistoryController(useCaseInteractor, input);
-//        HistoryView hv = new HistoryView(viewModel, controller);
-
         viewManagerModel.setState(historyView.getViewName());
         viewManagerModel.firePropertyChanged();
 
@@ -166,6 +169,29 @@ public class HistoryView extends JPanel implements ActionListener, PropertyChang
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        final HistoryState state = (HistoryState) evt.getNewValue();
+        if (state.getHistoryError().isEmpty()) {
+            setFields(state);
+        } else {
+            errorLabel.setText(state.getHistoryError());
+        }
+
+    }
+
+    private void setFields(HistoryState state) {
+        System.out.println("Hit set property change");
+        List<String> info = state.getDayDetails();
+        DefaultListModel<String> tempList = new DefaultListModel<>();
+
+        for (String food: info) {
+            tempList.addElement(food);
+        }
+
+        list.setModel(tempList);
+
+        dateLabel.setText("Date: " + state.getDate());
+        viewingDate = state.getViewingDate();
+        errorLabel.setText("");
 
     }
 }
