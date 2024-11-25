@@ -9,6 +9,10 @@ import interface_adapter.daily_value_recs.MainViewState;
 import interface_adapter.food_logging.LogFoodController;
 import interface_adapter.food_logging.LogFoodState;
 import interface_adapter.food_logging.LogFoodViewModel;
+import interface_adapter.login.LoginViewModel;
+import interface_adapter.logout.LogoutController;
+import org.jetbrains.annotations.NotNull;
+import view.Helpers.ViewHelpers;
 //import interface_adapter.display_food_options.DisplayFoodOptionsController;
 
 import javax.swing.*;
@@ -47,6 +51,7 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
     //private DisplayFoodOptionsController displayFoodOptionsController;
 
     private LogFoodController logFoodController;
+    private LogoutController logoutController;
 
     private UserFoodSearchInMemoryDAO userFoodSearchInMemoryDAO = new UserFoodSearchInMemoryDAO();
 
@@ -59,7 +64,7 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
 
         // Input fields and labels part.
         JLabel enterFood = new JLabel("Enter food:");
-        JTextField foodInputField = new JTextField(15);
+        this.foodInputField = new JTextField(15);
 
         JLabel enterAmountNumber = new JLabel("Enter weight number:");
         JLabel enterAmountUnits = new JLabel("Enter weight units:");
@@ -209,16 +214,19 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
         sbsPanel.add(fhPanel);
         sbsPanel.add(panel2);
 
+        // Button panel.
+        JPanel logoutPanel = getLogoutPanel(this.mainViewModel);
+
         // Add to main panel.
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         mainPanel.add(panel1);
         mainPanel.add(sbsPanel);
+        mainPanel.add(logoutPanel);
 
         this.add(mainPanel);
 
     }
-
 
     public String getViewName() {
         return viewName;
@@ -243,6 +251,8 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
             dailyValueProteinText.setText("");
             dailyValueCarbsText.setText("");
             dailyValueFatText.setText("");
+
+            System.out.println("from log food view model");
         }
         else if (evt.getSource() instanceof MainViewModel) {
             final MainViewState state = (MainViewState) evt.getNewValue();
@@ -254,6 +264,7 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
                     "% of the recommended Daily Value.");
             dailyValueFatText.setText("is " + String.valueOf(state.getPercent_fat()) +
                     "% of the recommended Daily Value.");
+            this.setFields();
         }
     }
 
@@ -265,7 +276,12 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
     public void setLogFoodController(LogFoodController logFoodController) {
         this.logFoodController = logFoodController;
     }
-/*    private void addFoodListener (){
+
+    public void setLogoutController(LogoutController logoutController) {
+        this.logoutController = logoutController;
+    }
+
+    /*    private void addFoodListener (){
         foodInputField.getDocument().addDocumentListener(new DocumentListener() {private void documentListenerHelper() {
             final LogFoodState currentState = logFoodViewModel.getState();
             logFoodViewModel.setState(currentState);
@@ -292,7 +308,13 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
 
             private void documentListenerHelper() {
                 final LogFoodState currentState = logFoodViewModel.getState();
-                currentState.setWeightNumber(Float.valueOf(foodAmountField.getText()));
+
+                float foodAmount = 0;
+                if (!foodAmountField.getText().isEmpty()) {
+                    foodAmount = Float.parseFloat(foodAmountField.getText());
+                }
+
+                currentState.setWeightNumber(foodAmount);
                 logFoodViewModel.setState(currentState);
             }
 
@@ -337,5 +359,25 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
                 documentListenerHelper();
             }
         });
+    }
+
+    @NotNull
+    private JPanel getLogoutPanel(MainViewModel mainViewModel) {
+        JPanel logoutPanel = new JPanel();
+        JButton logoutButton = new JButton("Log Out");
+        logoutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                logoutController.execute(mainViewModel.getState().getUsername());
+            }
+        });
+        logoutPanel.add(logoutButton);
+        return logoutPanel;
+    }
+
+    private void setFields() {
+        this.foodInputField.setText("");
+        this.foodAmountField.setText("");
+        this.unitInputField.setText("");
     }
 }

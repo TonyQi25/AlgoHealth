@@ -4,4 +4,6 @@ public interface SignupInputBoundary {
 
     void execute(SignupInputData signupInputData);
 
+    void switchToLogin();
+
 }

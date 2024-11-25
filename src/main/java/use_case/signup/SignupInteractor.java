@@ -1,5 +1,6 @@
 package use_case.signup;
 
+import data_access.GradeAccountDAO;
 import data.AccountInfo;
 import data.DayInfo;
 
@@ -9,18 +10,16 @@ import java.util.List;
 
 public class SignupInteractor implements SignupInputBoundary {
 
-    private final SignupDataAccessInterface signupDataAccessObject;
+    private final SignupDataAccessInterface signupDataAccessObject = new GradeAccountDAO();
     private final SignupOutputBoundary signupPresenter;
 
-    public SignupInteractor(SignupDataAccessInterface signupDataAccessObject,
-                            SignupOutputBoundary signupPresenter) {
-        this.signupDataAccessObject = signupDataAccessObject;
+    public SignupInteractor(SignupOutputBoundary signupPresenter) {
         this.signupPresenter = signupPresenter;
     }
 
     @Override
     public void execute(SignupInputData signupInputData) {
-        if (!signupDataAccessObject.existsByName(signupInputData.getUsername())) {
+        if (signupDataAccessObject.existsByName(signupInputData.getUsername())) {
             signupPresenter.prepareFailView("Username is taken.");
         } else if (signupInputData.getHeight() <= 0) {
             signupPresenter.prepareFailView("Invalid height.");
@@ -31,14 +30,22 @@ public class SignupInteractor implements SignupInputBoundary {
                     signupInputData.getHeight(), signupInputData.getWeight(), signupInputData.getDiet(),
                     signupInputData.getGoal(), signupInputData.getUsername(), signupInputData.getPassword(),
                     signupInputData.getDietaryRestrictions());
+
             List<DayInfo> newDays = new ArrayList<>();
             newDays.add(new DayInfo(LocalDate.now()));
             accountInfo.setDays(newDays);
-            signupDataAccessObject.put(accountInfo.getUsername(), accountInfo);
-            signupDataAccessObject.setCurrentUsername(accountInfo.getUsername());
 
-            SignupOutputData signupOutputData = new SignupOutputData(accountInfo.getUsername(), accountInfo.getDays());
+            signupDataAccessObject.createAccount(accountInfo.getUsername(), accountInfo.getPassword());
+            signupDataAccessObject.put(accountInfo.getUsername(), accountInfo.getPassword(), accountInfo);
+            signupDataAccessObject.setCurrentUsername(accountInfo.getUsername());    // currently does nothing
+
+            SignupOutputData signupOutputData = new SignupOutputData(
+                    accountInfo.getUsername(), accountInfo.getPassword(), accountInfo.getDays());
             signupPresenter.prepareSuccessView(signupOutputData);
         }
+    }
+
+    public void switchToLogin() {
+        signupPresenter.switchToLogin();
     }
 }
