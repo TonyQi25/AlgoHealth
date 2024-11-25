@@ -13,7 +13,7 @@ import use_case.signup.SignupDataAccessInterface;
 import java.io.IOException;
 import java.util.HashMap;
 
-public class FoodLoggingStorageDAO implements LogFoodDataAccessInterface, SignupDataAccessInterface {
+public class FoodLoggingStorageDAO implements LogFoodDataAccessInterface{
     private static final int SUCCESS_CODE = 200;
     private static final int CREDENTIAL_ERROR = 401;
     private static final String CONTENT_TYPE_LABEL = "Content-Type";
@@ -133,46 +133,5 @@ public class FoodLoggingStorageDAO implements LogFoodDataAccessInterface, Signup
         catch (IOException | JSONException ex) {
             throw new RuntimeException(ex);
         }
-    }
-
-    @Override
-    public AccountInfo get(String username) {
-        return null;
-    }
-
-    @Override
-    public void put(String username, AccountInfo accountInfo) {
-
-    }
-
-    // calls CheckIfUsernameExists method from grade api
-    @Override
-    public boolean existsByName(String username) {
-        final OkHttpClient client = new OkHttpClient().newBuilder()
-                .build();
-        final Request request = new Request.Builder()
-                .url(String.format("http://vm003.teach.cs.toronto.edu:20112/checkIfUserExists?username=%s", username))
-                .addHeader(CONTENT_TYPE_LABEL, CONTENT_TYPE_JSON)
-                .build();
-        try {
-            final Response response = client.newCall(request).execute();
-
-            final JSONObject responseBody = new JSONObject(response.body().string());
-
-            return responseBody.getInt(STATUS_CODE_LABEL) == SUCCESS_CODE;
-        }
-        catch (IOException | JSONException ex) {
-            throw new RuntimeException(ex);
-        }
-    }
-
-    @Override
-    public String getCurrentUsername() {
-        return null;
-    }
-
-    @Override
-    public void setCurrentUsername(String username) {
-
     }
 }
