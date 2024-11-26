@@ -19,14 +19,14 @@ public class HistoryController {
         this.historyUseCaseInteractor = historyUseCaseInteractor;
     }
 
-    public void execute(LocalDate viewingDate, int offset) {
+    public void execute(LocalDate viewingDate, int offset, String username) {
         final HistoryInputData input;
         if (offset == -1) {
-            input = new HistoryInputData(viewingDate.minusDays(1));
+            input = new HistoryInputData(viewingDate.minusDays(1), username);
         }   else if (offset == 1) {
-            input = new HistoryInputData(viewingDate.plusDays(1));
+            input = new HistoryInputData(viewingDate.plusDays(1), username);
         }   else {
-            input = new HistoryInputData(viewingDate);
+            input = new HistoryInputData(viewingDate, username);
         }
 
         historyUseCaseInteractor.execute(input);

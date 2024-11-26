@@ -8,12 +8,18 @@ import java.time.LocalDate;
 public class HistoryInputData {
 
     private final LocalDate date;
+    private final String username;
 
-    public HistoryInputData(LocalDate date) {
+    public HistoryInputData(LocalDate date, String username) {
         this.date = date;
+        this.username = username;
     }
 
     public LocalDate getDate() {
         return date;
+    }
+
+    public String getUsername() {
+        return username;
     }
 }

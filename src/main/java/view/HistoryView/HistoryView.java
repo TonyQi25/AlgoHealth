@@ -16,11 +16,11 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 public class HistoryView extends JPanel implements ActionListener, PropertyChangeListener {
 
     private final String viewName = "history";
+    private String username;
     private final HistoryViewModel historyViewModel;
 
     private JPanel headerPanel;
@@ -44,7 +44,7 @@ public class HistoryView extends JPanel implements ActionListener, PropertyChang
         resetDate();
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         build();
-        historyController.execute(viewingDate, 0);
+        historyController.execute(viewingDate, 0, username);
     }
 
 
@@ -82,7 +82,7 @@ public class HistoryView extends JPanel implements ActionListener, PropertyChang
         prevButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                historyController.execute(viewingDate, -1);
+                historyController.execute(viewingDate, -1, username);
             }
         });
         return prevButton;
@@ -99,7 +99,7 @@ public class HistoryView extends JPanel implements ActionListener, PropertyChang
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                historyController.execute(viewingDate, 1);
+                historyController.execute(viewingDate, 1, username);
             }
         });
         return nextButton;
@@ -170,6 +170,7 @@ public class HistoryView extends JPanel implements ActionListener, PropertyChang
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         final HistoryState state = (HistoryState) evt.getNewValue();
+        username = state.getUsername();
         if (state.getHistoryError().isEmpty()) {
             setFields(state);
         } else {
@@ -192,6 +193,7 @@ public class HistoryView extends JPanel implements ActionListener, PropertyChang
         dateLabel.setText("Date: " + state.getDate());
         viewingDate = state.getViewingDate();
         errorLabel.setText("");
+
 
     }
 }

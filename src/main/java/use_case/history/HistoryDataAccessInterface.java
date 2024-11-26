@@ -6,11 +6,7 @@ import java.time.LocalDate;
 
 public interface HistoryDataAccessInterface {
 
-    boolean nextDayExists(LocalDate date);
+    boolean DayExists(LocalDate date, String username);
 
-    boolean previousDayExists(LocalDate date);
-
-    DayInfo getNextDay(LocalDate date);
-
-    DayInfo getPreviousDay(LocalDate date);
+    DayInfo getDay(LocalDate date, String username);
 }

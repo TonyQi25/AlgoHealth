@@ -11,6 +11,7 @@ public class HistoryState {
     private String date;
     private LocalDate viewingDate;
     private String historyError;
+    private String username;
 
     public void setDayDetails(List<String> dayDetails) {
         this.dayDetails = dayDetails;
@@ -42,5 +43,13 @@ public class HistoryState {
 
     public String getHistoryError() {
         return historyError;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getUsername() {
+        return username;
     }
 }
