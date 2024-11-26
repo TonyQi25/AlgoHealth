@@ -1,7 +1,5 @@
 package interface_adapter.history;
 
-import data.DayInfo;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
