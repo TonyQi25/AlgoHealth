@@ -12,6 +12,8 @@ public class Main {
         final AppBuilder appBuilder = new AppBuilder();
         final JFrame application = appBuilder
                 .addMainView()
+                .addDisplayOptionsView()
+                .addDisplayOptionsUseCase()
                 .addDailyValueRecsUseCase()
                 .addFoodLoggingUseCase()
                 .build();
@@ -19,5 +21,4 @@ public class Main {
         application.pack();
         application.setVisible(true);
     }
-
 }

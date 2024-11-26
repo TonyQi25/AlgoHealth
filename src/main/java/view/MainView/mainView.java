@@ -1,7 +1,6 @@
 package view.MainView;
 
 
-import api.FoodDataCentralSearchDAO;
 import data_access.UserFoodSearchInMemoryDAO;
 import interface_adapter.daily_value_recs.DailyValueRecsController;
 import interface_adapter.daily_value_recs.MainViewModel;
@@ -18,10 +17,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.Collection;
-import java.util.HashMap;
-
-import static api.FoodDataCentralSearchDAO.genMyApiKey;
 
 public class mainView extends JPanel implements ActionListener, PropertyChangeListener {
 
@@ -99,7 +94,7 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
         });
 
         searchFoodButton.addActionListener(
-            new ActionListener() {
+/*            new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent evt) {
                     if (evt.getSource().equals(searchFoodButton)) {
@@ -110,8 +105,8 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
                                 "myFDCApiKey.txt"));
                         HashMap<String, Integer> foodMap = usdaObj.first10FoundationFoods(currentState
                                 .getFoodSearchInput());
-                        /*HashMap<String, Integer> foodMap = usdaObj.first10FoundationFoods(foodSearchDAO
-                                .getFoodSearchInput());*/
+                        *//*HashMap<String, Integer> foodMap = usdaObj.first10FoundationFoods(foodSearchDAO
+                                .getFoodSearchInput());*//*
                         Collection<String> foodMapKeys = foodMap.keySet();
                         String[] foodList = new String[foodMap.values().size()];
                         int i = 0;
@@ -122,8 +117,12 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
                         currentState.setFoodOptionsMap(foodMap);
                         // foodSearchDAO.setFoodOptionsMap(foodMap);
                         selectFromListPopup popUp = new selectFromListPopup(currentState,foodList);
-                        // String stringy = JOptionPane.showInputDialog(new JComboBox(foodList));
-
+                        // String stringy = JOptionPane.showInputDialog(new JComboBox(foodList));*/
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(searchFoodButton)) {
+                            displayFoodOptionsController.execute(searchFoodButton.getText());
                         }
                     }
                 });
@@ -365,5 +364,13 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
                 documentListenerHelper();
             }
         });
+    }
+
+    public DisplayFoodOptionsController getDisplayFoodOptionsController() {
+        return displayFoodOptionsController;
+    }
+
+    public void setDisplayFoodOptionsController(DisplayFoodOptionsController displayFoodOptionsController) {
+        this.displayFoodOptionsController = displayFoodOptionsController;
     }
 }
