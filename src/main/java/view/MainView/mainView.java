@@ -1,7 +1,7 @@
 package view.MainView;
 
 
-import data_access.UserFoodSearchInMemoryDAO;
+// import data_access.UserFoodSearchInMemoryDAO;
 import interface_adapter.daily_value_recs.DailyValueRecsController;
 import interface_adapter.daily_value_recs.MainViewModel;
 import interface_adapter.daily_value_recs.MainViewState;
@@ -49,7 +49,7 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
 
     private LogFoodController logFoodController;
 
-    private UserFoodSearchInMemoryDAO userFoodSearchInMemoryDAO = new UserFoodSearchInMemoryDAO();
+    // private UserFoodSearchInMemoryDAO userFoodSearchInMemoryDAO = new UserFoodSearchInMemoryDAO();
 
     public mainView(MainViewModel mainViewModel, LogFoodViewModel logFoodViewModel) {
 
@@ -122,7 +122,7 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
                     @Override
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(searchFoodButton)) {
-                            displayFoodOptionsController.execute(searchFoodButton.getText());
+                            displayFoodOptionsController.execute(foodInputField.getText());
                         }
                     }
                 });

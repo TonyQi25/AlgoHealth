@@ -15,6 +15,7 @@ public class Main {
                 .addDisplayOptionsView()
                 .addDisplayOptionsUseCase()
                 .addDailyValueRecsUseCase()
+                .selectFromFoodOptionsUseCase()
                 .addFoodLoggingUseCase()
                 .build();
 

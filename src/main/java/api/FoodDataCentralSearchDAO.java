@@ -6,6 +6,8 @@ import okhttp3.Response;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import use_case.display_food_options.DisplayFoodOptionsDataAccessInterface;
+import use_case.select_from_food_options.SelectSearchDataAccessInterface;
 
 
 import java.io.File;
@@ -16,7 +18,8 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 
-public class FoodDataCentralSearchDAO {
+public class FoodDataCentralSearchDAO implements DisplayFoodOptionsDataAccessInterface,
+        SelectSearchDataAccessInterface {
     public String apiKey;
 
     public FoodDataCentralSearchDAO(String apiKey) {
@@ -79,6 +82,46 @@ public class FoodDataCentralSearchDAO {
     }
 
     /**
+     * NEW VERSION NOV 27
+     * @param fdcId
+     * @param nutrientCodeArray
+     * @return
+     */
+    public JSONObject getFoodByFdcId(Integer fdcId,Integer[] nutrientCodeArray) {
+        String nutrientSpecifier = nutrientStringGen(nutrientCodeArray);
+        final OkHttpClient client = new OkHttpClient().newBuilder()
+                .build();
+        final Request request = new Request.Builder()
+                .url("https://api.nal.usda.gov/fdc/v1/food/" + String.valueOf(fdcId) + "?api_key=" + apiKey +
+                        "&format=abridged" + nutrientSpecifier)
+                .build();
+        try {
+            final Response response = client.newCall(request).execute();
+            final JSONObject responseBody = new JSONObject(response.body().string());
+            // JSONArray foodsArray = responseBody.getJSONArray("foods");
+            //JSONObject firstResult = (JSONObject) foodsArray.get(0);
+            return responseBody;
+        } catch (IOException | JSONException event) {
+            throw new RuntimeException(event);
+        }
+    }
+
+    /**
+     * Helper method for getFoodbyFdcId. Generates string to add to url for filtering results to just nutrients
+     * of food.
+     * @param nutrientCodes
+     * @return
+     */
+    public static String nutrientStringGen(Integer[] nutrientCodes) {
+        String accumulator = "";
+        for (Integer nutrientCode: nutrientCodes) {
+            StringBuilder baseString = new StringBuilder("&nutrients=" + String.valueOf(nutrientCode));
+            accumulator += baseString;
+        }
+        return accumulator;
+    }
+
+    /**
      * Returns up to 10 results from FDC Api based on query. All results correspond to foundation category foods.
      * @param food The food query.
      * @return A HashMap where the key, value pairs are description, fdcId.
@@ -109,7 +152,43 @@ public class FoodDataCentralSearchDAO {
         }
     }
 
+    public HashMap<String, Integer> first10FoundationFoods2(String food) {
+        final OkHttpClient client = new OkHttpClient().newBuilder()
+                .build();
+        final Request request = new Request.Builder()
+                .url("https://api.nal.usda.gov/fdc/v1/foods/search?api_key=" + apiKey + "&dataType="
+                        + "Foundation" + "&format=abridged" + "&query=" + food)
+                .build();
+
+        try {
+            final Response response = client.newCall(request).execute();
+            final JSONObject responseBody = new JSONObject(response.body().string());
+            JSONArray foodsArray = responseBody.getJSONArray("foods");
+            HashMap<String, Integer> description2fdcId = new HashMap<>();
+            int i = 0;
+            while (i < 10 && i < foodsArray.length()) {
+                String key1 = ((JSONObject) foodsArray.get(i)).getString("description");
+                Integer value1 = ((JSONObject) foodsArray.get(i)).getInt("fdcId");
+                description2fdcId.put(key1, value1);
+                i += 1;
+            }
+            return description2fdcId;
+        } catch (IOException | JSONException event) {
+            throw new RuntimeException(event);
+        }
+    }
+
     public static void main(String[] args) {
+        // Sanity check.
+        FoodDataCentralSearchDAO usdaObj = new FoodDataCentralSearchDAO(genMyApiKey("myFDCApiKey.txt"));
+        Integer[] array = {203,204,205,208, 268, 957, 958};
+        //JSONObject result = usdaObj.getFoodByFdcId(173410, array);
+        JSONObject result = usdaObj.getFoodByFdcId(2514744, array);
+        int i = 0;
+        String stringResult = nutrientStringGen(array);
+        int y = 7;
+        /*HashMap<String, Integer> result2 = usdaObj.first10FoundationFoods2("beef");
+        int jh = 9;*/
     }
 }
 
