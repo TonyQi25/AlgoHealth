@@ -11,6 +11,7 @@ import java.beans.PropertyChangeListener;
 
 public class RemoveFoodView extends JPanel implements ActionListener, PropertyChangeListener {
 
+    private final String viewName = "remove food";
     private JLabel responseLabel;
 
     private JButton returnToHistoryButton;
@@ -21,6 +22,22 @@ public class RemoveFoodView extends JPanel implements ActionListener, PropertyCh
     public RemoveFoodView(RemoveFoodViewModel viewModel, RemoveFoodController controller) {
         this.viewModel = viewModel;
         this.controller = controller;
+        this.responseLabel = new JLabel();
+
+    }
+
+    private JButton returnButton() {
+        JButton returning = new JButton("Return");
+        returning.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+
+        });
+
+        return returning;
     }
 
     @Override
@@ -31,5 +48,9 @@ public class RemoveFoodView extends JPanel implements ActionListener, PropertyCh
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
 
+    }
+
+    public String getViewName() {
+        return viewName;
     }
 }

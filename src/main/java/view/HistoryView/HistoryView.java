@@ -1,12 +1,16 @@
 package view.HistoryView;
 
 import app.HistoryUseCaseFactory;
+import app.RemoveFoodUseCaseFactory;
 import data_access.TempHistoryDAO;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.history.HistoryController;
 import interface_adapter.history.HistoryState;
 import interface_adapter.history.HistoryViewModel;
+import interface_adapter.remove_food.RemoveFoodController;
+import interface_adapter.remove_food.RemoveFoodViewModel;
 import view.ViewManager;
+import view.removeFoodView.RemoveFoodView;
 
 import java.util.List;
 import javax.swing.*;
@@ -34,11 +38,15 @@ public class HistoryView extends JPanel implements ActionListener, PropertyChang
     private JButton prevButton;
     private JButton nextButton;
 
+    private JButton removeFoodButton;
+
+    //private RemoveFoodController removeFoodController;
     private HistoryController historyController;
 
     public HistoryView(HistoryViewModel viewModel, HistoryController historyController) {
         this.historyViewModel = viewModel;
         this.historyController = historyController;
+        //this.removeFoodController = removeFoodController;
         this.historyViewModel.addPropertyChangeListener(this);
         this.viewingDate = LocalDate.now();
 
@@ -64,6 +72,21 @@ public class HistoryView extends JPanel implements ActionListener, PropertyChang
 
     public JButton getPrevDayButton() {
         return createPrevDayButton();
+    }
+
+    private JButton createRemoveFoodButton() {
+        removeFoodButton = new JButton("Remove Food");
+        removeFoodButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        removeFoodButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // create Remove state and send it in Viewmodel manager (but there is no manager here)
+                // or use Remove controller? to have exectue?
+            }
+        });
+
+        return removeFoodButton;
     }
 
     private JButton createPrevDayButton() {
@@ -102,6 +125,8 @@ public class HistoryView extends JPanel implements ActionListener, PropertyChang
         scrollPane.setMaximumSize(new Dimension(600, 400));
         scrollPane.setMinimumSize(new Dimension(600, 400));
         dataPanel.add(scrollPane);
+        dataPanel.setLayout(new BoxLayout(dataPanel, BoxLayout.Y_AXIS));
+        dataPanel.add(createRemoveFoodButton());
         this.add(dataPanel);
     }
 
@@ -138,11 +163,16 @@ public class HistoryView extends JPanel implements ActionListener, PropertyChang
 
 
         final HistoryViewModel historyViewModel = new HistoryViewModel();
+        final RemoveFoodViewModel removeFoodViewModel = new RemoveFoodViewModel();
+
         final TempHistoryDAO historyDAO = new TempHistoryDAO();
+        final TempHistoryDAO removeFoodDAO = new TempHistoryDAO(); // have its own
 
         final HistoryView historyView = HistoryUseCaseFactory.create(viewManagerModel, historyViewModel, historyDAO);
+        final RemoveFoodView removeFoodView = RemoveFoodUseCaseFactory.create(viewManagerModel, removeFoodViewModel, removeFoodDAO);
 
         views.add(historyView, historyView.getViewName());
+        views.add(removeFoodView, removeFoodView.getViewName());
 
         viewManagerModel.setState(historyView.getViewName());
         viewManagerModel.firePropertyChanged();
