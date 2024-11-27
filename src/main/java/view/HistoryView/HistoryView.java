@@ -40,20 +40,11 @@ public class HistoryView extends JPanel implements ActionListener, PropertyChang
         this.historyViewModel = viewModel;
         this.historyController = historyController;
         this.historyViewModel.addPropertyChangeListener(this);
+        this.viewingDate = LocalDate.now();
 
-        resetDate();
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         build();
         historyController.execute(viewingDate, 0, username);
-    }
-
-
-    public void resetDate() {
-        this.viewingDate = LocalDate.now();
-    }
-
-    public void loadInfo(List<String> info) {
-
     }
 
     public void setHeaderPanel() {
@@ -61,21 +52,21 @@ public class HistoryView extends JPanel implements ActionListener, PropertyChang
         dateLabel = new JLabel("Date: " + this.viewingDate.toString());
         errorLabel = new JLabel("");
         headerPanel.setLayout(new BoxLayout(headerPanel, BoxLayout.X_AXIS));
-        headerPanel.add(getPrevDayButton(viewingDate.minusDays(1)));
+        headerPanel.add(getPrevDayButton());
         this.add(errorLabel);
         headerPanel.add(dateLabel);
-        headerPanel.add(getNextDayButton(viewingDate.plusDays(1)));
+        headerPanel.add(getNextDayButton());
         headerPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
         headerPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         this.add(headerPanel);
 
     }
 
-    public JButton getPrevDayButton(LocalDate date) {
-        return createPrevDayButton(date);
+    public JButton getPrevDayButton() {
+        return createPrevDayButton();
     }
 
-    private JButton createPrevDayButton(LocalDate date) {
+    private JButton createPrevDayButton() {
         // calls to controller
         prevButton = new JButton("Previous Day");
         prevButton.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -88,11 +79,11 @@ public class HistoryView extends JPanel implements ActionListener, PropertyChang
         return prevButton;
     }
 
-    public JButton getNextDayButton(LocalDate date) {
-        return createNextDayButton(date);
+    public JButton getNextDayButton() {
+        return createNextDayButton();
     }
 
-    private JButton createNextDayButton(LocalDate date) {
+    private JButton createNextDayButton() {
         nextButton = new JButton("Next Day");
         nextButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         nextButton.addActionListener(new ActionListener() {
