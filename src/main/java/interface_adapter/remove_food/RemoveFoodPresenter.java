@@ -19,7 +19,19 @@ public class RemoveFoodPresenter implements RemoveFoodOutputBoundary {
 
     @Override
     public void prepareSuccessView(RemoveFoodOutputData data) {
+        RemoveFoodState state = new RemoveFoodState();
+        state.setRemoveFoodError("");
+        state.setOutputMessage("Deletion Successful");
+        state.setUsername(data.getUsername());
+        state.setViewingDate(data.getViewingDate());
 
+        this.viewModel.setState(state);
+        this.viewModel.firePropertyChanged();
+
+        this.viewManagerModel.setState(viewModel.getViewName());
+        this.viewManagerModel.firePropertyChanged();
+
+        System.out.println("firePropertyChanged called");
     }
 
     @Override

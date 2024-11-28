@@ -1,6 +1,8 @@
 package view.removeFoodView;
 
+import interface_adapter.history.HistoryState;
 import interface_adapter.remove_food.RemoveFoodController;
+import interface_adapter.remove_food.RemoveFoodState;
 import interface_adapter.remove_food.RemoveFoodViewModel;
 
 import javax.swing.*;
@@ -33,6 +35,7 @@ public class RemoveFoodView extends JPanel implements ActionListener, PropertyCh
             @Override
             public void actionPerformed(ActionEvent e) {
 
+
             }
 
         });
@@ -47,7 +50,12 @@ public class RemoveFoodView extends JPanel implements ActionListener, PropertyCh
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-
+        final RemoveFoodState state = (RemoveFoodState) evt.getNewValue();
+        if (state.getRemoveFoodError().isEmpty()) {
+            responseLabel.setText(state.getOutputMessage());
+        }   else {
+            responseLabel.setText(state.getRemoveFoodError());
+        }
     }
 
     public String getViewName() {

@@ -9,12 +9,12 @@ import java.time.LocalDate;
 public class TempHistoryDAO implements HistoryDataAccessInterface, RemoveFoodDataAccessInterface {
 
     @Override
-    public boolean DayExists(LocalDate date, String username) {
+    public boolean DayExists(String date, String username) {
         return false;
     }
 
     @Override
-    public DayInfo getDay(LocalDate date, String username) {
+    public DayInfo getDay(String date, String username) {
         return null;
     }
 

@@ -1,19 +1,27 @@
 package view.HistoryView;
 
-import app.HistoryUseCaseFactory;
-import app.RemoveFoodUseCaseFactory;
 import data_access.TempHistoryDAO;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.history.HistoryController;
+import interface_adapter.history.HistoryPresenter;
 import interface_adapter.history.HistoryState;
 import interface_adapter.history.HistoryViewModel;
 import interface_adapter.remove_food.RemoveFoodController;
+import interface_adapter.remove_food.RemoveFoodPresenter;
 import interface_adapter.remove_food.RemoveFoodViewModel;
+import use_case.history.HistoryInputBoundary;
+import use_case.history.HistoryInteractor;
+import use_case.history.HistoryOutputBoundary;
+import use_case.removeFood.RemoveFoodInputBoundary;
+import use_case.removeFood.RemoveFoodInteractor;
+import use_case.removeFood.RemoveFoodOutputBoundary;
 import view.ViewManager;
 import view.removeFoodView.RemoveFoodView;
 
 import java.util.List;
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,6 +34,7 @@ public class HistoryView extends JPanel implements ActionListener, PropertyChang
     private final String viewName = "history";
     private String username;
     private final HistoryViewModel historyViewModel;
+    private String highlightedFood;
 
     private JPanel headerPanel;
     private JPanel dataPanel;
@@ -83,6 +92,25 @@ public class HistoryView extends JPanel implements ActionListener, PropertyChang
             public void actionPerformed(ActionEvent e) {
                 // create Remove state and send it in Viewmodel manager (but there is no manager here)
                 // or use Remove controller? to have exectue?
+
+                // e.g. "Apple: ###.##(g/ml), ...
+                String name;
+                double weight;
+
+                String input = list.getSelectedValue();
+
+                //tester
+                input = "Apple: 323.43(g/ml)";
+                if (input != null) {
+                    String[] split = input.split("(:)|(,)|(\\()");
+                    name = split[0];
+                    weight = Double.parseDouble(split[1]);
+                } else {
+                    name = "";
+                    weight = 0.0;
+                }
+
+                historyController.removeHighlightedFood(name, weight, username, viewingDate.toString());
             }
         });
 
@@ -136,6 +164,23 @@ public class HistoryView extends JPanel implements ActionListener, PropertyChang
 
         list = new JList<>(listModel);
         list.setFixedCellWidth(300);
+
+        list.addListSelectionListener(new ListSelectionListener() {
+
+            // dont even need to always check
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                String input = list.getSelectedValue();
+                if (input != null) {
+                    String[] split = input.split(":");
+                    highlightedFood = split[0];
+                    System.out.println(highlightedFood);
+                } else {
+                    highlightedFood = "";
+                }
+
+            }
+        });
         return list;
     }
 
@@ -168,8 +213,20 @@ public class HistoryView extends JPanel implements ActionListener, PropertyChang
         final TempHistoryDAO historyDAO = new TempHistoryDAO();
         final TempHistoryDAO removeFoodDAO = new TempHistoryDAO(); // have its own
 
-        final HistoryView historyView = HistoryUseCaseFactory.create(viewManagerModel, historyViewModel, historyDAO);
-        final RemoveFoodView removeFoodView = RemoveFoodUseCaseFactory.create(viewManagerModel, removeFoodViewModel, removeFoodDAO);
+        //final HistoryView historyView = HistoryUseCaseFactory.create(viewManagerModel, historyViewModel, historyDAO);
+        //final RemoveFoodView removeFoodView = RemoveFoodUseCaseFactory.create(viewManagerModel, removeFoodViewModel, removeFoodDAO);
+
+        final HistoryOutputBoundary historyOutputBoundary = new HistoryPresenter(historyViewModel, removeFoodViewModel, viewManagerModel);
+        final HistoryInputBoundary historyInteractor = new HistoryInteractor(historyOutputBoundary, historyDAO);
+        final HistoryController historyController = new HistoryController(historyInteractor);
+        HistoryView historyView = new HistoryView(historyViewModel, historyController);
+
+        final RemoveFoodOutputBoundary removeFoodOutputBoundary = new RemoveFoodPresenter(removeFoodViewModel, viewManagerModel);
+        final RemoveFoodInputBoundary removeFoodInteractor = new RemoveFoodInteractor(removeFoodOutputBoundary, historyDAO);
+        final RemoveFoodController removeFoodController = new RemoveFoodController(removeFoodInteractor);
+        RemoveFoodView removeFoodView = new RemoveFoodView(removeFoodViewModel, removeFoodController);
+
+        //========================================================================================
 
         views.add(historyView, historyView.getViewName());
         views.add(removeFoodView, removeFoodView.getViewName());

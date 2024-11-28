@@ -2,6 +2,7 @@ package use_case.history;
 
 import data.DayInfo;
 import data.Food;
+import use_case.removeFood.RemoveFoodInputData;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -70,5 +71,9 @@ public class HistoryInteractor implements HistoryInputBoundary{
             System.out.println("Day not found!");
             historyOutputBoundary.prepareFailView("Day Not Found");
         }
+    }
+
+    public void removeHighlightedFood (RemoveFoodInputData input) {
+        historyOutputBoundary.prepareRemoveFoodView(input);
     }
 }

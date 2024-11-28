@@ -1,4 +1,59 @@
 package interface_adapter.remove_food;
 
 public class RemoveFoodState {
+
+    private String foodName;
+    private double weight;
+    private String outputMessage;
+    private String removeFoodError;
+    private String viewingDate;
+    private String username;
+
+    public void setOutputMessage(String outputMessage) {
+        this.outputMessage = outputMessage;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setRemoveFoodError(String removeFoodError) {
+        this.removeFoodError = removeFoodError;
+    }
+
+    public void setViewingDate(String viewingDate) {
+        this.viewingDate = viewingDate;
+    }
+
+    public void setFoodName(String foodName) {
+        this.foodName = foodName;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
+    public double getWeight() {
+        return weight;
+    }
+
+    public String getFoodName() {
+        return foodName;
+    }
+
+    public String getRemoveFoodError() {
+        return removeFoodError;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getViewingDate() {
+        return viewingDate;
+    }
+
+    public String getOutputMessage() {
+        return outputMessage;
+    }
 }

@@ -2,6 +2,7 @@ package interface_adapter.history;
 
 import use_case.history.HistoryInputBoundary;
 import use_case.history.HistoryInputData;
+import use_case.removeFood.RemoveFoodInputData;
 
 import java.time.LocalDate;
 
@@ -24,5 +25,11 @@ public class HistoryController {
         }
 
         historyUseCaseInteractor.execute(input);
+    }
+
+    public void removeHighlightedFood(String foodName, double foodWeight, String username, String viewingDate) {
+        final RemoveFoodInputData input = new RemoveFoodInputData(foodName, foodWeight, username, viewingDate);
+
+        historyUseCaseInteractor.removeHighlightedFood(input);
     }
 }
