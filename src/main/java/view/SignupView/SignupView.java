@@ -4,9 +4,9 @@ package view.SignupView;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupState;
 import interface_adapter.signup.SignupViewModel;
-import view.Helpers.DOBSelectorListener;
-import view.Helpers.NumericFilter;
-import view.Helpers.ViewHelpers;
+import helpers.DOBSelectorListener;
+import helpers.NumericFilter;
+import helpers.ViewHelpers;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;

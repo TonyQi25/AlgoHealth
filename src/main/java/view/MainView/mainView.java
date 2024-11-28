@@ -9,10 +9,8 @@ import interface_adapter.daily_value_recs.MainViewState;
 import interface_adapter.food_logging.LogFoodController;
 import interface_adapter.food_logging.LogFoodState;
 import interface_adapter.food_logging.LogFoodViewModel;
-import interface_adapter.login.LoginViewModel;
 import interface_adapter.logout.LogoutController;
 import org.jetbrains.annotations.NotNull;
-import view.Helpers.ViewHelpers;
 //import interface_adapter.display_food_options.DisplayFoodOptionsController;
 
 import javax.swing.*;

@@ -108,6 +108,10 @@ public class AccountInfo {
         this.dietaryRestrictions = dietaryRestrictions;
     }
 
+    public void addToDays(DayInfo days) {
+        this.days.add(days);
+    }
+
     public String toString() {
         JSONObject accountStringObject = new JSONObject();
 
@@ -118,6 +122,7 @@ public class AccountInfo {
         accountStringObject.put("goal", this.getGoal());
         accountStringObject.put("username", this.getUsername());
         accountStringObject.put("password", this.getPassword());
+        accountStringObject.put("days", this.getDays());
         accountStringObject.put("restrictions", this.getDietaryRestrictions());
 
         return accountStringObject.toString();
@@ -150,6 +155,12 @@ public class AccountInfo {
         newAccount.setGoal((String) accountObject.get("goal"));
         newAccount.setUsername((String) accountObject.get("username"));
         newAccount.setPassword((String) accountObject.get("password"));
+
+        JSONArray daysArray = new JSONArray((String) accountObject.get("days"));
+        for (Object day : daysArray) {
+            DayInfo newDay = DayInfo.fromString(day.toString());
+            newAccount.addToDays(newDay);
+        }
 
         // converting from list to array to list??? probably bad
         JSONArray restrictionsJSONArray = (JSONArray) accountObject.get("restrictions");

@@ -1,14 +1,10 @@
-package api;
+package helpers;
 
 import data.AccountInfo;
 import okhttp3.*;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Base64;
 
 public class GradeHelper {
 

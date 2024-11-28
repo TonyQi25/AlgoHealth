@@ -3,7 +3,7 @@ package view.LoginView;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginState;
 import interface_adapter.login.LoginViewModel;
-import view.Helpers.ViewHelpers;
+import helpers.ViewHelpers;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;

@@ -1,8 +1,7 @@
-package view.Helpers;
+package helpers;
 
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginViewModel;
-import interface_adapter.logout.LogoutController;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupViewModel;
 import org.jetbrains.annotations.NotNull;
@@ -12,9 +11,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeListener;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;

@@ -1,14 +1,10 @@
 package data_access;
 
-import api.GradeHelper;
+import helpers.GradeHelper;
 import data.AccountInfo;
-import okhttp3.*;
-import org.json.JSONObject;
 import use_case.login.LoginDataAccessInterface;
 import use_case.logout.LogoutDataAccessInterface;
 import use_case.signup.SignupDataAccessInterface;
-
-import java.io.IOException;
 
 public class GradeAccountDAO implements SignupDataAccessInterface, LoginDataAccessInterface,
         LogoutDataAccessInterface {
