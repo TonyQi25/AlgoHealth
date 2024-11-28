@@ -167,6 +167,14 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
         // jp4.add(dailyValueFatText);
         jp4.add(progressBarFat);
 
+      /*  JPanel progressPanel = new JPanel();
+        progressPanel.setLayout( new BoxLayout(progressPanel, BoxLayout.Y_AXIS));
+        progressPanel.add(progressBarCalories);
+        progressPanel.add(progressBarProtein);
+        progressPanel.add(progressBarCarbs);
+        progressPanel.add(progressBarFat);*/
+
+
         JButton getDVrecs = new JButton("Daily Value Assessment");
 
         getDVrecs.addActionListener(
@@ -208,6 +216,12 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
         panel2.add(jp4);
         panel2.add(getDVrecs);
 
+        /*JPanel totalsAndProgressGestaltPanel = new JPanel();
+        totalsAndProgressGestaltPanel.add(panel2);
+        totalsAndProgressGestaltPanel.add(progressPanel);*/
+
+
+
         //Food history panel.
         JPanel fhPanel = new JPanel();
         fhPanel.setLayout(new BoxLayout(fhPanel, BoxLayout.Y_AXIS));
@@ -218,11 +232,13 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
         sbsPanel.add(fhPanel);
         sbsPanel.add(panel2);
 
+
         // Add to main panel.
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         mainPanel.add(panel1);
         mainPanel.add(sbsPanel);
+        //mainPanel.add(totalsAndProgressGestaltPanel);
 
         this.add(mainPanel);
 
