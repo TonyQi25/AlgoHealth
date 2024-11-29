@@ -54,6 +54,51 @@ public class GradeAccountDAO implements SignupDataAccessInterface, LoginDataAcce
 
     }
 
+    public boolean FoodExists(String date, String username){
+
+    }
+
+    //saves the food information for current day
+    @Override
+    public void saveFood(String username, String password, Food foodIntake){
+        AccountInfo user = GradeHelper.getUser(username);
+        List<DayInfo> days = user.getDays();
+        boolean dayInMemory = false;
+        for (DayInfo day: days){
+            if (day.getDate().equals(LocalDate.now())){
+                List<Food> currFoodLog = day.getFoodLog();
+                List<Food> newFoodLog = new ArrayList<>();
+                for (Food dayFood: currFoodLog){
+                    newFoodLog.add(dayFood);
+                }
+                newFoodLog.add(foodIntake);
+                day.setFoodLog(newFoodLog);
+                dayInMemory = true;
+            }
+        }
+        if (dayInMemory == false){
+            DayInfo newDay = new DayInfo(LocalDate.now());
+            ArrayList<Food> newDayFoodLog = new ArrayList<>();
+            newDayFoodLog.add(foodIntake);
+            newDay.setFoodLog(newDayFoodLog);
+        }
+        GradeHelper.setUserInfo(user.getUsername(), user.getPassword(), user);
+    }
+
+    //loads the food information for requested date
+    @Override
+    public List<Food> loadFoodInfo(String username, LocalDate date){
+        AccountInfo user = GradeHelper.getUser(username);
+        List<DayInfo> days = user.getDays();
+        boolean dayInMemory = false;
+        for (DayInfo day: days){
+            if (day.getDate().equals(LocalDate.now())){
+                return day.getFoodLog();
+            }
+        }
+        return null;
+    }
+
     //saves the food information for current day
     @Override
     public void saveFood(String username, String password, Food foodIntake){
