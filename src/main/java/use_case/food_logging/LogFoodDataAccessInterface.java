@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface LogFoodDataAccessInterface {
-    void saveFood (String userName, String password, Food foodIntake);
+    void saveFood (String username, String password, Food foodIntake, Integer fdcID);
 
     List<Food> loadFoodInfo(String userName, LocalDate date);
 }

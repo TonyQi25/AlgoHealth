@@ -19,6 +19,7 @@ import interface_adapter.signup.SignupViewModel;
 import use_case.daily_value_recs.DailyValueRecsInputBoundary;
 import use_case.daily_value_recs.DailyValueRecsInteractor;
 import use_case.daily_value_recs.DailyValueRecsOutputBoundary;
+import use_case.food_logging.LogFoodDataAccessInterface;
 import use_case.food_logging.LogFoodInputBoundary;
 import use_case.food_logging.LogFoodInteractor;
 import use_case.food_logging.LogFoodOutputBoundary;
@@ -128,7 +129,9 @@ public class AppBuilder {
     public AppBuilder addFoodLoggingUseCase(){
         final LogFoodOutputBoundary logFoodOutputBoundary = new LogFoodPresenter(logFoodViewModel, mainViewModel,
                 viewManagerModel);
-        final LogFoodInputBoundary logFoodInteractor = new LogFoodInteractor(logFoodOutputBoundary);
+        final LogFoodDataAccessInterface logFoodDataAccessInterface = new GradeAccountDAO();
+        final LogFoodInputBoundary logFoodInteractor = new LogFoodInteractor(logFoodDataAccessInterface,
+                logFoodOutputBoundary);
         final LogFoodController logFoodController = new LogFoodController(logFoodInteractor);
         mainView.setLogFoodController(logFoodController);
         return this;

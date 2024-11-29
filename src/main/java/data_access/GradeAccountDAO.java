@@ -54,35 +54,33 @@ public class GradeAccountDAO implements SignupDataAccessInterface, LoginDataAcce
 
     }
 
-    public boolean FoodExists(String date, String username){
-
+    public Integer FoodExists(String date, String username, String foodName){
+        JSONObject jsonFoodLog = GradeHelper.getJSONFoodLog(username);
+        //String[] fdcIDs = JSONObject.getNames(jsonFoodLog);
+        //for (String fdcID: fdcIDs){
+            //JSONObject foodSearchResult = fdcSearchDAO.getFoodByFdcId(Integer.valueOf(fdcID));
+            //Food foodItem = makeFood.createFood(foodSearchResult);
+            //if (foodItem.getDescription().equals(foodName){
+            //return Integer.valueOf(fdcID);
+        //}
+        return null;
     }
 
     //saves the food information for current day
     @Override
-    public void saveFood(String username, String password, Food foodIntake){
+    public void saveFood(String username, String password, Food foodIntake, Integer fdcID){
         AccountInfo user = GradeHelper.getUser(username);
-        List<DayInfo> days = user.getDays();
-        boolean dayInMemory = false;
-        for (DayInfo day: days){
-            if (day.getDate().equals(LocalDate.now())){
-                List<Food> currFoodLog = day.getFoodLog();
-                List<Food> newFoodLog = new ArrayList<>();
-                for (Food dayFood: currFoodLog){
-                    newFoodLog.add(dayFood);
-                }
-                newFoodLog.add(foodIntake);
-                day.setFoodLog(newFoodLog);
-                dayInMemory = true;
-            }
+        List<DayInfo> dayInfos = user.getDays();
+        DayInfo currDay = dayInfos.get(0);
+        JSONObject currFoodLog = GradeHelper.getJSONFoodLog(username);
+        JSONObject newFoodLog = GradeHelper.copyJSONFoodLog(currFoodLog);
+        Integer foodExist = this.FoodExists(LocalDate.now().toString(), username, foodIntake.getDescription());
+        float newWeight = foodIntake.getWeight();
+        if (foodExist != null){
+            newWeight = currFoodLog.getFloat(Integer.toString(foodExist));
         }
-        if (dayInMemory == false){
-            DayInfo newDay = new DayInfo(LocalDate.now());
-            ArrayList<Food> newDayFoodLog = new ArrayList<>();
-            newDayFoodLog.add(foodIntake);
-            newDay.setFoodLog(newDayFoodLog);
-        }
-        GradeHelper.setUserInfo(user.getUsername(), user.getPassword(), user);
+        newFoodLog.put(Integer.toString(fdcID), newWeight);
+        GradeHelper.setUserInfo(username, password, user, newFoodLog);
     }
 
     //loads the food information for requested date
@@ -90,53 +88,7 @@ public class GradeAccountDAO implements SignupDataAccessInterface, LoginDataAcce
     public List<Food> loadFoodInfo(String username, LocalDate date){
         AccountInfo user = GradeHelper.getUser(username);
         List<DayInfo> days = user.getDays();
-        boolean dayInMemory = false;
-        for (DayInfo day: days){
-            if (day.getDate().equals(LocalDate.now())){
-                return day.getFoodLog();
-            }
-        }
-        return null;
-    }
-
-    //saves the food information for current day
-    @Override
-    public void saveFood(String username, String password, Food foodIntake){
-        AccountInfo user = GradeHelper.getUser(username);
-        List<DayInfo> days = user.getDays();
-        boolean dayInMemory = false;
-        for (DayInfo day: days){
-            if (day.getDate().equals(LocalDate.now())){
-                List<Food> currFoodLog = day.getFoodLog();
-                List<Food> newFoodLog = new ArrayList<>();
-                for (Food dayFood: currFoodLog){
-                    newFoodLog.add(dayFood);
-                }
-                newFoodLog.add(foodIntake);
-                day.setFoodLog(newFoodLog);
-                dayInMemory = true;
-            }
-        }
-        if (dayInMemory == false){
-            DayInfo newDay = new DayInfo(LocalDate.now());
-            ArrayList<Food> newDayFoodLog = new ArrayList<>();
-            newDayFoodLog.add(foodIntake);
-            newDay.setFoodLog(newDayFoodLog);
-        }
-        GradeHelper.setUserInfo(user.getUsername(), user.getPassword(), user);
-    }
-
-    //loads the food information for requested date
-    @Override
-    public List<Food> loadFoodInfo(String username, LocalDate date){
-        AccountInfo user = GradeHelper.getUser(username);
-        List<DayInfo> days = user.getDays();
-        boolean dayInMemory = false;
-        for (DayInfo day: days){
-            if (day.getDate().equals(LocalDate.now())){
-                return day.getFoodLog();
-            }
-        }
-        return null;
+        DayInfo currDay = days.get(0);
+        return currDay.getFoodLog();
     }
 }
