@@ -11,12 +11,19 @@ import interface_adapter.food_logging.LogFoodViewModel;
 import interface_adapter.display_food_options.DisplayFoodOptionsController;
 
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+
+import static java.awt.Font.MONOSPACED;
+import static java.awt.Font.SANS_SERIF;
+import static javax.swing.SwingConstants.LEFT;
+import static view.MainView.ViewFormattingUtility.truncateString2Places;
 
 public class mainView extends JPanel implements ActionListener, PropertyChangeListener {
 
@@ -35,14 +42,14 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
     private JLabel dailyValueFatText = new JLabel();
 
 
-    private JLabel totalCalories = new JLabel("Total calories: 0Kcal");
-    private JLabel totalProtein = new JLabel("Total protein: 0g");
-    private JLabel totalCarbs = new JLabel("Total carbohydrates: 0g");
-    private JLabel totalFat = new JLabel("Total fat: 0g");
+    private JLabel totalCalories = new JLabel("0Kcal");
+    private JLabel totalProtein = new JLabel("0g");
+    private JLabel totalCarbs = new JLabel("0g");
+    private JLabel totalFat = new JLabel("0g");
 
     private JTextField foodInputField = new JTextField(15);
-    private JTextField foodAmountField = new JTextField(15);
-    private JTextField unitInputField = new JTextField(15);
+    private JTextField foodAmountField = new JTextField(5);
+    private JTextField unitInputField = new JTextField(5);
 
     private DailyValueRecsController dailyValueRecsController;
     private DisplayFoodOptionsController displayFoodOptionsController;
@@ -61,6 +68,10 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
         // Input fields and labels part.
         JLabel enterFood = new JLabel("Enter food:");
         JTextField foodInputField = new JTextField(15);
+
+        JLabel brandLabel = new JLabel("Brand (optional): ");
+        //brandLabel.setFont(Font.getFont(SANS_SERIF));
+        JTextField brandInputField = new JTextField(10);
 
         JLabel enterAmountNumber = new JLabel("Enter weight number:");
         JLabel enterAmountUnits = new JLabel("Enter weight units:");
@@ -121,6 +132,7 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent evt) {
+                        // Change reading direct from field to mediated through a view model.
                         if (evt.getSource().equals(searchFoodButton)) {
                             displayFoodOptionsController.execute(foodInputField.getText());
                         }
@@ -167,6 +179,8 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
         // jp4.add(dailyValueFatText);
         jp4.add(progressBarFat);
 
+        JPanel masterTotalsPanel = new JPanel();
+
       /*  JPanel progressPanel = new JPanel();
         progressPanel.setLayout( new BoxLayout(progressPanel, BoxLayout.Y_AXIS));
         progressPanel.add(progressBarCalories);
@@ -196,11 +210,36 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
                 });
 
         // Input and submit panel.
+        JPanel searchPanel = new JPanel();
+        searchPanel.setBorder(BorderFactory.createRaisedBevelBorder());
+
+        searchPanel.add(enterFood);
+        //panel1.add(enterAmountNumber);
+
+        searchPanel.add(foodInputField);
+
+
+        /*searchPanel.add(brandLabel);
+        searchPanel.add(brandInputField);*/
+
+        searchPanel.add(searchFoodButton);
+
+
+
         JPanel panel1 = new JPanel();
-        panel1.add(enterFood);
-        panel1.add(enterAmountNumber);
+        panel1.setBorder(BorderFactory.createRaisedBevelBorder());
+/*        panel1.add(enterFood);
+        //panel1.add(enterAmountNumber);
+
         panel1.add(foodInputField);
-        panel1.add(searchFoodButton);
+
+
+        panel1.add(brandLabel);
+        panel1.add(brandInputField);
+
+        panel1.add(searchFoodButton);*/
+
+
         panel1.add(enterAmountNumber);
         panel1.add(foodAmountField);
         panel1.add(enterAmountUnits);
@@ -209,12 +248,25 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
 
         // Macros panel.
         JPanel panel2 = new JPanel();
-        panel2.setLayout(new BoxLayout(panel2, BoxLayout.Y_AXIS));
+        panel2.setBorder(BorderFactory.createLineBorder(Color.blue));
+        // panel2.setLayout(new GridLayout(3, 1));
+        BoxLayout layout = new BoxLayout(panel2, BoxLayout.Y_AXIS);
+        panel2.setLayout(layout);
+/*        jp1.setAlignmentX(LEFT);
+        jp2.setAlignmentX(LEFT);
+        jp3.setAlignmentX(LEFT);
+        jp4.setAlignmentX(LEFT);*/
         panel2.add(jp1);
         panel2.add(jp2);
         panel2.add(jp3);
         panel2.add(jp4);
         panel2.add(getDVrecs);
+  /*      GroupLayout layout = new GroupLayout(panel2);
+        panel2.setLayout(layout);
+        layout.setHorizontalGroup(layout.createSequentialGroup()
+                .addComponent(jp1));*/
+
+
 
         /*JPanel totalsAndProgressGestaltPanel = new JPanel();
         totalsAndProgressGestaltPanel.add(panel2);
@@ -228,17 +280,58 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
         fhPanel.add(new JLabel("Day's Food History"));
 
         // Panel with history and macros side by side.
-        JPanel sbsPanel = new JPanel();
-        sbsPanel.add(fhPanel);
-        sbsPanel.add(panel2);
+        //JPanel sbsPanel = new JPanel();
+        //sbsPanel.add(fhPanel);
+        //sbsPanel.add(panel2);
 
+        JPanel searchAndWeightSBSPanel = new JPanel();
+        searchAndWeightSBSPanel.add(searchPanel);
+        searchAndWeightSBSPanel.add(panel1);
 
         // Add to main panel.
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-        mainPanel.add(panel1);
-        mainPanel.add(sbsPanel);
+        //mainPanel.add(panel1);
+        mainPanel.add(searchAndWeightSBSPanel);
+        //mainPanel.add(sbsPanel);
         //mainPanel.add(totalsAndProgressGestaltPanel);
+
+        JPanel totalsAndRecPanel = new JPanel();
+        totalsAndRecPanel.setBorder(BorderFactory.createRaisedBevelBorder());
+        totalsAndRecPanel.setLayout(new GridLayout(5, 3));
+        JLabel caloriesLabel = new JLabel("Total calories: ");
+        JLabel proteinLabel = new JLabel("Total protein: ");
+        JLabel carbsLabel = new JLabel("Total carbohydrates: ");
+        JLabel fatLabel = new JLabel("Total fat: ");
+        Dimension size = caloriesLabel.getPreferredSize();
+        totalsAndRecPanel.setPreferredSize(new Dimension((int) 500, (int) size.getHeight() + 200));
+
+        totalsAndRecPanel.add(caloriesLabel);
+        totalsAndRecPanel.add(totalCalories);
+        totalsAndRecPanel.add(progressBarCalories);
+
+        totalsAndRecPanel.add(proteinLabel);
+        totalsAndRecPanel.add(totalProtein);
+        totalsAndRecPanel.add(progressBarProtein);
+
+        totalsAndRecPanel.add(carbsLabel);
+        totalsAndRecPanel.add(totalCarbs);
+        totalsAndRecPanel.add(progressBarCarbs);
+
+        totalsAndRecPanel.add(fatLabel);
+        totalsAndRecPanel.add(totalFat);
+        totalsAndRecPanel.add(progressBarFat);
+
+        totalsAndRecPanel.add(new JLabel(""));
+        totalsAndRecPanel.add(new JLabel(""));
+        totalsAndRecPanel.add(getDVrecs);
+
+
+
+
+
+
+        mainPanel.add(totalsAndRecPanel);
 
         this.add(mainPanel);
 
@@ -259,15 +352,23 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
 
         if (evt.getSource() instanceof LogFoodViewModel) {
             final LogFoodState logFoodState = (LogFoodState) evt.getNewValue();
-            totalCalories.setText("Total calories: " + String.valueOf(logFoodState.getTotalCalories()) + "Kcal");
-            totalProtein.setText("Total protein: " + String.valueOf(logFoodState.getTotalProtein()) + "g");
-            totalCarbs.setText("Total carbohydrates" + String.valueOf(logFoodState.getTotalCarbs()) + "g");
-            totalFat.setText("Total fat: " + String.valueOf(logFoodState.getTotalFat()) + "g");
+            totalCalories.setText(truncateString2Places(String.valueOf(logFoodState.getTotalCalories())) + "Kcal");
+            totalProtein.setText(truncateString2Places(String.valueOf(logFoodState.getTotalProtein())) + "g");
+            totalCarbs.setText(truncateString2Places(String.valueOf(logFoodState.getTotalCarbs())) + "g");
+            totalFat.setText(truncateString2Places(String.valueOf(logFoodState.getTotalFat())) + "g");
 
             //dailyValueCaloriesText.setText("");
-            dailyValueProteinText.setText("");
+            /*dailyValueProteinText.setText("");
             dailyValueCarbsText.setText("");
-            dailyValueFatText.setText("");
+            dailyValueFatText.setText("");*/
+            progressBarCalories.setValue(0);
+            progressBarCalories.setStringPainted(false);
+            progressBarProtein.setValue(0);
+            progressBarProtein.setStringPainted(false);
+            progressBarCarbs.setValue(0);
+            progressBarCarbs.setStringPainted(false);
+            progressBarFat.setValue(0);
+            progressBarFat.setStringPainted(false);
         }
         else if (evt.getSource() instanceof MainViewModel) {
             final MainViewState state = (MainViewState) evt.getNewValue();
@@ -275,19 +376,23 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
                     //"% of the recommended Daily Value.");
             //progressBarCalories.setString(String.valueOf(state.getPercent_cals()));
             progressBarCalories.setValue((int) Math.floor(state.getPercent_cals()));
-            progressBarCalories.setString(String.valueOf(Math.floor(state.getPercent_cals()) + "% of DV"));
+            String valueString = truncateString2Places(String.valueOf(state.getPercent_cals()));
+            progressBarCalories.setString(valueString + "% of DV");
             progressBarCalories.setStringPainted(true);
 
             progressBarProtein.setValue((int) Math.floor(state.getPercent_prot()));
-            progressBarProtein.setString(String.valueOf(Math.floor(state.getPercent_prot()) + "% of DV"));
+            valueString = truncateString2Places(String.valueOf(state.getPercent_prot()));
+            progressBarProtein.setString(valueString + "% of DV");
             progressBarProtein.setStringPainted(true);
 
             progressBarCarbs.setValue((int) Math.floor(state.getPercent_carbs()));
-            progressBarCarbs.setString(String.valueOf(Math.floor(state.getPercent_carbs()) + "% of DV"));
+            valueString = truncateString2Places(String.valueOf(state.getPercent_carbs()));
+            progressBarCarbs.setString(valueString + "% of DV");
             progressBarCarbs.setStringPainted(true);
 
             progressBarFat.setValue((int) Math.floor(state.getPercent_fat()));
-            progressBarFat.setString(String.valueOf(Math.floor(state.getPercent_fat()) + "% of DV"));
+            valueString = truncateString2Places(String.valueOf(state.getPercent_fat()));
+            progressBarFat.setString(valueString+ "% of DV");
             progressBarFat.setStringPainted(true);
 
 
