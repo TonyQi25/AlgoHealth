@@ -54,15 +54,19 @@ public class GradeAccountDAO implements SignupDataAccessInterface, LoginDataAcce
 
     }
 
-    public Integer FoodExists(String date, String username, String foodName){
+    public Integer FoodExists(String date, String username, String foodName, Integer fdcID) {
         JSONObject jsonFoodLog = GradeHelper.getJSONFoodLog(username);
-        //String[] fdcIDs = JSONObject.getNames(jsonFoodLog);
-        //for (String fdcID: fdcIDs){
+        String[] fdcIDs = JSONObject.getNames(jsonFoodLog);
+        //for (String id : fdcIDs) {
             //JSONObject foodSearchResult = fdcSearchDAO.getFoodByFdcId(Integer.valueOf(fdcID));
             //Food foodItem = makeFood.createFood(foodSearchResult);
             //if (foodItem.getDescription().equals(foodName){
             //return Integer.valueOf(fdcID);
-        //}
+            //}
+//            if(fdcID.equals(Integer.valueOf(id))){
+//                return fdcID;
+//            }
+//        }
         return null;
     }
 
@@ -74,7 +78,7 @@ public class GradeAccountDAO implements SignupDataAccessInterface, LoginDataAcce
         DayInfo currDay = dayInfos.get(0);
         JSONObject currFoodLog = GradeHelper.getJSONFoodLog(username);
         JSONObject newFoodLog = GradeHelper.copyJSONFoodLog(currFoodLog);
-        Integer foodExist = this.FoodExists(LocalDate.now().toString(), username, foodIntake.getDescription());
+        Integer foodExist = this.FoodExists(LocalDate.now().toString(), username, foodIntake.getDescription(), fdcID);
         float newWeight = foodIntake.getWeight();
         if (foodExist != null){
             newWeight = currFoodLog.getFloat(Integer.toString(foodExist));

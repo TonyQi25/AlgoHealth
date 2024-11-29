@@ -3,6 +3,7 @@ package api;
 import data.AccountInfo;
 import data.Food;
 import data_access.GradeAccountDAO;
+import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -26,7 +27,7 @@ public class StoringFoodDataTest {
                 diet, "lose weight", "testSaveAccount", "12345", dietaryRestrictions);
         gradeAccountDAO.save(newAccount);
         AccountInfo savedAccount = gradeAccountDAO.get("testSaveAccount");
-        assertEquals(savedAccount.getUsername(), "testSaveAccount");
+        assertEquals("testSaveAccount", savedAccount.getUsername());
         assertEquals(savedAccount.getGoal(), newAccount.getGoal());
     }
     @Test
@@ -39,7 +40,7 @@ public class StoringFoodDataTest {
                 diet, "gain weight", "testSaveAccount", "12345", dietaryRestrictions);
         gradeAccountDAO.save(newAccountInfo);
         AccountInfo savedAccount = gradeAccountDAO.get("testSaveAccount");
-        assertEquals(savedAccount.getUsername(), "testSaveAccount");
+        assertEquals("testSaveAccount", savedAccount.getUsername());
         assertEquals(savedAccount.getGoal(), newAccountInfo.getGoal());
     }
     @Test
@@ -63,5 +64,11 @@ public class StoringFoodDataTest {
         pineapple.setTotalFat();
         pineapple.setTotalProtein();
         gradeAccountDAO.saveFood("testSaveAccount", "12345", pineapple, 12345);
+    }
+    @Test
+    void loadingFoodTest() {
+        JSONObject food = GradeHelper.getJSONFoodLog ("testSaveAccount");
+        assertEquals("12345", JSONObject.getNames(food)[0]);
+        assertEquals(100, food.get("12345"));
     }
 }
