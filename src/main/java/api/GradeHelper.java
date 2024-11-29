@@ -47,7 +47,18 @@ public class GradeHelper {
         MediaType mediaType = MediaType.parse("application/json");
 
         JSONObject newAccountInfo = new JSONObject();
-        newAccountInfo.put("account info", accountInfo);
+        JSONObject userInfo = new JSONObject();
+        userInfo.put("date of birth", accountInfo.getDateOfBirth().toString());
+        userInfo.put("height", accountInfo.getHeight());
+        userInfo.put("weight", accountInfo.getWeight());
+        userInfo.put("diet", accountInfo.getDiet());
+        userInfo.put("goal", accountInfo.getGoal());
+        userInfo.put("username", accountInfo.getUsername());
+        userInfo.put("password", accountInfo.getPassword());
+        userInfo.put("restrictions", accountInfo.getDietaryRestrictions());
+        newAccountInfo.put("account info", userInfo);
+        JSONObject foodLog = new JSONObject();
+        newAccountInfo.put("currentDayFoodLog", foodLog);
 
         JSONObject newAccountBody = new JSONObject();
         newAccountBody.put("username", AccountInfo.USERNAME_PREFIX + username);
@@ -113,9 +124,9 @@ public class GradeHelper {
             if (userResponse.isSuccessful() && userResponse.body() != null) {
                 JSONObject userObject = (JSONObject) new JSONObject(userResponse.body().string()).get("user");
                 JSONObject user = (JSONObject) userObject.get("info");
-                String jsonAccount = (String) user.get("account info");
-
-                return AccountInfo.fromJSONString(jsonAccount);
+                JSONObject jsonAccount = (JSONObject) user.get("account info");
+                AccountInfo accountInfo = AccountInfo.fromJSONString(jsonAccount);
+                JSONObject foodLog = (JSONObject) user.get("currentDayFoodLog");
             }
         } catch (IOException e) {
             e.printStackTrace();
