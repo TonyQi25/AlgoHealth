@@ -80,6 +80,9 @@ public class GradeAccountDAO implements SignupDataAccessInterface, LoginDataAcce
 
     @Nullable
     private static Integer getExistingID(String foodName, String[] fdcIDs, JSONObject jsonFoodLog) {
+        if (fdcIDs == null){
+            return null;
+        }
         for (String id : fdcIDs) {
             JSONObject foodInfo = jsonFoodLog.getJSONObject(id);
             if(foodInfo.get("name").equals(foodName)){

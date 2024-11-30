@@ -196,6 +196,9 @@ public class GradeHelper {
     public static JSONObject copySingleDayJSONFoodLog(JSONObject SingleFoodLog) {
         JSONObject copyFoodLog = new JSONObject();
         String[] fdcIDs = JSONObject.getNames(SingleFoodLog);
+        if (fdcIDs == null){
+            return copyFoodLog;
+        }
         for (String fdcID: fdcIDs){
             JSONObject foodInfo = SingleFoodLog.getJSONObject(fdcID);
             JSONObject copyFoodInfo = new JSONObject();

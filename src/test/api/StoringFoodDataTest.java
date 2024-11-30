@@ -63,7 +63,7 @@ public class StoringFoodDataTest {
         pineapple.setTotalCalories();
         pineapple.setTotalFat();
         pineapple.setTotalProtein();
-        gradeAccountDAO.saveFood(LocalDate.now(), "testSaveAccount","12345", pineapple, 12345);
+        gradeAccountDAO.saveFood(LocalDate.now().toString(), "testSaveAccount","12345", pineapple, 12345);
     }
     @Test
     void testSavingNewFoodToAPI() {
@@ -85,7 +85,7 @@ public class StoringFoodDataTest {
         banana.setTotalCalories();
         banana.setTotalFat();
         banana.setTotalProtein();
-        gradeAccountDAO.saveFood(LocalDate.now(), "testSaveAccount","12345", banana, 6789);
+        gradeAccountDAO.saveFood(LocalDate.now().toString(), "testSaveAccount","12345", banana, 6789);
     }
     @Test
     void testSavingNewWeightFoodToAPI() {
@@ -107,7 +107,7 @@ public class StoringFoodDataTest {
         banana.setTotalCalories();
         banana.setTotalFat();
         banana.setTotalProtein();
-        gradeAccountDAO.saveFood(LocalDate.now(), "testSaveAccount","12345", banana, 6789);
+        gradeAccountDAO.saveFood(LocalDate.now().toString(), "testSaveAccount","12345", banana, 6789);
     }
     @Test
     void testSavingNewDayFoodToAPI() {
@@ -129,7 +129,7 @@ public class StoringFoodDataTest {
         potato.setTotalCalories();
         potato.setTotalFat();
         potato.setTotalProtein();
-        gradeAccountDAO.saveFood(LocalDate.parse("2024-10-09"), "testSaveAccount","12345", potato, 91234);
+        gradeAccountDAO.saveFood("2024-10-09", "testSaveAccount","12345", potato, 91234);
     }
     @Test
     void loadingFoodTest() {
@@ -142,5 +142,18 @@ public class StoringFoodDataTest {
         //JSONObject OctLogFoodInfo = (JSONObject) OctLog.get("32380");
         //assertEquals("apple", OctLog.get("name"));
         //assertEquals(800, OctLog.get("weight"));
+        Integer foodExistBeforeDelete = gradeAccountDAO.FoodExists("2024-10-09", "testSaveAccount",
+                "potato");
+        assertEquals(91234, (int)foodExistBeforeDelete);
+    }
+
+    @Test
+    void DeletingFoodTest(){
+        boolean foodRemove = gradeAccountDAO.removeFood("2024-10-09", "testSaveAccount",
+                "12345", "91234");
+        assertEquals(true, foodRemove);
+        Integer foodExist = gradeAccountDAO.FoodExists("2024-10-09", "testSaveAccount",
+                "potato");
+        assertEquals(null, foodExist);
     }
 }
