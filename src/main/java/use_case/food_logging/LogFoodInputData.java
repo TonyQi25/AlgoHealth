@@ -6,10 +6,15 @@ public class LogFoodInputData {
     private final float foodWeight;
     private final String weightUnit;
 
-    public LogFoodInputData(Integer fdcId, float foodWeight, String weightUnit) {
+    private final String username;
+    private final String password;
+
+    public LogFoodInputData(Integer fdcId, float foodWeight, String weightUnit, String username, String password) {
         this.fdcId = fdcId;
         this.foodWeight = foodWeight;
         this.weightUnit = weightUnit;
+        this.username = username;
+        this.password = password;
     }
 
 
@@ -24,4 +29,7 @@ public class LogFoodInputData {
     public Integer getFdcId() {
         return fdcId;
     }
+
+    public String getUsername(){return username;}
+    public String getPassword(){return password;}
 }

@@ -1,10 +1,17 @@
-package helpers;
+package api;
 
+import data.AccountBuilder;
 import data.AccountInfo;
+import data.Food;
 import okhttp3.*;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.List;
 
 public class GradeHelper {
 
@@ -36,15 +43,62 @@ public class GradeHelper {
         }
     }
 
+    public static JSONObject makeJSONAccountInfo(String username, String password, AccountInfo accountInfo){
+        JSONObject newAccountInfo = new JSONObject();
+        newAccountInfo.put("date of birth", accountInfo.getDateOfBirth().toString());
+        newAccountInfo.put("height", accountInfo.getHeight());
+        newAccountInfo.put("weight", accountInfo.getWeight());
+        newAccountInfo.put("diet", accountInfo.getDiet());
+        newAccountInfo.put("goal", accountInfo.getGoal());
+        newAccountInfo.put("username", accountInfo.getUsername());
+        newAccountInfo.put("password", accountInfo.getPassword());
+        newAccountInfo.put("restrictions", accountInfo.getDietaryRestrictions());
+        return newAccountInfo;
+    }
+
+    public static void setUserInfo(String username, String password, AccountInfo accountInfo, JSONObject foodLog) {
+        OkHttpClient client = new OkHttpClient().newBuilder()
+                .build();
+
+        MediaType mediaType = MediaType.parse("application/json");
+        JSONObject newAccountInfo = GradeHelper.makeJSONAccountInfo(username, password, accountInfo);
+        newAccountInfo.put("currentDayFoodLog", foodLog);
+        JSONObject newAccountBody = new JSONObject();
+        newAccountBody.put("username", AccountInfo.USERNAME_PREFIX + username);
+        newAccountBody.put("password", password);
+        newAccountBody.put("info", newAccountInfo);
+
+        RequestBody accountRequestBody = RequestBody.create(newAccountBody.toString(), mediaType);
+
+        System.out.println(newAccountBody);
+
+        Request accountRequest = new Request.Builder()
+                .url("http://vm003.teach.cs.toronto.edu:20112/modifyUserInfo")
+                .put(accountRequestBody)
+                .addHeader("Content-Type", "application/json")
+                .build();
+
+        try (Response accountResponse = client.newCall(accountRequest).execute()) {
+            if (accountResponse.isSuccessful() && accountResponse.body() != null) {
+                System.out.println("Response: " + accountResponse.body().string());
+            } else {
+                System.out.println("Request failed. HTTP error code: " + accountResponse.code());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();      // placeholder
+        }
+    }
+
     public static void setUserInfo(String username, String password, AccountInfo accountInfo) {
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
 
         MediaType mediaType = MediaType.parse("application/json");
 
-        JSONObject newAccountInfo = new JSONObject();
-        newAccountInfo.put("account info", accountInfo);
 
+        JSONObject newAccountInfo = GradeHelper.makeJSONAccountInfo(username, password, accountInfo);
+        JSONObject foodLog = new JSONObject();
+        newAccountInfo.put("currentDayFoodLog", foodLog);
         JSONObject newAccountBody = new JSONObject();
         newAccountBody.put("username", AccountInfo.USERNAME_PREFIX + username);
         newAccountBody.put("password", password);
@@ -93,7 +147,7 @@ public class GradeHelper {
         return false;
     }
 
-    public static AccountInfo getUser(String username) {
+    public static JSONObject getUserInfo(String username) {
         OkHttpClient client = new OkHttpClient().newBuilder().build();
 
         String endpoint = "http://vm003.teach.cs.toronto.edu:20112/user?username=" +
@@ -109,14 +163,35 @@ public class GradeHelper {
             if (userResponse.isSuccessful() && userResponse.body() != null) {
                 JSONObject userObject = (JSONObject) new JSONObject(userResponse.body().string()).get("user");
                 JSONObject user = (JSONObject) userObject.get("info");
-                String jsonAccount = (String) user.get("account info");
-
-                return AccountInfo.fromJSONString(jsonAccount);
+                return user;
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         return null;
+    }
+
+    public static AccountInfo getUser(String username) {
+        JSONObject user = GradeHelper.getUserInfo(username);
+        AccountBuilder accountBuilder = new AccountBuilder(user);
+        //accountBuilder.addFoodLog(user);
+        AccountInfo accountInfo = accountBuilder.getAccountInfo();
+        return accountInfo;
+    }
+
+    public static JSONObject getJSONFoodLog(String username) {
+        JSONObject user = GradeHelper.getUserInfo(username);
+        JSONObject JSONFoodLog = user.getJSONObject("currentDayFoodLog");
+        return JSONFoodLog;
+    }
+
+    public static JSONObject copyJSONFoodLog(JSONObject foodLog) {
+        JSONObject copyFoodLog = new JSONObject();
+//        String[] fdcIDs = JSONObject.getNames(foodLog);
+//        for (String fdcID: fdcIDs){
+//            copyFoodLog.put(fdcID, foodLog.get(fdcID));
+//        }
+        return copyFoodLog;
     }
 }
