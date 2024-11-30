@@ -15,13 +15,13 @@ public class UpdateHistoryTotalsController {
     }
 
     public void execute(ListModel<String> list, String username, String date) {
-        HashMap<String, Double> idToWeight = new HashMap<>();
+        HashMap<Integer, Double> idToWeight = new HashMap<>();
         for (int i = 0; i < list.getSize(); i++) {
 
             // e.g. "Apple(123123): 323.43(g/ml)"
             String[] temp = list.getElementAt(i).split("(:)|(,)|(\\()|(\\))");
 
-            idToWeight.put(temp[1], Double.parseDouble(temp[2]));
+            idToWeight.put(Integer.parseInt(temp[1]), Double.parseDouble(temp[2]));
         }
 
         UpdateHistoryTotalsInputData input = new UpdateHistoryTotalsInputData(idToWeight, username, date);

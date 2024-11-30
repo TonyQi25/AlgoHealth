@@ -19,6 +19,19 @@ public class UpdateHistoryTotalsPresenter implements UpdateHistoryTotalsOutputBo
     public void prepareSuccessView(UpdateHistoryTotalsOutputData output) {
         final UpdateHistoryTotalsState state = viewModel.getState();
 
-        state.set
+        state.setCarbs(output.getCarbs());
+        state.setFat(output.getFat());
+        state.setProtein(output.getProtein());
+        state.setCarbs(output.getCarbs());
+        state.setRecCalories(output.getRecCalories());
+        state.setRecFat(output.getRecFat());
+        state.setRecProtein(output.getRecProtein());
+        state.setRecCarbs(output.getRecCarbs());
+
+        this.viewModel.setState(state);
+        this.viewModel.firePropertyChanged();
+
+        this.viewManagerModel.setState(viewModel.getViewName());
+        this.viewManagerModel.firePropertyChanged();
     }
 }

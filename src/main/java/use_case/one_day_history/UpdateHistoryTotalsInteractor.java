@@ -41,11 +41,11 @@ public class UpdateHistoryTotalsInteractor implements UpdateHistoryTotalsInputBo
         // Probably will be a HashMap<String, Double> so I'm using that here. Will update as necessary.
         // Implementation in mind for UpdateHistoryTotalsOutputData is that
         // it has an instance variable which can store a list of Foods generated in execute.
-        Food[] outputFoodList = new Food[UpdateHistoryTotalsInputData.getFDCidToWeightMap().keySet().length()];
+        Food[] outputFoodList = new Food[updateHistoryTotalsInputData.getIdToWeight().keySet().size()];
         int i = 0;
-        for (Integer fdcId: UpdateHistoryTotalsInputData.getFDCidToWeightMap().keySet()) {
+        for (Integer fdcId: updateHistoryTotalsInputData.getIdToWeight().keySet()) {
             Food freshFood = createFood(foodDataCentralSearchDAO.getFoodByFdcId(fdcId, MACRO_SPECIFIER_1));
-            freshFood.setWeight(UpdateHistoryTotalsInputData.getFDCidtoWeightMap().get(fdcId));
+            freshFood.setWeight(updateHistoryTotalsInputData.getIdToWeight().get(fdcId));
             outputFoodList[i] = freshFood;
             i += 1;
         }

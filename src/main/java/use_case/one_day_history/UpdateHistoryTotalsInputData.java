@@ -4,18 +4,18 @@ import java.util.HashMap;
 
 public class UpdateHistoryTotalsInputData {
 
-    HashMap<String, Double> foodList;
+    HashMap<Integer, Double> idToWeight;
     String username;
     String date;
 
-    public UpdateHistoryTotalsInputData(HashMap<String, Double> foodList, String username, String date) {
-        this.foodList = foodList;
+    public UpdateHistoryTotalsInputData(HashMap<Integer, Double> foodList, String username, String date) {
+        this.idToWeight = foodList;
         this.username = username;
         this.date = date;
     }
 
-    public HashMap<String, Double> getFoodList() {
-        return foodList;
+    public HashMap<Integer, Double> getIdToWeight() {
+        return idToWeight;
     }
 
     public String getUsername() {
