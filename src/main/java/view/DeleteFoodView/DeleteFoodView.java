@@ -6,8 +6,11 @@ import interface_adapter.delete_food.DeleteFoodPresenter;
 import interface_adapter.delete_food.DeleteFoodViewModel;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.List;
 
 public class DeleteFoodView extends JPanel implements PropertyChangeListener {
 
@@ -37,6 +40,14 @@ public class DeleteFoodView extends JPanel implements PropertyChangeListener {
         JList<String> loggedFood = new JList<>(this.deleteFoodViewModel.getState().getFoods().toArray(new String[0]));
         loggedFood.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         JScrollPane loggedFoodPane = new JScrollPane(loggedFood);
+
+        loggedFood.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                List<String> listSelectedFoods = loggedFood.getSelectedValuesList();
+                deleteFoodViewModel.getState().setSelectedFoods(listSelectedFoods);
+            }
+        });
 
         this.foodListPanel.add(loggedFoodPane);
 
