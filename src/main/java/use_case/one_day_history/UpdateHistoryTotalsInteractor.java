@@ -1,7 +1,7 @@
 package use_case.one_day_history;
 
 import data.Food;
-import use_case.daily_value_recs.DailyValueCalculationStrategy;
+//import use_case.daily_value_recs.DailyValueCalculationStrategy;
 import use_case.select_from_food_options.SelectSearchDataAccessInterface;
 
 import static api.PopulateUtility.createFood;
@@ -25,14 +25,13 @@ public class UpdateHistoryTotalsInteractor implements UpdateHistoryTotalsInputBo
 
     private UpdateHistoryTotalsOutputBoundary updateHistoryTotalsPresenter;
     private SelectSearchDataAccessInterface foodDataCentralSearchDAO;
-    DailyValueCalculationStrategy dailyValueCalculationStrategy;
+    //private DailyValueCalculationStrategy dailyValueCalculationStrategy;
 
     public UpdateHistoryTotalsInteractor(UpdateHistoryTotalsOutputBoundary updateHistoryTotalsPresenter,
-                                         SelectSearchDataAccessInterface foodDataCentralSearchDAO,
-                                         DailyValueCalculationStrategy dailyValueCalculationStrategy) {
+                                         SelectSearchDataAccessInterface foodDataCentralSearchDAO) {
         this.updateHistoryTotalsPresenter = updateHistoryTotalsPresenter;
         this.foodDataCentralSearchDAO = foodDataCentralSearchDAO;
-        this.dailyValueCalculationStrategy = dailyValueCalculationStrategy;
+        //this.dailyValueCalculationStrategy = dailyValueCalculationStrategy;
     }
 
     @Override
