@@ -4,17 +4,14 @@ import api.GradeHelper;
 import data.AccountInfo;
 import data.DayInfo;
 import data.Food;
-import okhttp3.*;
+import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
-import use_case.food_logging.DataAccessException;
 import use_case.food_logging.LogFoodDataAccessInterface;
 import use_case.login.LoginDataAccessInterface;
 import use_case.logout.LogoutDataAccessInterface;
 import use_case.signup.SignupDataAccessInterface;
 
-import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 public class GradeAccountDAO implements SignupDataAccessInterface, LoginDataAccessInterface,
@@ -54,10 +51,14 @@ public class GradeAccountDAO implements SignupDataAccessInterface, LoginDataAcce
 
     }
 
-    public Integer FoodExists(String date, String username, String foodName, Integer fdcID) {
-        JSONObject jsonFoodLog = GradeHelper.getJSONFoodLog(username);
-        String[] fdcIDs = JSONObject.getNames(jsonFoodLog);
-        //for (String id : fdcIDs) {
+    public Integer FoodExists(String date, String username, String foodName) {
+        if (this.DayExists(date, username) == true){
+            JSONObject jsonFoodLog = GradeHelper.getSingleDayJSONFoodLog(username, date);
+            String[] fdcIDs = JSONObject.getNames(jsonFoodLog);
+            Integer id = getInteger(foodName, fdcIDs, jsonFoodLog);
+            if (id != null) return id;
+        }
+        return null;
             //JSONObject foodSearchResult = fdcSearchDAO.getFoodByFdcId(Integer.valueOf(fdcID));
             //Food foodItem = makeFood.createFood(foodSearchResult);
             //if (foodItem.getDescription().equals(foodName){
@@ -67,24 +68,44 @@ public class GradeAccountDAO implements SignupDataAccessInterface, LoginDataAcce
 //                return fdcID;
 //            }
 //        }
+    }
+
+    @Nullable
+    private static Integer getInteger(String foodName, String[] fdcIDs, JSONObject jsonFoodLog) {
+        for (String id : fdcIDs) {
+            JSONObject foodInfo = jsonFoodLog.getJSONObject(id);
+            if(foodInfo.get("name").equals(foodName)){
+                return Integer.valueOf(id);
+            }
+        }
         return null;
     }
 
     //saves the food information for current day
     @Override
-    public void saveFood(String username, String password, Food foodIntake, Integer fdcID){
+    public void saveFood(LocalDate date, String username, String password, Food foodIntake, Integer fdcID){
         AccountInfo user = GradeHelper.getUser(username);
-        List<DayInfo> dayInfos = user.getDays();
-        DayInfo currDay = dayInfos.get(0);
         JSONObject currFoodLog = GradeHelper.getJSONFoodLog(username);
-        JSONObject newFoodLog = GradeHelper.copyJSONFoodLog(currFoodLog);
-        Integer foodExist = this.FoodExists(LocalDate.now().toString(), username, foodIntake.getDescription(), fdcID);
+        JSONObject newFoodLog = GradeHelper.copyEntireFoodLog(currFoodLog);
+
+        JSONObject newFoodInfo = new JSONObject();
+        newFoodInfo.put("name", foodIntake.getDescription());
+        JSONObject newDayFoodLog = new JSONObject();
         float newWeight = foodIntake.getWeight();
-        if (foodExist != null){
-            newWeight = currFoodLog.getFloat(Integer.toString(foodExist));
+
+        if (this.DayExists(date.toString(), username)){
+            JSONObject DayFoodLog = GradeHelper.getSingleDayJSONFoodLog(username, date.toString());
+            newDayFoodLog = GradeHelper.copySingleDayJSONFoodLog(DayFoodLog);
+            Integer foodExist = this.FoodExists(date.toString(), username, foodIntake.getDescription());
+            if (foodExist != null){
+                JSONObject currFoodInfo = DayFoodLog.getJSONObject(Integer.toString(foodExist));
+                newWeight += currFoodInfo.getFloat("weight");
+            }
         }
-        newFoodLog.put(Integer.toString(fdcID), newWeight);
-        GradeHelper.setUserInfo(username, password, user, newFoodLog);
+        newFoodInfo.put("weight", newWeight);
+        newDayFoodLog.put(Integer.toString(fdcID), newFoodInfo);
+        newFoodLog.put(date.toString(), newDayFoodLog);
+        GradeHelper.addFoodUserInfo(username, password, user, newFoodLog, date.toString());
     }
 
     //loads the food information for requested date
@@ -95,4 +116,24 @@ public class GradeAccountDAO implements SignupDataAccessInterface, LoginDataAcce
         DayInfo currDay = days.get(0);
         return currDay.getFoodLog();
     }
+
+    public boolean DayExists(String date, String username){
+        JSONObject FoodLog = GradeHelper.getJSONFoodLog(username);
+        return FoodLog.has(date);
+    }
+
+//    public boolean removeFood(String date, String username, String password, String foodName){
+//        if (this.FoodExists(date,username, foodName) != null){
+//            AccountInfo user = GradeHelper.getUser(username);
+//            JSONObject currFoodLog = GradeHelper.getSingleDayJSONFoodLog(username, date);
+//            JSONObject newFoodLog = GradeHelper.copyJSONFoodLog(currFoodLog);
+//            Integer foodExist = this.FoodExists(date, username, foodName);
+//            if (foodExist != null){
+//                Object removedFood = newFoodLog.remove(foodExist.toString());
+//                GradeHelper.addFoodUserInfo(username, password, user, newFoodLog, date);
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
 }

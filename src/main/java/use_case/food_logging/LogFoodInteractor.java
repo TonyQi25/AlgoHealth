@@ -5,6 +5,7 @@ import data.Food;
 import data_access.GradeAccountDAO;
 import org.json.JSONObject;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -44,7 +45,7 @@ public class LogFoodInteractor implements LogFoodInputBoundary {
         final ArrayList<Object> fatWUnit = new ArrayList<>();
         fatWUnit.add(String.valueOf(food.getTotalFat()));
         proteinWUnit.add("g");
-        foodLoggingDAO.saveFood(logFoodInputData.getUsername(),
+        foodLoggingDAO.saveFood(LocalDate.now(), logFoodInputData.getUsername(),
                 logFoodInputData.getPassword(), food, logFoodInputData.getFdcId());
         final LogFoodOutputData logFoodOutputData = new LogFoodOutputData(food.getDescription(), food.getWeight(),
                 food.getStandardUnit(), calWUnit, proteinWUnit, carbsWUnit, fatWUnit);
