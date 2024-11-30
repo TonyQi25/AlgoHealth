@@ -38,6 +38,8 @@ public class DisplayOptionsView extends JPanel implements ActionListener, Proper
                         if (evt.getSource().equals(dropdown)) {
                             JComboBox comboBox = (JComboBox) evt.getSource();
                             String selected = (String) comboBox.getSelectedItem();
+                            DisplayOptionsViewState displayOptionsViewState = displayOptionsViewModel.getState();
+                            displayOptionsViewState.setCurrSelection(selected);
                             /*int i = 0;
                             currentState.setFdcIDofSelection(currentState.getFoodOptionsMap().get(selected));*/
                         }
@@ -48,7 +50,8 @@ public class DisplayOptionsView extends JPanel implements ActionListener, Proper
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        selectFromFoodOptionsController.execute((String) dropdown.getSelectedItem());
+                        // selectFromFoodOptionsController.execute((String) dropdown.getSelectedItem());
+                        selectFromFoodOptionsController.execute(displayOptionsViewModel.getState().getCurrSelection());
                     }
                 }
         );
