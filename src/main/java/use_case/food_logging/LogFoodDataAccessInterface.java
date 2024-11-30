@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface LogFoodDataAccessInterface {
-    void saveFood (LocalDate date, String username, String password, Food foodIntake, Integer fdcID);
+    void saveFood (String date, String username, String password, Food foodIntake, Integer fdcID);
 
     JSONObject loadFoodInfo(String userName, String date);
 }
