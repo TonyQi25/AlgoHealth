@@ -20,8 +20,6 @@ import view.removeFoodView.RemoveFoodView;
 
 import java.util.List;
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -34,7 +32,6 @@ public class HistoryView extends JPanel implements ActionListener, PropertyChang
     private final String viewName = "history";
     private String username;
     private final HistoryViewModel historyViewModel;
-    private String highlightedFood;
 
     private JPanel headerPanel;
     private JPanel dataPanel;
@@ -49,13 +46,11 @@ public class HistoryView extends JPanel implements ActionListener, PropertyChang
 
     private JButton removeFoodButton;
 
-    //private RemoveFoodController removeFoodController;
     private HistoryController historyController;
 
     public HistoryView(HistoryViewModel viewModel, HistoryController historyController) {
         this.historyViewModel = viewModel;
         this.historyController = historyController;
-        //this.removeFoodController = removeFoodController;
         this.historyViewModel.addPropertyChangeListener(this);
         this.viewingDate = LocalDate.now();
 
@@ -98,7 +93,7 @@ public class HistoryView extends JPanel implements ActionListener, PropertyChang
                 String input = list.getSelectedValue();
 
                 //tester
-                input = "Apple: 323.43(g/ml)";
+                //input = "Apple: 323.43(g/ml)";
                 //input = null;
 
                 if (input != null) {

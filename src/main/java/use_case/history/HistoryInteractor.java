@@ -57,9 +57,8 @@ public class HistoryInteractor implements HistoryInputBoundary{
 
             for (Food food : sample.get(input.getDate().toString()).getFoodLog()) {
                 String info = "";
-                info += food.getDescription() + ":";
-                info += food.getTotalCalories() + " calories";
-                // blah blah blah
+                info += food.getDescription() + ": ";
+                info += food.getWeight() + "(g/ml)";
 
                 returning.add(info);
             }
