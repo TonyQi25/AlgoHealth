@@ -112,50 +112,30 @@ public class StoringFoodDataTest {
     @Test
     void testSavingNewDayFoodToAPI() {
         HashMap<String, Object> calories = new HashMap<>();
-        calories.put("amount per 100", 0.10);
+        calories.put("amount per 100", 0.89);
         HashMap<String, Object> proteins = new HashMap<>();
-        proteins.put("amount per 100", 0.93);
+        proteins.put("amount per 100", 0.38);
         HashMap<String, Object> carbs = new HashMap<>();
-        carbs.put("amount per 100", 0.38);
+        carbs.put("amount per 100", 0.28);
         HashMap<String, Object> fat = new HashMap<>();
-        fat.put("amount per 100", 0.19);
-        Food banana = new Food("banana", 120, calories);
+        fat.put("amount per 100", 0.10);
+        Food potato = new Food("potato", 150, calories);
         HashMap<String, HashMap<String, Object>> macros = new HashMap<>();
         macros.put("Protein", proteins);
         macros.put("Carbohydrate", carbs);
         macros.put("Fat", fat);
-        banana.setMacroNutrients(macros);
-        banana.setTotalCarb();
-        banana.setTotalCalories();
-        banana.setTotalFat();
-        banana.setTotalProtein();
-        gradeAccountDAO.saveFood(LocalDate.now(), "testSaveAccount","12345", banana, 6789);
-
-        HashMap<String, Object> applecalories = new HashMap<>();
-        applecalories.put("amount per 100", 0.10);
-        HashMap<String, Object> appleproteins = new HashMap<>();
-        appleproteins.put("amount per 100", 0.93);
-        HashMap<String, Object> applecarbs = new HashMap<>();
-        applecarbs.put("amount per 100", 0.38);
-        HashMap<String, Object> applefat = new HashMap<>();
-        applefat.put("amount per 100", 0.19);
-        Food apple = new Food("apple", 800, applecalories);
-        HashMap<String, HashMap<String, Object>> applemacros = new HashMap<>();
-        applemacros.put("Protein", appleproteins);
-        applemacros.put("Carbohydrate", applecarbs);
-        applemacros.put("Fat", applefat);
-        apple.setMacroNutrients(applemacros);
-        apple.setTotalCarb();
-        apple.setTotalCalories();
-        apple.setTotalFat();
-        apple.setTotalProtein();
-        gradeAccountDAO.saveFood(LocalDate.parse("2024-10-30"), "testSaveAccount","12345", apple, 32380);
-        JSONObject newFoodLog = GradeHelper.getUserInfo("testSaveAccount");
+        potato.setMacroNutrients(macros);
+        potato.setTotalCarb();
+        potato.setTotalCalories();
+        potato.setTotalFat();
+        potato.setTotalProtein();
+        gradeAccountDAO.saveFood(LocalDate.parse("2024-10-09"), "testSaveAccount","12345", potato, 91234);
     }
     @Test
     void loadingFoodTest() {
-        String date = LocalDate.now().toString();
-        JSONObject userInfo = GradeHelper.getUserInfo("testSaveAccount");
+        JSONObject dayFoodLog = gradeAccountDAO.loadFoodInfo("testSaveAccount", "2024-10-09");
+        JSONObject foodInfo = dayFoodLog.getJSONObject("91234");
+        assertEquals("potato", foodInfo.get("name"));
 
         //JSONObject todayLog = GradeHelper.getJSONFoodLog("testSaveAccount", LocalDate.now().toString());
         JSONObject OctLog = (JSONObject) GradeHelper.getJSONFoodLog("testSaveAccount");

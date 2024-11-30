@@ -55,7 +55,7 @@ public class GradeAccountDAO implements SignupDataAccessInterface, LoginDataAcce
         if (this.DayExists(date, username) == true){
             JSONObject jsonFoodLog = GradeHelper.getSingleDayJSONFoodLog(username, date);
             String[] fdcIDs = JSONObject.getNames(jsonFoodLog);
-            Integer id = getInteger(foodName, fdcIDs, jsonFoodLog);
+            Integer id = getExistingID(foodName, fdcIDs, jsonFoodLog);
             if (id != null) return id;
         }
         return null;
@@ -71,7 +71,7 @@ public class GradeAccountDAO implements SignupDataAccessInterface, LoginDataAcce
     }
 
     @Nullable
-    private static Integer getInteger(String foodName, String[] fdcIDs, JSONObject jsonFoodLog) {
+    private static Integer getExistingID(String foodName, String[] fdcIDs, JSONObject jsonFoodLog) {
         for (String id : fdcIDs) {
             JSONObject foodInfo = jsonFoodLog.getJSONObject(id);
             if(foodInfo.get("name").equals(foodName)){
@@ -110,11 +110,12 @@ public class GradeAccountDAO implements SignupDataAccessInterface, LoginDataAcce
 
     //loads the food information for requested date
     @Override
-    public List<Food> loadFoodInfo(String username, LocalDate date){
-        AccountInfo user = GradeHelper.getUser(username);
-        List<DayInfo> days = user.getDays();
-        DayInfo currDay = days.get(0);
-        return currDay.getFoodLog();
+    public JSONObject loadFoodInfo(String username, String date){
+        if(this.DayExists(date, username)){
+            JSONObject dayFoodLog = GradeHelper.getSingleDayJSONFoodLog(username, date);
+            return dayFoodLog;
+        }
+        return null;
     }
 
     public boolean DayExists(String date, String username){

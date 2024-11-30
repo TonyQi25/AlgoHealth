@@ -9,5 +9,5 @@ import java.util.List;
 public interface LogFoodDataAccessInterface {
     void saveFood (LocalDate date, String username, String password, Food foodIntake, Integer fdcID);
 
-    List<Food> loadFoodInfo(String userName, LocalDate date);
+    JSONObject loadFoodInfo(String userName, String date);
 }
