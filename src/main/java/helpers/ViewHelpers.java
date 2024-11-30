@@ -22,7 +22,7 @@ public class ViewHelpers {
 
     // general helpers
     public static JButton getPasswordToggleButton(JPanel passwordPanel, JTextField passwordShowField,
-                                           JPasswordField passwordHideField) {
+                                           JPasswordField passwordHideField, int fieldIndex) {
         String SHOW_MESSAGE = "Show";
         String HIDE_MESSAGE = "Hide";
         JButton togglePasswordButton = new JButton(SHOW_MESSAGE);
@@ -30,17 +30,17 @@ public class ViewHelpers {
         togglePasswordButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (passwordPanel.getComponent(1) instanceof JPasswordField) {
+                if (passwordPanel.getComponent(fieldIndex) instanceof JPasswordField) {
                     String hideText = new String(passwordHideField.getPassword());
-                    passwordPanel.remove(1);
+                    passwordPanel.remove(fieldIndex);
                     passwordShowField.setText(hideText);
-                    passwordPanel.add(passwordShowField, 1);
+                    passwordPanel.add(passwordShowField, fieldIndex);
                     togglePasswordButton.setText(HIDE_MESSAGE);
                 } else {
                     String showText = passwordShowField.getText();
-                    passwordPanel.remove(1);
+                    passwordPanel.remove(fieldIndex);
                     passwordHideField.setText(showText);
-                    passwordPanel.add(passwordHideField, 1);
+                    passwordPanel.add(passwordHideField, fieldIndex);
                     togglePasswordButton.setText(SHOW_MESSAGE);
                 }
             }

@@ -16,7 +16,7 @@ public class DeleteFoodView extends JPanel implements PropertyChangeListener {
 
     private final DeleteFoodViewModel deleteFoodViewModel;
     private final DeleteFoodController deleteFoodController;
-    private final String viewName = "delete food";
+    private final String viewName = "day details";
 
     private final JPanel deleteFoodPanel = new JPanel();
     private JPanel introPanel;

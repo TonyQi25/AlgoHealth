@@ -90,7 +90,7 @@ public class SignupView extends JPanel implements PropertyChangeListener {
         JTextField passwordShowField = new JTextField(15);
         JPasswordField passwordHideField = new JPasswordField(15);
         JButton togglePasswordButton = ViewHelpers.getPasswordToggleButton(this.passwordPanel, passwordShowField,
-                passwordHideField);
+                passwordHideField, 3);
 
         passwordShowField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
