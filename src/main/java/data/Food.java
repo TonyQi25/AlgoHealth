@@ -9,11 +9,6 @@ public class Food {
     private HashMap<String, Object> calories;
     private HashMap<String, HashMap<String, Object>> microNutrients;
     private HashMap<String, HashMap<String, Object>> macroNutrients;
-
-    public double getTotalFat() {
-        return totalFat;
-    }
-
     private double totalCalories;
     private double totalProtein;
 
@@ -108,6 +103,9 @@ public class Food {
         this.totalFat = (double) this.getMacroNutrients().get("Fat").get(
                 "amount per 100")/100*this.weight;
     }
+    public double getTotalFat() {
+        return totalFat;
+    }
 
     public double getTotalCalories() {
         return totalCalories;
@@ -119,5 +117,15 @@ public class Food {
 
     public double getTotalCarb() {
         return totalCarb;
+    }
+
+    public void setNutritionFacts(HashMap<String, HashMap<String, Object>> microNutrients,
+                                   HashMap<String, HashMap<String, Object>> macroNutrients){
+        this.setMacroNutrients(macroNutrients);
+        this.setMicroNutrients(microNutrients);
+        this.setTotalProtein();
+        this.setTotalFat();
+        this.setTotalCalories();
+        this.setTotalCarb();
     }
 }

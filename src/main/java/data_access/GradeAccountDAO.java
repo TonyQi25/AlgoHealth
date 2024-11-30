@@ -113,6 +113,12 @@ public class GradeAccountDAO implements SignupDataAccessInterface, LoginDataAcce
             }
         }
         newFoodInfo.put("weight", newWeight);
+        Food newFood = new Food(foodIntake.getDescription(), newWeight, foodIntake.getCalories());
+        newFood.setNutritionFacts(foodIntake.getMicroNutrients(), foodIntake.getMacroNutrients());
+        newFoodInfo.put("totalCalories", newFood.getTotalCalories());
+        newFoodInfo.put("totalFat", newFood.getTotalFat());
+        newFoodInfo.put("totalCarb", newFood.getTotalCarb());
+        newFoodInfo.put("totalProtein", newFood.getTotalProtein());
         newDayFoodLog.put(Integer.toString(fdcID), newFoodInfo);
         newFoodLog.put(date, newDayFoodLog);
         GradeHelper.addFoodUserInfo(username, password, user, newFoodLog, date);
