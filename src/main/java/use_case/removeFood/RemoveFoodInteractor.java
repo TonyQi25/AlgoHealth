@@ -17,5 +17,11 @@ public class RemoveFoodInteractor implements RemoveFoodInputBoundary{
     @Override
     public void execute(RemoveFoodInputData input) {
 
+        // call remove food method
+        System.out.println("removing food");
+
+        RemoveFoodOutputData output = new RemoveFoodOutputData("Food deleted", input.getUsername(), input.getViewingDate());
+        outputBoundary.prepareSuccessView(output);
+
     }
 }

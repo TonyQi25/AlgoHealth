@@ -49,12 +49,16 @@ public class HistoryPresenter implements HistoryOutputBoundary {
 
     @Override
     public void prepareRemoveFoodView(RemoveFoodInputData inputData) {
+        System.out.println("transition from history to remove called");
         final RemoveFoodState removeFoodState = removeFoodViewModel.getState();
 
         removeFoodState.setUsername(inputData.getUsername());
         removeFoodState.setViewingDate(inputData.getViewingDate());
         removeFoodState.setFoodName(inputData.getFoodName());
         removeFoodState.setWeight(inputData.getWeight());
+        removeFoodState.setRemoveFoodError("");
+        removeFoodState.setOutputMessage("");
+        removeFoodState.setCompleted(false);
 
         this.removeFoodViewModel.setState(removeFoodState);
         this.removeFoodViewModel.firePropertyChanged();

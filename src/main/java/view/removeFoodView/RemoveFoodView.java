@@ -6,6 +6,7 @@ import interface_adapter.remove_food.RemoveFoodState;
 import interface_adapter.remove_food.RemoveFoodViewModel;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -14,7 +15,7 @@ import java.beans.PropertyChangeListener;
 public class RemoveFoodView extends JPanel implements ActionListener, PropertyChangeListener {
 
     private final String viewName = "remove food";
-    private JLabel responseLabel;
+    private final JLabel responseLabel;
 
     private JButton returnToHistoryButton;
 
@@ -26,6 +27,15 @@ public class RemoveFoodView extends JPanel implements ActionListener, PropertyCh
         this.controller = controller;
         this.responseLabel = new JLabel();
 
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
+        responseLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        this.add(responseLabel);
+        this.returnToHistoryButton = returnButton();
+        returnToHistoryButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        this.add(returnToHistoryButton);
+
+        this.viewModel.addPropertyChangeListener(this);
     }
 
     private JButton returnButton() {
@@ -34,7 +44,7 @@ public class RemoveFoodView extends JPanel implements ActionListener, PropertyCh
 
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                System.out.println("return clicked");
 
             }
 
@@ -52,7 +62,12 @@ public class RemoveFoodView extends JPanel implements ActionListener, PropertyCh
     public void propertyChange(PropertyChangeEvent evt) {
         final RemoveFoodState state = (RemoveFoodState) evt.getNewValue();
         if (state.getRemoveFoodError().isEmpty()) {
-            responseLabel.setText(state.getOutputMessage());
+            if (!state.getCompleted()) {
+                controller.execute(state.getFoodName(), state.getWeight(), state.getUsername(), state.getViewingDate());
+            } else {
+                System.out.println("State completed and property change called");
+                responseLabel.setText(state.getOutputMessage());
+            }
         }   else {
             responseLabel.setText(state.getRemoveFoodError());
         }

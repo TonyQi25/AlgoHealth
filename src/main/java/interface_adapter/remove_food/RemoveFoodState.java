@@ -8,6 +8,7 @@ public class RemoveFoodState {
     private String removeFoodError;
     private String viewingDate;
     private String username;
+    private boolean completed;
 
     public void setOutputMessage(String outputMessage) {
         this.outputMessage = outputMessage;
@@ -15,6 +16,10 @@ public class RemoveFoodState {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
     }
 
     public void setRemoveFoodError(String removeFoodError) {
@@ -32,6 +37,11 @@ public class RemoveFoodState {
     public void setWeight(double weight) {
         this.weight = weight;
     }
+
+    public boolean getCompleted() {
+        return completed;
+    }
+
 
     public double getWeight() {
         return weight;
