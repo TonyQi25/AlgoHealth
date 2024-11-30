@@ -2,31 +2,34 @@ package use_case.food_logging;
 import api.FoodDataCentralPopulateDAO;
 import api.FoodDataCentralSearchDAO;
 import data.Food;
-import data_access.GradeAccountDAO;
 import org.json.JSONObject;
+import use_case.display_food_options.InMemoryFoodSelectionDataAccessInterface;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class LogFoodInteractor implements LogFoodInputBoundary {
-    private final LogFoodDataAccessInterface foodLoggingDAO;
+    //private final FoodDataCentralPopulateDAO logFoodDataAccessObject;
     private final LogFoodOutputBoundary logFoodPresenter;
+    private InMemoryFoodSelectionDataAccessInterface inMemoryFoodSelectionDAO;
 
 
-    public LogFoodInteractor(LogFoodDataAccessInterface foodLoggingDAO ,LogFoodOutputBoundary logFoodPresenter) {
+    public LogFoodInteractor(LogFoodOutputBoundary logFoodPresenter,
+                             InMemoryFoodSelectionDataAccessInterface inMemoryFoodSelectionDAO) {
         this.logFoodPresenter = logFoodPresenter;
-        this.foodLoggingDAO = foodLoggingDAO;
+        this.inMemoryFoodSelectionDAO = inMemoryFoodSelectionDAO;
     }
 
    //@Override
     public void execute(LogFoodInputData logFoodInputData) {
-        final FoodDataCentralSearchDAO usdaObject = new FoodDataCentralSearchDAO(FoodDataCentralSearchDAO
-                .genMyApiKey("myFDCApiKey.txt"));
-        JSONObject result = usdaObject.getFoodByFdcId(logFoodInputData.getFdcId());
+        /*final FoodDataCentralSearchDAO usdaObject = new FoodDataCentralSearchDAO(FoodDataCentralSearchDAO
+                .genMyApiKey("myFDCApiKey.txt"));*/
+        //JSONObject result = usdaObject.getFoodByFdcId(logFoodInputData.getFdcId());
         // final Food food = FoodDataCentralPopulateDAO.foodFromFirstResultUsda(
                 // logFoodInputData.getFoodName(), usdaObject);
-        final Food food = FoodDataCentralPopulateDAO.foodFromResultUsda(
-                result, usdaObject);
+        /*final Food food = FoodDataCentralPopulateDAO.foodFromResultUsda(
+                result, usdaObject);*/
+        Food food = inMemoryFoodSelectionDAO.getCurrFoodEntity();
         food.setWeight(logFoodInputData.getFoodWeight());
         food.setTotalCarb();
         food.setTotalProtein();
@@ -44,8 +47,7 @@ public class LogFoodInteractor implements LogFoodInputBoundary {
         final ArrayList<Object> fatWUnit = new ArrayList<>();
         fatWUnit.add(String.valueOf(food.getTotalFat()));
         proteinWUnit.add("g");
-        foodLoggingDAO.saveFood(logFoodInputData.getUsername(),
-                logFoodInputData.getPassword(), food, logFoodInputData.getFdcId());
+
         final LogFoodOutputData logFoodOutputData = new LogFoodOutputData(food.getDescription(), food.getWeight(),
                 food.getStandardUnit(), calWUnit, proteinWUnit, carbsWUnit, fatWUnit);
         logFoodPresenter.prepareLogFoodView(logFoodOutputData);

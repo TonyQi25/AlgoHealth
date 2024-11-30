@@ -1,8 +1,5 @@
 package data;
 
-import helpers.HashMapFromString;
-import org.json.JSONObject;
-
 import java.util.HashMap;
 
 public class Food {
@@ -11,9 +8,12 @@ public class Food {
     private float weight;
     private HashMap<String, Object> calories;
     private HashMap<String, HashMap<String, Object>> microNutrients;
-    private HashMap<String, Object> protein;
+    private HashMap<String, HashMap<String, Object>> macroNutrients;
+   /* private HashMap<String, Object> protein;
     private HashMap<String, Object> carbs;
-    private HashMap<String, Object> fat;
+    private HashMap<String, Object> fat;*/
+
+
 
     public double getTotalFat() {
         return totalFat;
@@ -26,13 +26,14 @@ public class Food {
     private double totalFat;
 
     public Food() {
-        this.description = "";
-        this.weight = 0;
-        this.calories = new HashMap<>();
-        this.microNutrients = new HashMap<>();
-        this.protein = new HashMap<>();
+        description = "";
+        weight = 0;
+        calories = new HashMap<>();
+        microNutrients = new HashMap<>();
+        macroNutrients = new HashMap<>();
+        /*this.protein = new HashMap<>();
         this.carbs = new HashMap<>();
-        this.fat = new HashMap<>();
+        this.fat = new HashMap<>();*/
     }
 
     public Food(String name, float weight, HashMap<String, Object> calories) {
@@ -40,10 +41,18 @@ public class Food {
         this.weight = weight;
         this.calories = calories;
         this.microNutrients = new HashMap<>();  // could also just put in the nutrients right from the constructor
-        this.protein = new HashMap<>();  // depends on how API calls work! Check back after API calls do smth
-        this.carbs = new HashMap<>();
-        this.fat = new HashMap<>();
+        this.macroNutrients = new HashMap<>();  // depends on how API calls work! Check back after API calls do smth
     }
+
+/*    public Food(String name, float weight, HashMap<String, Object> calories, HashMap<String, Object> protein,
+                HashMap<String, Object> carbs, HashMap<String, Object> fat) {
+        this.description = name;
+        this.weight = weight;
+        this.calories = calories;
+        this.protein = protein;
+        this.carbs = carbs;
+        this.fat = fat;
+    }*/
 
     public String getDescription() {
         return this.description;
@@ -61,16 +70,8 @@ public class Food {
         return this.microNutrients;
     }
 
-    public HashMap<String, Object> getProtein() {
-        return this.protein;
-    }
-
-    public HashMap<String, Object> getCarbs() {
-        return carbs;
-    }
-
-    public HashMap<String, Object> getFat() {
-        return fat;
+    public HashMap<String, HashMap<String, Object>> getMacroNutrients() {
+        return this.macroNutrients;
     }
 
     public void setCalories(HashMap<String, Object> calories) {
@@ -81,20 +82,12 @@ public class Food {
         this.description = description;
     }
 
+    public void setMacroNutrients(HashMap<String, HashMap<String, Object>> macroNutrients) {
+        this.macroNutrients = macroNutrients;
+    }
+
     public void setMicroNutrients(HashMap<String, HashMap<String, Object>> microNutrients) {
         this.microNutrients = microNutrients;
-    }
-
-    public void setProtein(HashMap<String, Object> protein) {
-        this.protein = protein;
-    }
-
-    public void setCarbs(HashMap<String, Object> carbs) {
-        this.carbs = carbs;
-    }
-
-    public void setFat(HashMap<String, Object> fat) {
-        this.fat = fat;
     }
 
     public void setStandardUnit(String standardUnit) {
@@ -114,7 +107,8 @@ public class Food {
     }
 
     public void setTotalProtein() {
-        this.totalProtein = (double) this.getProtein().get("amount per 100")/100*this.weight;
+        this.totalProtein = (double) this.getMacroNutrients().get("Protein").get(
+                "amount per 100")/100*this.weight;
     }
 
     public void setTotalCarb() {
@@ -129,7 +123,8 @@ public class Food {
     }
 
     public void setTotalFat() {
-        this.totalFat = (double) this.getFat().get("amount per 100")/100*this.weight;
+        this.totalFat = (double) this.getMacroNutrients().get("Fat").get(
+                "amount per 100")/100*this.weight;
     }
 
     public double getTotalCalories() {
@@ -142,45 +137,5 @@ public class Food {
 
     public double getTotalCarb() {
         return totalCarb;
-    }
-
-    public String toString() {
-        JSONObject foodStringObject = new JSONObject();
-
-        foodStringObject.put("description", this.getDescription());
-        foodStringObject.put("standard unit", this.getStandardUnit());
-        foodStringObject.put("weight", this.getWeight());
-        foodStringObject.put("calories", this.getCalories());
-        foodStringObject.put("micronutrients", this.getMicroNutrients());
-        foodStringObject.put("protein", this.getProtein());
-        foodStringObject.put("carbs", this.getCarbs());
-        foodStringObject.put("fat", this.getFat());
-
-        return foodStringObject.toString();
-    }
-
-    public static Food fromString(String foodString) {
-        Food newFood = new Food();
-        JSONObject foodObject = new JSONObject(foodString);
-
-        newFood.setDescription((String) foodObject.get("description"));
-        newFood.setStandardUnit((String) foodObject.get("standard unit"));
-        newFood.setWeight((float) foodObject.get("weight"));
-
-        HashMap<String, Object> calories = HashMapFromString.hashMapFromString((String) foodObject.get("calories"));
-        newFood.setCalories(calories);
-
-        newFood.setMicroNutrients(new HashMap<>());
-
-        HashMap<String, Object> protein = HashMapFromString.hashMapFromString((String) foodObject.get("protein"));
-        newFood.setProtein(protein);
-
-        HashMap<String, Object> carbs = HashMapFromString.hashMapFromString((String) foodObject.get("carbs"));
-        newFood.setProtein(carbs);
-
-        HashMap<String, Object> fat = HashMapFromString.hashMapFromString((String) foodObject.get("fat"));
-        newFood.setProtein(fat);
-
-        return newFood;
     }
 }
