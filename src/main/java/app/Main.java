@@ -15,6 +15,7 @@ public class Main {
                 .addDisplayOptionsView()
                 .addLoginView()
                 .addSignupView()
+                .addDeleteFoodView()
                 .addDisplayOptionsUseCase()
                 .addDailyValueRecsUseCase()
                 .selectFromFoodOptionsUseCase()

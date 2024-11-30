@@ -9,6 +9,8 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.daily_value_recs.DailyValueRecsController;
 import interface_adapter.daily_value_recs.DailyValueRecsPresenter;
 import interface_adapter.daily_value_recs.MainViewModel;
+import interface_adapter.delete_food.DeleteFoodController;
+import interface_adapter.delete_food.DeleteFoodViewModel;
 import interface_adapter.display_food_options.DisplayFoodOptionsController;
 import interface_adapter.display_food_options.DisplayFoodOptionsPresenter;
 import interface_adapter.display_food_options.DisplayOptionsViewModel;
@@ -46,6 +48,7 @@ import use_case.select_from_food_options.SelectSearchDataAccessInterface;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
+import view.DeleteFoodView.DeleteFoodView;
 import view.DisplayOptionsView;
 import view.LoginView.LoginView;
 import view.SignupView.SignupView;
@@ -66,12 +69,14 @@ public class AppBuilder {
     private DisplayOptionsView displayOptionsView;
     private LoginView loginView;
     private SignupView signupView;
+    private DeleteFoodView deleteFoodView;
 
     private MainViewModel mainViewModel;
     private LogFoodViewModel logFoodViewModel;
     private DisplayOptionsViewModel displayOptionsViewModel;
     private LoginViewModel loginViewModel;
     private SignupViewModel signupViewModel;
+    private DeleteFoodViewModel deleteFoodViewModel;
 
     private InMemoryFoodSelectionDataAccessInterface inMemoryFoodSelectionDAO;
     private DisplayFoodOptionsDataAccessInterface foodDataCentralSearchDAO;
@@ -127,6 +132,18 @@ public class AppBuilder {
                 dietOptions, restrictionOptions, goalOptions);
 
         cardPanel.add(signupView.getViewName(), signupView);
+        return this;
+    }
+
+    public AppBuilder addDeleteFoodView() {
+        this.deleteFoodViewModel = new DeleteFoodViewModel();
+
+        // come back here when things are implemented
+        DeleteFoodController deleteFoodController = new DeleteFoodController();
+
+        this.deleteFoodView = new DeleteFoodView(this.deleteFoodViewModel, deleteFoodController);
+
+        cardPanel.add(this.deleteFoodView.getViewName(), this.deleteFoodView);
         return this;
     }
 
