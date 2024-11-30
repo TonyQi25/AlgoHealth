@@ -86,26 +86,7 @@ public class HistoryView extends JPanel implements ActionListener, PropertyChang
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                // e.g. "Apple: ###.##(g/ml), ...
-                String name;
-                double weight;
-
-                String input = list.getSelectedValue();
-
-                //tester
-                //input = "Apple: 323.43(g/ml)";
-                //input = null;
-
-                if (input != null) {
-                    String[] split = input.split("(:)|(,)|(\\()");
-                    name = split[0];
-                    weight = Double.parseDouble(split[1]);
-                } else {
-                    name = "";
-                    weight = 0.0;
-                }
-
-                historyController.removeHighlightedFood(name, weight, username, viewingDate.toString());
+                historyController.removeHighlightedFood(list.getSelectedValue(), username, viewingDate.toString());
             }
         });
 

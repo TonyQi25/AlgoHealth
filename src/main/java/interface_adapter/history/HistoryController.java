@@ -27,8 +27,25 @@ public class HistoryController {
         historyUseCaseInteractor.execute(input);
     }
 
-    public void removeHighlightedFood(String foodName, double foodWeight, String username, String viewingDate) {
-        final RemoveFoodInputData input = new RemoveFoodInputData(foodName, foodWeight, username, viewingDate);
+    public void removeHighlightedFood(String line, String username, String viewingDate) {
+
+        String name;
+        double weight;
+
+        //tester
+        //input = "Apple(123123): 323.43(g/ml)";
+        //input = null;
+
+        if (line != null) {
+            String[] split = line.split("(:)|(,)|(\\()|(\\))");
+            name = split[0];
+            weight = Double.parseDouble(split[1]);
+        } else {
+            name = "";
+            weight = 0.0;
+        }
+
+        final RemoveFoodInputData input = new RemoveFoodInputData(name, weight, username, viewingDate);
 
         historyUseCaseInteractor.removeHighlightedFood(input);
     }
