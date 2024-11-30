@@ -30,15 +30,15 @@ public class HistoryPresenter implements HistoryOutputBoundary {
         historyState.setHistoryError("");
         historyState.setCompleted(true);
 
-        System.out.println(response.getFoodList());
-
         this.historyViewModel.setState(historyState);
         this.historyViewModel.firePropertyChanged();
 
         this.viewManagerModel.setState(historyViewModel.getViewName());
-        this.viewManagerModel.firePropertyChanged();
 
         System.out.println("firePropertyChanged called");
+        this.viewManagerModel.firePropertyChanged();
+
+
     }
 
     @Override

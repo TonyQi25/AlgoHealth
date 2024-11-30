@@ -90,8 +90,6 @@ public class HistoryView extends JPanel implements ActionListener, PropertyChang
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                // create Remove state and send it in Viewmodel manager (but there is no manager here)
-                // or use Remove controller? to have exectue?
 
                 // e.g. "Apple: ###.##(g/ml), ...
                 String name;
@@ -101,6 +99,8 @@ public class HistoryView extends JPanel implements ActionListener, PropertyChang
 
                 //tester
                 input = "Apple: 323.43(g/ml)";
+                //input = null;
+
                 if (input != null) {
                     String[] split = input.split("(:)|(,)|(\\()");
                     name = split[0];
@@ -165,22 +165,22 @@ public class HistoryView extends JPanel implements ActionListener, PropertyChang
         list = new JList<>(listModel);
         list.setFixedCellWidth(300);
 
-        list.addListSelectionListener(new ListSelectionListener() {
-
-            // dont even need to always check
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                String input = list.getSelectedValue();
-                if (input != null) {
-                    String[] split = input.split(":");
-                    highlightedFood = split[0];
-                    System.out.println(highlightedFood);
-                } else {
-                    highlightedFood = "";
-                }
-
-            }
-        });
+//        list.addListSelectionListener(new ListSelectionListener() {
+//
+//            // dont even need to always check
+//            @Override
+//            public void valueChanged(ListSelectionEvent e) {
+//                String input = list.getSelectedValue();
+//                if (input != null) {
+//                    String[] split = input.split(":");
+//                    highlightedFood = split[0];
+//                    System.out.println(highlightedFood);
+//                } else {
+//                    highlightedFood = "";
+//                }
+//
+//            }
+//        });
         return list;
     }
 

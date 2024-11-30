@@ -22,10 +22,13 @@ public class RemoveFoodInteractor implements RemoveFoodInputBoundary{
 
         // call remove food method
         System.out.println("removing food");
-
-        RemoveFoodOutputData output = new RemoveFoodOutputData(input.getFoodName() + " is removed", input.getUsername(), input.getViewingDate());
-        outputBoundary.prepareSuccessView(output);
-
+        if (input.getFoodName().isEmpty()) {
+            System.out.println("error No food selected");
+            outputBoundary.prepareFailView("No Food Selected");
+        }   else {
+            RemoveFoodOutputData output = new RemoveFoodOutputData(input.getFoodName() + " is removed", input.getUsername(), input.getViewingDate());
+            outputBoundary.prepareSuccessView(output);
+        }
     }
 
     public void returnToHistory(HistoryInputData input) {

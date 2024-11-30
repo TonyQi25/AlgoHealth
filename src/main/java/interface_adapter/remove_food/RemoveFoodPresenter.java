@@ -39,7 +39,9 @@ public class RemoveFoodPresenter implements RemoveFoodOutputBoundary {
 
     @Override
     public void prepareFailView(String errorMessage) {
-
+        RemoveFoodState state = viewModel.getState();
+        state.setRemoveFoodError(errorMessage);
+        viewModel.firePropertyChanged();
     }
 
     @Override
