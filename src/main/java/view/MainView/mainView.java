@@ -103,9 +103,9 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
                     if (evt.getSource().equals(submitButton)) {
                         final LogFoodState currentState = logFoodViewModel.getState();
 
-                        logFoodController.execute(currentState.getFdcIDofSelection(),
-                                (float) currentState.getWeightNumber(),
-                                currentState.getWeightUnit());
+//                        logFoodController.execute(currentState.getFdcIDofSelection(),
+//                                (float) currentState.getWeightNumber(),
+//                                currentState.getWeightUnit());
                     }
                 }
         );

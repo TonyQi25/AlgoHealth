@@ -1,5 +1,7 @@
 package helpers;
 
+import interface_adapter.delete_food.DeleteFoodController;
+import interface_adapter.delete_food.DeleteFoodViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.signup.SignupController;
@@ -18,7 +20,7 @@ import java.util.stream.IntStream;
 
 public class ViewHelpers {
 
-    // log in and sign up helpers
+    // general helpers
     public static JButton getPasswordToggleButton(JPanel passwordPanel, JTextField passwordShowField,
                                            JPasswordField passwordHideField) {
         String SHOW_MESSAGE = "Show";
@@ -75,7 +77,7 @@ public class ViewHelpers {
 
         return failedFrame;
     }
-    // end of log in and sign up helpers
+    // end of general helpers
 
     // sign up helpers
     public static String[] getDobOptions(int min, int max, boolean ascending) {
@@ -108,7 +110,7 @@ public class ViewHelpers {
         dietList.setSelectedIndex(0);
         signupViewModel.getState().setDiet(dietList.getSelectedValuesList().toArray(new String[0]));
 
-        JButton dietDropDownButton = new JButton("Click to see list of diets!");
+        JButton dietDropDownButton = new JButton("None");
         JScrollPane dietScrollList = new JScrollPane(dietList);
         JPopupMenu dietListMenu = new JPopupMenu();
         dietListMenu.add(dietScrollList);
@@ -139,7 +141,7 @@ public class ViewHelpers {
         restrictionList.setSelectedIndex(0);
         signupViewModel.getState().setDietaryRestrictions(restrictionList.getSelectedValuesList());
 
-        JButton restrictionDropDownButton = new JButton("Click to see list of dietary restrictions!");
+        JButton restrictionDropDownButton = new JButton("None");
         JScrollPane restrictionScrollList = new JScrollPane(restrictionList);
         JPopupMenu restrictionListMenu = new JPopupMenu();
         restrictionListMenu.add(restrictionScrollList);
@@ -231,4 +233,85 @@ public class ViewHelpers {
         return signupButton;
     }
     // end of log in helpers
+
+    // delete food helpers
+    public static JButton getDeleteToHistoryButton(DeleteFoodController deleteFoodController) {
+        JButton historyButton = new JButton("Go to History");
+        historyButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                deleteFoodController.switchToHistory();
+            }
+        });
+        return historyButton;
+    }
+
+    public static JButton getDeleteButton(DeleteFoodViewModel deleteFoodViewModel,
+                                          DeleteFoodController deleteFoodController) {
+        JButton deleteButton = new JButton("Delete Food");
+        deleteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (deleteFoodViewModel.getState().getSelectedFoods().isEmpty()) {
+                    getFailedDialog("No foods selected.");
+                } else {
+                    JDialog confirmDialog = getDeleteConfirmDialog(deleteFoodViewModel, deleteFoodController);
+                    confirmDialog.setVisible(true);
+                }
+            }
+        });
+        return deleteButton;
+    }
+
+    public static JDialog getDeleteConfirmDialog(DeleteFoodViewModel deleteFoodViewModel,
+                                                 DeleteFoodController deleteFoodController) {
+        JDialog confirmDeleteDialog = new JDialog();
+        JPanel confirmPanel = new JPanel();
+        JLabel deleteLabel = new JLabel("Deleting:");
+        JList<String> selectedFoods = new JList<>(
+                deleteFoodViewModel.getState().getSelectedFoods().toArray(new String[0]));
+
+        JPanel buttonPanel = getDeleteButtonPanel(deleteFoodViewModel, deleteFoodController, confirmDeleteDialog);
+
+        confirmPanel.setLayout(new BoxLayout(confirmPanel, BoxLayout.Y_AXIS));
+        confirmPanel.add(deleteLabel);
+        confirmPanel.add(selectedFoods);
+        confirmPanel.add(buttonPanel);
+
+        confirmDeleteDialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        confirmDeleteDialog.setContentPane(confirmPanel);
+        confirmDeleteDialog.setModal(true);
+        confirmDeleteDialog.pack();
+
+        return confirmDeleteDialog;
+    }
+
+    @NotNull
+    private static JPanel getDeleteButtonPanel(DeleteFoodViewModel deleteFoodViewModel,
+                                               DeleteFoodController deleteFoodController,
+                                               JDialog confirmDeleteDialog) {
+        JPanel buttonPanel = new JPanel();
+        JButton confirmButton = new JButton("Confirm");
+        JButton cancelButton = new JButton("Cancel");
+
+        confirmButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                deleteFoodController.execute(deleteFoodViewModel.getState().getSelectedFoods());
+                confirmDeleteDialog.dispose();
+            }
+        });
+
+        cancelButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                confirmDeleteDialog.dispose();
+            }
+        });
+
+        buttonPanel.add(confirmButton);
+        buttonPanel.add(cancelButton);
+
+        return buttonPanel;
+    }
 }
