@@ -1,4 +1,4 @@
-/*package use_case.one_day_history;
+package use_case.one_day_history;
 
 import data.Food;
 import use_case.daily_value_recs.DailyValueCalculationStrategy;
@@ -6,7 +6,7 @@ import use_case.select_from_food_options.SelectSearchDataAccessInterface;
 
 import static api.PopulateUtility.createFood;
 
-public class UpdateHistoryTotalsInteractor implements UpdateHistoryTotalsOutputBoundary {
+public class UpdateHistoryTotalsInteractor implements UpdateHistoryTotalsInputBoundary {
 
 
     // constants for DVs based on https://www.canada.ca/en/health-canada/services/food-nutrition/
@@ -79,5 +79,5 @@ public class UpdateHistoryTotalsInteractor implements UpdateHistoryTotalsOutputB
 
         updateHistoryTotalsPresenter.prepareSuccessView(outputData);
 
-    }*/
-//}
+    }
+}
