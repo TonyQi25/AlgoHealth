@@ -1,13 +1,14 @@
 package interface_adapter.delete_food;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DeleteFoodState {
 
-    private String username;
-    private String password;
-    private List<String> foods;
-    private List<String> selectedFoods;
+    private String username = "";
+    private String password = "";
+    private List<String> foods = new ArrayList<>();
+    private List<String> selectedFoods = new ArrayList<>();
 
     public String getUsername() {
         return username;
