@@ -10,6 +10,15 @@ public class HistoryState {
     private LocalDate viewingDate;
     private String historyError;
     private String username;
+    private boolean completed;
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
+
+    public boolean getCompleted() {
+        return completed;
+    }
 
     public void setDayDetails(List<String> dayDetails) {
         this.dayDetails = dayDetails;

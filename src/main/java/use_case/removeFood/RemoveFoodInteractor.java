@@ -1,5 +1,8 @@
 package use_case.removeFood;
 
+import use_case.history.HistoryInputData;
+import use_case.history.HistoryInteractor;
+
 public class RemoveFoodInteractor implements RemoveFoodInputBoundary{
 
     private RemoveFoodOutputBoundary outputBoundary;
@@ -20,8 +23,12 @@ public class RemoveFoodInteractor implements RemoveFoodInputBoundary{
         // call remove food method
         System.out.println("removing food");
 
-        RemoveFoodOutputData output = new RemoveFoodOutputData("Food deleted", input.getUsername(), input.getViewingDate());
+        RemoveFoodOutputData output = new RemoveFoodOutputData(input.getFoodName() + " is removed", input.getUsername(), input.getViewingDate());
         outputBoundary.prepareSuccessView(output);
 
+    }
+
+    public void returnToHistory(HistoryInputData input) {
+        outputBoundary.prepareHistoryView(input);
     }
 }

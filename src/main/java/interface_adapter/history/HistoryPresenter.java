@@ -28,6 +28,7 @@ public class HistoryPresenter implements HistoryOutputBoundary {
         historyState.setDayDetails(response.getFoodList());
         historyState.setViewingDate(response.getViewingDate());
         historyState.setHistoryError("");
+        historyState.setCompleted(true);
 
         System.out.println(response.getFoodList());
 

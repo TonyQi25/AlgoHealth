@@ -7,4 +7,5 @@ public interface HistoryInputBoundary {
     void execute(HistoryInputData input);
 
     void removeHighlightedFood(RemoveFoodInputData input);
+
 }

@@ -221,7 +221,7 @@ public class HistoryView extends JPanel implements ActionListener, PropertyChang
         final HistoryController historyController = new HistoryController(historyInteractor);
         HistoryView historyView = new HistoryView(historyViewModel, historyController);
 
-        final RemoveFoodOutputBoundary removeFoodOutputBoundary = new RemoveFoodPresenter(removeFoodViewModel, viewManagerModel);
+        final RemoveFoodOutputBoundary removeFoodOutputBoundary = new RemoveFoodPresenter(removeFoodViewModel, viewManagerModel, historyViewModel);
         final RemoveFoodInputBoundary removeFoodInteractor = new RemoveFoodInteractor(removeFoodOutputBoundary, historyDAO);
         final RemoveFoodController removeFoodController = new RemoveFoodController(removeFoodInteractor);
         RemoveFoodView removeFoodView = new RemoveFoodView(removeFoodViewModel, removeFoodController);
@@ -250,7 +250,11 @@ public class HistoryView extends JPanel implements ActionListener, PropertyChang
         final HistoryState state = (HistoryState) evt.getNewValue();
         username = state.getUsername();
         if (state.getHistoryError().isEmpty()) {
-            setFields(state);
+            if (!state.getCompleted()) {
+                historyController.execute(state.getViewingDate(), 0, state.getUsername());
+            } else {
+                setFields(state);
+            }
         } else {
             errorLabel.setText(state.getHistoryError());
         }

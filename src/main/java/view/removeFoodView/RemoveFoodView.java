@@ -11,10 +11,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RemoveFoodView extends JPanel implements ActionListener, PropertyChangeListener {
 
     private final String viewName = "remove food";
+
+    private String username;
+    private String date;
+
     private final JLabel responseLabel;
 
     private JButton returnToHistoryButton;
@@ -46,6 +53,8 @@ public class RemoveFoodView extends JPanel implements ActionListener, PropertyCh
             public void actionPerformed(ActionEvent e) {
                 System.out.println("return clicked");
 
+                controller.returnToHistory(date, username);
+
             }
 
         });
@@ -61,6 +70,10 @@ public class RemoveFoodView extends JPanel implements ActionListener, PropertyCh
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         final RemoveFoodState state = (RemoveFoodState) evt.getNewValue();
+
+        username = state.getUsername();
+        date = state.getViewingDate();
+
         if (state.getRemoveFoodError().isEmpty()) {
             if (!state.getCompleted()) {
                 controller.execute(state.getFoodName(), state.getWeight(), state.getUsername(), state.getViewingDate());
