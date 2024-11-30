@@ -7,6 +7,7 @@ import interface_adapter.food_logging.LogFoodController;
 import interface_adapter.food_logging.LogFoodState;
 import interface_adapter.food_logging.LogFoodViewModel;
 import interface_adapter.display_food_options.DisplayFoodOptionsController;
+import interface_adapter.logout.LogoutController;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -43,6 +44,8 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
     private DisplayFoodOptionsController displayFoodOptionsController;
 
     private LogFoodController logFoodController;
+
+    private LogoutController logoutController;
 
     public mainView(MainViewModel mainViewModel, LogFoodViewModel logFoodViewModel) {
 
@@ -133,6 +136,15 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
                     }
                 });
 
+        JButton logoutButton = new JButton("Log Out");
+
+        logoutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                logoutController.execute(mainViewModel.getState().getUsername());
+            }
+        });
+
         // Input and submit panel.
         JPanel searchPanel = new JPanel();
         searchPanel.setBorder(BorderFactory.createRaisedBevelBorder());
@@ -184,7 +196,7 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
         totalsAndRecPanel.add(totalFat);
         totalsAndRecPanel.add(progressBarFat);
 
-        totalsAndRecPanel.add(new JLabel(""));
+        totalsAndRecPanel.add(logoutButton);
         totalsAndRecPanel.add(new JLabel(""));
         totalsAndRecPanel.add(getDVrecs);
 
@@ -314,5 +326,9 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
 
     public void setDisplayFoodOptionsController(DisplayFoodOptionsController displayFoodOptionsController) {
         this.displayFoodOptionsController = displayFoodOptionsController;
+    }
+
+    public void setLogoutController(LogoutController logoutController) {
+        this.logoutController = logoutController;
     }
 }

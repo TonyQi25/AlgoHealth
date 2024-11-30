@@ -19,6 +19,7 @@ public class Main {
                 .addDailyValueRecsUseCase()
                 .selectFromFoodOptionsUseCase()
                 .addFoodLoggingUseCase()
+                .addLogoutUseCase()
                 .build();
 
         application.pack();
