@@ -19,6 +19,6 @@ public class UpdateHistoryTotalsPresenter implements UpdateHistoryTotalsOutputBo
     public void prepareSuccessView(UpdateHistoryTotalsOutputData output) {
         final UpdateHistoryTotalsState state = viewModel.getState();
 
-        state.set
+        //state.set
     }
 }

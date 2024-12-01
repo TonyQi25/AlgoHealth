@@ -5,7 +5,7 @@ import interface_adapter.ViewModel;
 public class UpdateHistoryTotalsViewModel extends ViewModel<UpdateHistoryTotalsState> {
 
     public UpdateHistoryTotalsViewModel() {
-        super("update history totals");
+        super("one day history");
         setState(new UpdateHistoryTotalsState());
     }
 }

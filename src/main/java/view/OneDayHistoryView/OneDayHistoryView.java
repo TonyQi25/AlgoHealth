@@ -27,7 +27,7 @@ public class OneDayHistoryView extends JPanel implements PropertyChangeListener 
 
     private final UpdateHistoryTotalsViewModel updateHistoryTotalsViewModel;
     private final UpdateHistoryTotalsController updateHistoryTotalsController;
-    private final String viewName = "update history totals";
+    private final String viewName = "one day history";
 
     private JProgressBar progressBarCalories = new JProgressBar(0, 100);
     private JProgressBar progressBarProtein = new JProgressBar(0, 100);

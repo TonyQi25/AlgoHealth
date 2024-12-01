@@ -178,14 +178,14 @@ public class LoginView extends JPanel implements PropertyChangeListener {
         String setUsername = loginState.getUsername();
         String setPassword = loginState.getPassword();
 
-        JTextField usernameField = (JTextField) this.usernamePasswordPanel.getComponent(1);
+        JTextField usernameField = (JTextField) this.usernamePanel.getComponent(1);
         usernameField.setText(setUsername);
 
-        JButton passwordToggleButton = (JButton) this.usernamePasswordPanel.getComponent(5);
-        if (!(this.usernamePasswordPanel.getComponent(4) instanceof JPasswordField)) {
+        JButton passwordToggleButton = (JButton) this.togglePanel.getComponent(1);
+        if (!(this.usernamePanel.getComponent(1) instanceof JPasswordField)) {
             passwordToggleButton.doClick();
         }
-        JPasswordField passwordField = (JPasswordField) this.usernamePasswordPanel.getComponent(4);
+        JPasswordField passwordField = (JPasswordField) this.passwordPanel.getComponent(1);
         passwordField.setText(setPassword);
     }
 }
