@@ -1,4 +1,4 @@
-package view.LoginView;
+/*package view.LoginView;
 
 import data_access.TempDAOInMemory;
 import interface_adapter.login.LoginController;
@@ -8,7 +8,7 @@ import use_case.login.LoginDataAccessInterface;
 import use_case.login.LoginInputBoundary;
 import use_case.login.LoginInteractor;
 import use_case.login.LoginOutputBoundary;
-import view.mainView;
+import view.MainView.mainView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -192,4 +192,4 @@ public class LoginViewBuilder {   // maybe more of the methods should have gette
 
         return loginFrame;
     }
-}
+}*/

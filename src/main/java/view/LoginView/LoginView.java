@@ -1,4 +1,4 @@
-package view.LoginView;
+/*package view.LoginView;
 
 import javax.swing.*;
 
@@ -26,4 +26,4 @@ public class LoginView {
 
         loginView.generateLoginView();
     }
-}
+}*/

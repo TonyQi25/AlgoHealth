@@ -1,3 +1,4 @@
+/*
 package view.SignupView;
 
 import data_access.TempDAOInMemory;
@@ -9,7 +10,7 @@ import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
 import view.TextFieldProperties.NumericFilter;
-import view.mainView;
+import view.MainView.mainView;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -511,4 +512,4 @@ public class SignupViewBuilder {
 
         return this.signupFrame;
     }
-}
+}*/

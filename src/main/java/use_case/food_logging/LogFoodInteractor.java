@@ -1,53 +1,55 @@
 package use_case.food_logging;
-import api.populateFromUsda;
-import api.callUsdaApi;
+import api.FoodDataCentralPopulateDAO;
+import api.FoodDataCentralSearchDAO;
 import data.Food;
+import org.json.JSONObject;
+import use_case.display_food_options.InMemoryFoodSelectionDataAccessInterface;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class LogFoodInteractor implements LogFoodInputBoundary {
-    private final LogFoodDataAccessInterface logFoodDataAccessObject;
+    //private final FoodDataCentralPopulateDAO logFoodDataAccessObject;
     private final LogFoodOutputBoundary logFoodPresenter;
-    private final populateFromUsda foodConstruct;
+    private InMemoryFoodSelectionDataAccessInterface inMemoryFoodSelectionDAO;
 
 
-    public LogFoodInteractor(LogFoodDataAccessInterface logFoodDataAccessObject, LogFoodOutputBoundary logFoodPresenter,
-                             populateFromUsda foodConstruct) {
-        this.logFoodDataAccessObject = logFoodDataAccessObject;
+    public LogFoodInteractor(LogFoodOutputBoundary logFoodPresenter,
+                             InMemoryFoodSelectionDataAccessInterface inMemoryFoodSelectionDAO) {
         this.logFoodPresenter = logFoodPresenter;
-        this.foodConstruct = foodConstruct;
+        this.inMemoryFoodSelectionDAO = inMemoryFoodSelectionDAO;
     }
 
-    @Override
+   //@Override
     public void execute(LogFoodInputData logFoodInputData) {
-        final callUsdaApi usdaObject = new callUsdaApi("DEMO_KEY");
-        final Food food = populateFromUsda.foodFromFirstResultUsda(logFoodInputData.getFood(), usdaObject);
-        final HashMap<String, Object> calories = food.getCalories();
-        final HashMap<String, HashMap<String, Object>> macroNutrients = food.getMacroNutrients();
-        final HashMap<String, Object> protein = macroNutrients.get("Protein");
-        final HashMap<String, Object> carbs = macroNutrients.get("Carbohydrate");
-        final HashMap<String, Object> fat = macroNutrients.get("Fat");
-        final float foodAmount = food.getWeight();
-        final float calAmount = (Integer) calories.get("amount per 100" + food.getStandardUnit())/100*foodAmount;
-        final float proteinAmount = (Integer) protein.get("amount per 100" + food.getStandardUnit())/100*foodAmount;
-        final float carbAmount = (Integer) carbs.get("amount per 100" + food.getStandardUnit())/100*foodAmount;
-        final float fatAmount = (Integer) fat.get("amount per 100" + food.getStandardUnit())/100*foodAmount;
+        /*final FoodDataCentralSearchDAO usdaObject = new FoodDataCentralSearchDAO(FoodDataCentralSearchDAO
+                .genMyApiKey("myFDCApiKey.txt"));*/
+        //JSONObject result = usdaObject.getFoodByFdcId(logFoodInputData.getFdcId());
+        // final Food food = FoodDataCentralPopulateDAO.foodFromFirstResultUsda(
+                // logFoodInputData.getFoodName(), usdaObject);
+        /*final Food food = FoodDataCentralPopulateDAO.foodFromResultUsda(
+                result, usdaObject);*/
+        Food food = inMemoryFoodSelectionDAO.getCurrFoodEntity();
+        food.setWeight(logFoodInputData.getFoodWeight());
+        food.setTotalCarb();
+        food.setTotalProtein();
+        food.setTotalFat();
+        food.setTotalCalories();
         final ArrayList<Object> calWUnit = new ArrayList<>();
-        calWUnit.add(String.valueOf(calAmount));
+        calWUnit.add(String.valueOf(food.getTotalCalories()));
         calWUnit.add("Kcal");
         final ArrayList<Object> proteinWUnit = new ArrayList<>();
-        proteinWUnit.add(String.valueOf(proteinAmount));
+        proteinWUnit.add(String.valueOf(food.getTotalProtein()));
         proteinWUnit.add("g");
         final ArrayList<Object> carbsWUnit = new ArrayList<>();
-        carbsWUnit.add(String.valueOf(carbAmount));
+        carbsWUnit.add(String.valueOf(food.getTotalCarb()));
         carbsWUnit.add("g");
         final ArrayList<Object> fatWUnit = new ArrayList<>();
-        fatWUnit.add(String.valueOf(fatAmount));
+        fatWUnit.add(String.valueOf(food.getTotalFat()));
         proteinWUnit.add("g");
 
-        final LogFoodOutputData logFoodOutputData = new LogFoodOutputData(food.getDescription(), calWUnit, proteinWUnit,
-                carbsWUnit, fatWUnit);
+        final LogFoodOutputData logFoodOutputData = new LogFoodOutputData(food.getDescription(), food.getWeight(),
+                food.getStandardUnit(), calWUnit, proteinWUnit, carbsWUnit, fatWUnit);
         logFoodPresenter.prepareLogFoodView(logFoodOutputData);
     }
 }
