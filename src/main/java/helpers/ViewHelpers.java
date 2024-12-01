@@ -119,6 +119,9 @@ public class ViewHelpers {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 List<String> selectedValues = dietList.getSelectedValuesList();
+                if (isNoneInMultSelection(dietList)) {
+                    selectedValues.remove("None");
+                }
                 String newText = String.join(", ", selectedValues);
                 dietDropDownButton.setText(newText);
                 signupViewModel.getState().setDiet(selectedValues.toArray(new String[0]));
@@ -150,6 +153,9 @@ public class ViewHelpers {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 List<String> selectedValues = restrictionList.getSelectedValuesList();
+                if (isNoneInMultSelection(restrictionList)) {
+                    selectedValues.remove("None");
+                }
                 String newText = String.join(", ", selectedValues);
                 restrictionDropDownButton.setText(newText);
                 signupViewModel.getState().setDietaryRestrictions(selectedValues);
@@ -163,6 +169,12 @@ public class ViewHelpers {
             }
         });
         return restrictionDropDownButton;
+    }
+
+    // should this be private or public?
+    private static boolean isNoneInMultSelection(JList<String> selectedList) {
+        return selectedList.getSelectedIndices().length >= 2
+                && selectedList.getSelectedValuesList().contains("None");
     }
 
     public static JButton getSignupButton(SignupViewModel signupViewModel, SignupController signupController) {
