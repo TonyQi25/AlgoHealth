@@ -48,6 +48,9 @@ public class DOBSelectorListener implements ActionListener {
         if (selectedDayIndex < maxDay) {
             dayField.setSelectedIndex(selectedDayIndex);
         }
+        else {
+            selectedDayIndex = 0;
+        }
 
         signupViewModel.getState().setDateOfBirth(
                 LocalDate.of(selectedYear, selectedMonth, selectedDayIndex + 1));
