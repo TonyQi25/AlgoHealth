@@ -103,6 +103,7 @@ public class Food {
         this.totalFat = (double) this.getMacroNutrients().get("Fat").get(
                 "amount per 100")/100*this.weight;
     }
+
     public double getTotalFat() {
         return totalFat;
     }
