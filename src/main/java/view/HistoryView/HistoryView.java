@@ -31,6 +31,7 @@ public class HistoryView extends JPanel implements ActionListener, PropertyChang
 
     private final String viewName = "history";
     private String username;
+    private String password;
     private final HistoryViewModel historyViewModel;
 
     private JPanel headerPanel;
@@ -44,6 +45,8 @@ public class HistoryView extends JPanel implements ActionListener, PropertyChang
     private JButton prevButton;
     private JButton nextButton;
 
+    private JButton backButton;
+
     private JButton removeFoodButton;
 
     private HistoryController historyController;
@@ -56,7 +59,7 @@ public class HistoryView extends JPanel implements ActionListener, PropertyChang
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         build();
-        historyController.execute(viewingDate, 0, username);
+        historyController.execute(viewingDate, 0, username, password);
     }
 
     public void setHeaderPanel() {
@@ -86,11 +89,27 @@ public class HistoryView extends JPanel implements ActionListener, PropertyChang
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                historyController.removeHighlightedFood(list.getSelectedValue(), username, viewingDate.toString());
+                historyController.removeHighlightedFood(list.getSelectedValue(), username, viewingDate.toString(), password);
             }
         });
 
         return removeFoodButton;
+    }
+
+    private JButton createBackButton() {
+        backButton = new JButton("return");
+        backButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        backButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+
+
+            }
+        });
+
+        return backButton;
     }
 
     private JButton createPrevDayButton() {
@@ -100,7 +119,7 @@ public class HistoryView extends JPanel implements ActionListener, PropertyChang
         prevButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                historyController.execute(viewingDate, -1, username);
+                historyController.execute(viewingDate, -1, username, password);
             }
         });
         return prevButton;
@@ -117,7 +136,7 @@ public class HistoryView extends JPanel implements ActionListener, PropertyChang
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                historyController.execute(viewingDate, 1, username);
+                historyController.execute(viewingDate, 1, username, password);
             }
         });
         return nextButton;
@@ -136,27 +155,10 @@ public class HistoryView extends JPanel implements ActionListener, PropertyChang
 
     public JList<String> createDataList() {
         DefaultListModel<String> listModel = new DefaultListModel<>();
-        listModel.addElement("Hello3");
 
         list = new JList<>(listModel);
         list.setFixedCellWidth(300);
 
-//        list.addListSelectionListener(new ListSelectionListener() {
-//
-//            // dont even need to always check
-//            @Override
-//            public void valueChanged(ListSelectionEvent e) {
-//                String input = list.getSelectedValue();
-//                if (input != null) {
-//                    String[] split = input.split(":");
-//                    highlightedFood = split[0];
-//                    System.out.println(highlightedFood);
-//                } else {
-//                    highlightedFood = "";
-//                }
-//
-//            }
-//        });
         return list;
     }
 
@@ -225,9 +227,10 @@ public class HistoryView extends JPanel implements ActionListener, PropertyChang
     public void propertyChange(PropertyChangeEvent evt) {
         final HistoryState state = (HistoryState) evt.getNewValue();
         username = state.getUsername();
+        password = state.getPassword();
         if (state.getHistoryError().isEmpty()) {
             if (!state.getCompleted()) {
-                historyController.execute(state.getViewingDate(), 0, state.getUsername());
+                historyController.execute(state.getViewingDate(), 0, state.getUsername(), password);
             } else {
                 setFields(state);
             }

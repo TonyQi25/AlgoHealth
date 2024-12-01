@@ -2,9 +2,9 @@ package use_case.removeFood;
 
 public interface RemoveFoodDataAccessInterface {
 
-    boolean foodExists(String foodName, String username); // maybe more parameters
+    Integer foodExists(String viewingDate, String username, String foodName); // maybe more parameters
 
-    boolean removeFood(String foodName, String username);
+    boolean removeFood(String viewingDate, String username, String password, String fdcID);
 
 
 

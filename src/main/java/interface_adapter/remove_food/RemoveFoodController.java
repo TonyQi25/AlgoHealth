@@ -16,15 +16,15 @@ public class RemoveFoodController {
         this.removeFoodInputBoundary = removeFoodInteractor;
     }
 
-    public void execute(String foodName, double weight, String username, String date) {
+    public void execute(String foodName, double weight, String username, String date, String password) {
         System.out.println("controller called");
-        RemoveFoodInputData input = new RemoveFoodInputData(foodName, weight, username, date);
+        RemoveFoodInputData input = new RemoveFoodInputData(foodName, weight, username, date, password);
         removeFoodInputBoundary.execute(input);
     }
 
-    public void returnToHistory(String date, String username) {
+    public void returnToHistory(String date, String username, String password) {
 
-        HistoryInputData input = new HistoryInputData(LocalDate.parse(date), username);
+        HistoryInputData input = new HistoryInputData(LocalDate.parse(date), username, password);
         removeFoodInputBoundary.returnToHistory(input);
     }
 }

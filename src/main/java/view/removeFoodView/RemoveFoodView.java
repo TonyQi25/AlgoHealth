@@ -20,11 +20,12 @@ public class RemoveFoodView extends JPanel implements ActionListener, PropertyCh
     private final String viewName = "remove food";
 
     private String username;
+    private String password;
     private String date;
 
     private final JLabel responseLabel;
 
-    private JButton returnToHistoryButton;
+    private final JButton returnToHistoryButton;
 
     private RemoveFoodViewModel viewModel;
     private RemoveFoodController controller;
@@ -53,7 +54,7 @@ public class RemoveFoodView extends JPanel implements ActionListener, PropertyCh
             public void actionPerformed(ActionEvent e) {
                 System.out.println("return clicked");
 
-                controller.returnToHistory(date, username);
+                controller.returnToHistory(date, username, password);
 
             }
 
@@ -72,11 +73,12 @@ public class RemoveFoodView extends JPanel implements ActionListener, PropertyCh
         final RemoveFoodState state = (RemoveFoodState) evt.getNewValue();
 
         username = state.getUsername();
+        password = state.getPassword();
         date = state.getViewingDate();
 
         if (state.getRemoveFoodError().isEmpty()) {
             if (!state.getCompleted()) {
-                controller.execute(state.getFoodName(), state.getWeight(), state.getUsername(), state.getViewingDate());
+                controller.execute(state.getFoodName(), state.getWeight(), state.getUsername(), state.getViewingDate(), password);
             } else {
                 System.out.println("State completed and property change called");
                 responseLabel.setText(state.getOutputMessage());

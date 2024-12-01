@@ -1,12 +1,11 @@
 package use_case.removeFood;
 
 import use_case.history.HistoryInputData;
-import use_case.history.HistoryInteractor;
 
 public class RemoveFoodInteractor implements RemoveFoodInputBoundary{
 
-    private RemoveFoodOutputBoundary outputBoundary;
-    private RemoveFoodDataAccessInterface removeFoodDataAccessInterface;
+    private final RemoveFoodOutputBoundary outputBoundary;
+    private final RemoveFoodDataAccessInterface removeFoodDataAccessInterface;
 
 
     public RemoveFoodInteractor(RemoveFoodOutputBoundary removeFoodOutputBoundary,
@@ -20,12 +19,15 @@ public class RemoveFoodInteractor implements RemoveFoodInputBoundary{
     @Override
     public void execute(RemoveFoodInputData input) {
 
-        // call remove food method
         System.out.println("removing food");
         if (input.getFoodName().isEmpty()) {
             System.out.println("error No food selected");
             outputBoundary.prepareFailView("No Food Selected");
         }   else {
+
+            removeFoodDataAccessInterface.removeFood(input.getViewingDate(), input.getUsername(), input.getPassword(),
+                    String.valueOf(removeFoodDataAccessInterface.foodExists(input.getViewingDate(), input.getUsername(), input.getFoodName())));
+
             RemoveFoodOutputData output = new RemoveFoodOutputData(input.getFoodName() + " is removed", input.getUsername(), input.getViewingDate());
             outputBoundary.prepareSuccessView(output);
         }

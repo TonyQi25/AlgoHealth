@@ -14,27 +14,23 @@ public class HistoryController {
         this.historyUseCaseInteractor = historyUseCaseInteractor;
     }
 
-    public void execute(LocalDate viewingDate, int offset, String username) {
+    public void execute(LocalDate viewingDate, int offset, String username, String password) {
         final HistoryInputData input;
         if (offset == -1) {
-            input = new HistoryInputData(viewingDate.minusDays(1), username);
+            input = new HistoryInputData(viewingDate.minusDays(1), username, password);
         }   else if (offset == 1) {
-            input = new HistoryInputData(viewingDate.plusDays(1), username);
+            input = new HistoryInputData(viewingDate.plusDays(1), username, password);
         }   else {
-            input = new HistoryInputData(viewingDate, username);
+            input = new HistoryInputData(viewingDate, username, password);
         }
 
         historyUseCaseInteractor.execute(input);
     }
 
-    public void removeHighlightedFood(String line, String username, String viewingDate) {
+    public void removeHighlightedFood(String line, String username, String viewingDate, String password) {
 
         String name;
         double weight;
-
-        //tester
-        //input = "Apple(123123): 323.43(g/ml)";
-        //input = null;
 
         if (line != null) {
             String[] split = line.split("(:)|(,)|(\\()|(\\))");
@@ -45,7 +41,7 @@ public class HistoryController {
             weight = 0.0;
         }
 
-        final RemoveFoodInputData input = new RemoveFoodInputData(name, weight, username, viewingDate);
+        final RemoveFoodInputData input = new RemoveFoodInputData(name, weight, username, viewingDate, password);
 
         historyUseCaseInteractor.removeHighlightedFood(input);
     }

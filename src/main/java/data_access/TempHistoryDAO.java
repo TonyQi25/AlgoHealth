@@ -1,10 +1,8 @@
 package data_access;
 
-import data.DayInfo;
+import org.json.JSONObject;
 import use_case.history.HistoryDataAccessInterface;
 import use_case.removeFood.RemoveFoodDataAccessInterface;
-
-import java.time.LocalDate;
 
 public class TempHistoryDAO implements HistoryDataAccessInterface, RemoveFoodDataAccessInterface {
 
@@ -14,17 +12,18 @@ public class TempHistoryDAO implements HistoryDataAccessInterface, RemoveFoodDat
     }
 
     @Override
-    public DayInfo getDay(String date, String username) {
+    public JSONObject loadFoodInfo(String username, String date) {
         return null;
     }
 
     @Override
-    public boolean foodExists(String foodName, String username) {
-        return false;
+    public Integer foodExists(String viewingDate, String username, String foodName) {
+        return 123123;
     }
 
     @Override
-    public boolean removeFood(String foodName, String username) {
+    public boolean removeFood(String viewingDate, String username, String password, String fdcID) {
         return false;
     }
+
 }

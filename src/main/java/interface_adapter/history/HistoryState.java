@@ -10,6 +10,7 @@ public class HistoryState {
     private LocalDate viewingDate;
     private String historyError;
     private String username;
+    private String password;
     private boolean completed;
 
     public void setCompleted(boolean completed) {
@@ -34,6 +35,14 @@ public class HistoryState {
 
     public void setViewingDate(LocalDate viewingDate) {
         this.viewingDate = viewingDate;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public LocalDate getViewingDate() {

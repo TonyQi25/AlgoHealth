@@ -9,10 +9,12 @@ public class HistoryInputData {
 
     private final LocalDate date;
     private final String username;
+    private final String password;
 
-    public HistoryInputData(LocalDate date, String username) {
+    public HistoryInputData(LocalDate date, String username, String password) {
         this.date = date;
         this.username = username;
+        this.password = password;
     }
 
     public LocalDate getDate() {
@@ -21,5 +23,9 @@ public class HistoryInputData {
 
     public String getUsername() {
         return username;
+    }
+
+    public String getPassword() {
+        return password;
     }
 }
