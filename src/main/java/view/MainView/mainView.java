@@ -137,7 +137,7 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
 
                         logFoodController.execute(currentState.getFdcIDofSelection(),
                                 (float) currentState.getWeightNumber(),
-                                currentState.getWeightUnit(), "testSaveAccount", "12345");
+                                currentState.getWeightUnit(), currentState.getUsername(), currentState.getPassword());
                     }
                 }
         );
