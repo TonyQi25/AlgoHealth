@@ -161,9 +161,18 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
         searchAndWeightSBSPanel.add(searchPanel);
         searchAndWeightSBSPanel.add(foodWeightUnitsSubmitPanel);
 
+        //navigation panel
+        JPanel navigationPanel = new JPanel();
+        navigationPanel.setBorder(BorderFactory.createRaisedBevelBorder());
+        JButton historyButton = new JButton("History");
+        JButton loginButton = new JButton("Login/Logout");
+        navigationPanel.add(historyButton);
+        navigationPanel.add(loginButton);
+
         // Add to main panel.
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+        mainPanel.add(navigationPanel);
         mainPanel.add(searchAndWeightSBSPanel);
 
         JPanel totalsAndRecPanel = new JPanel();
