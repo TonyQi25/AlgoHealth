@@ -10,8 +10,8 @@ public class LogFoodController {
         this.logFoodUseCaseInteractor = logFoodUseCaseInteractor;
     }
 
-    public void execute(Integer fdcId, float foodWeight, String weightUnit){
-        final LogFoodInputData foodInputData = new LogFoodInputData(fdcId, foodWeight, weightUnit);
+    public void execute(Integer fdcId, float foodWeight, String weightUnit, String username, String password){
+        final LogFoodInputData foodInputData = new LogFoodInputData(fdcId, foodWeight, weightUnit, username, password);
         logFoodUseCaseInteractor.execute(foodInputData);
     }
 }

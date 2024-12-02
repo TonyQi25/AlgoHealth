@@ -31,8 +31,12 @@ public class DayInfo {
         this.foodLog.add(newFood);
     }
 
-    public void setTotalCalories(float newTotalCalories) {
-        this.totalCalories = newTotalCalories;
+    public void setTotalCalories() {
+        float totalCalories = 0;
+        for (Food foodItem: this.foodLog){
+            totalCalories += foodItem.getTotalCalories();
+        }
+        this.totalCalories = totalCalories;
     }
 
     public void setFoodLog(List<Food> foodLog) {

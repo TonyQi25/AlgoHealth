@@ -3,8 +3,11 @@ import data.AccountInfo;
 import data.Food;
 import org.json.JSONObject;
 
-public interface LogFoodDataAccessInterface {
-    JSONObject saveFood (String userName, String password, Food foodIntake) throws DataAccessException;
+import java.time.LocalDate;
+import java.util.List;
 
-    JSONObject loadFoodInfo(String userName) throws DataAccessException;
+public interface LogFoodDataAccessInterface {
+    void saveFood (String date, String username, String password, Food foodIntake, Integer fdcID);
+
+    JSONObject loadFoodInfo(String userName, String date);
 }
