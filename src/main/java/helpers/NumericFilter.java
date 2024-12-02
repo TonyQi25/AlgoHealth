@@ -1,4 +1,4 @@
-package view.Helpers;
+package helpers;
 
 import interface_adapter.signup.SignupViewModel;
 

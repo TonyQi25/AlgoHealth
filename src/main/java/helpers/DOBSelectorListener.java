@@ -1,6 +1,5 @@
-package view.Helpers;
+package helpers;
 
-import interface_adapter.signup.SignupState;
 import interface_adapter.signup.SignupViewModel;
 
 import javax.swing.*;
@@ -48,6 +47,9 @@ public class DOBSelectorListener implements ActionListener {
 
         if (selectedDayIndex < maxDay) {
             dayField.setSelectedIndex(selectedDayIndex);
+        }
+        else {
+            selectedDayIndex = 0;
         }
 
         signupViewModel.getState().setDateOfBirth(

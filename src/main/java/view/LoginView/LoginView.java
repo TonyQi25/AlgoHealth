@@ -3,11 +3,12 @@ package view.LoginView;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginState;
 import interface_adapter.login.LoginViewModel;
-import view.Helpers.ViewHelpers;
+import helpers.ViewHelpers;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -21,6 +22,9 @@ public class LoginView extends JPanel implements PropertyChangeListener {
     private JPanel welcomePanel;
     private JPanel usernamePanel;
     private JPanel passwordPanel;
+    private JPanel usernamePasswordPanel;
+    private JPanel togglePanel;
+    private JPanel userPassTogglePanel;
     private JPanel buttonPanel;
 
     public LoginView(LoginViewModel loginViewModel, LoginController loginController) {
@@ -28,13 +32,19 @@ public class LoginView extends JPanel implements PropertyChangeListener {
         this.loginController = loginController;
 
         this.loginViewModel.addPropertyChangeListener(this);
-        
 
         // welcome label panel
         this.welcomePanel = new JPanel();
         JLabel welcomeLabel = new JLabel("Welcome to AlgoHealth's Nutrition Tracker!");
 
         this.welcomePanel.add(welcomeLabel);
+
+        // username and password panel
+        final int NUM_ROWS = 2;
+        final int NUM_COLS = 1;
+
+        this.usernamePasswordPanel = new JPanel();
+        this.usernamePasswordPanel.setLayout(new GridLayout(NUM_ROWS, NUM_COLS));
 
         // username panel
         this.usernamePanel = new JPanel();
@@ -67,7 +77,7 @@ public class LoginView extends JPanel implements PropertyChangeListener {
         JTextField passwordShowField = new JTextField(15);
         JPasswordField passwordHideField = new JPasswordField(15);
         JButton togglePasswordButton = ViewHelpers.getPasswordToggleButton(
-                this.passwordPanel, passwordShowField, passwordHideField);
+                this.passwordPanel, passwordShowField, passwordHideField, 1);
 
         passwordShowField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -105,7 +115,31 @@ public class LoginView extends JPanel implements PropertyChangeListener {
 
         this.passwordPanel.add(passwordLabel);
         this.passwordPanel.add(passwordHideField);
-        this.passwordPanel.add(togglePasswordButton);
+
+        // configuring username password panel
+        Dimension usernamePasswordSize = usernamePanel.getPreferredSize();
+        System.out.println(usernamePasswordSize);
+        this.usernamePasswordPanel.setPreferredSize(new Dimension(usernamePasswordSize.width * NUM_COLS,
+                usernamePasswordSize.height * NUM_ROWS));
+
+        this.usernamePasswordPanel.add(usernamePanel);
+        this.usernamePasswordPanel.add(passwordPanel);
+
+        // toggle panel
+        this.togglePanel = new JPanel();
+        this.togglePanel.setLayout(new GridLayout(NUM_ROWS, NUM_COLS));
+
+        Dimension buttonSize = togglePasswordButton.getPreferredSize();
+        this.togglePanel.setPreferredSize(new Dimension(buttonSize.width,
+                usernamePasswordSize.height * NUM_ROWS));
+
+        this.togglePanel.add(new JLabel(""));
+        this.togglePanel.add(togglePasswordButton);
+
+        // username, password, and toggle button panel
+        this.userPassTogglePanel = new JPanel();
+        this.userPassTogglePanel.add(usernamePasswordPanel);
+        this.userPassTogglePanel.add(togglePanel);
 
         // buttons panel
         this.buttonPanel = new JPanel();
@@ -118,8 +152,7 @@ public class LoginView extends JPanel implements PropertyChangeListener {
         // putting it all together
         this.loginPanel.setLayout(new BoxLayout(this.loginPanel, BoxLayout.Y_AXIS));
         this.loginPanel.add(welcomePanel);
-        this.loginPanel.add(usernamePanel);
-        this.loginPanel.add(passwordPanel);
+        this.loginPanel.add(userPassTogglePanel);
         this.loginPanel.add(buttonPanel);
 
         this.add(loginPanel);
@@ -148,7 +181,7 @@ public class LoginView extends JPanel implements PropertyChangeListener {
         JTextField usernameField = (JTextField) this.usernamePanel.getComponent(1);
         usernameField.setText(setUsername);
 
-        JButton passwordToggleButton = (JButton) this.passwordPanel.getComponent(2);
+        JButton passwordToggleButton = (JButton) this.togglePanel.getComponent(1);
         if (!(this.passwordPanel.getComponent(1) instanceof JPasswordField)) {
             passwordToggleButton.doClick();
         }
