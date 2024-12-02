@@ -3,6 +3,7 @@ import api.FoodDataCentralPopulateDAO;
 import api.FoodDataCentralSearchDAO;
 import data.Food;
 import org.json.JSONObject;
+import use_case.display_food_options.InMemoryFoodSelectionDataAccessInterface;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,21 +11,25 @@ import java.util.HashMap;
 public class LogFoodInteractor implements LogFoodInputBoundary {
     //private final FoodDataCentralPopulateDAO logFoodDataAccessObject;
     private final LogFoodOutputBoundary logFoodPresenter;
+    private InMemoryFoodSelectionDataAccessInterface inMemoryFoodSelectionDAO;
 
 
-    public LogFoodInteractor(LogFoodOutputBoundary logFoodPresenter) {
+    public LogFoodInteractor(LogFoodOutputBoundary logFoodPresenter,
+                             InMemoryFoodSelectionDataAccessInterface inMemoryFoodSelectionDAO) {
         this.logFoodPresenter = logFoodPresenter;
+        this.inMemoryFoodSelectionDAO = inMemoryFoodSelectionDAO;
     }
 
    //@Override
     public void execute(LogFoodInputData logFoodInputData) {
-        final FoodDataCentralSearchDAO usdaObject = new FoodDataCentralSearchDAO(FoodDataCentralSearchDAO
-                .genMyApiKey("myFDCApiKey.txt"));
-        JSONObject result = usdaObject.getFoodByFdcId(logFoodInputData.getFdcId());
+        /*final FoodDataCentralSearchDAO usdaObject = new FoodDataCentralSearchDAO(FoodDataCentralSearchDAO
+                .genMyApiKey("myFDCApiKey.txt"));*/
+        //JSONObject result = usdaObject.getFoodByFdcId(logFoodInputData.getFdcId());
         // final Food food = FoodDataCentralPopulateDAO.foodFromFirstResultUsda(
                 // logFoodInputData.getFoodName(), usdaObject);
-        final Food food = FoodDataCentralPopulateDAO.foodFromResultUsda(
-                result, usdaObject);
+        /*final Food food = FoodDataCentralPopulateDAO.foodFromResultUsda(
+                result, usdaObject);*/
+        Food food = inMemoryFoodSelectionDAO.getCurrFoodEntity();
         food.setWeight(logFoodInputData.getFoodWeight());
         food.setTotalCarb();
         food.setTotalProtein();

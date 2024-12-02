@@ -9,6 +9,11 @@ public class Food {
     private HashMap<String, Object> calories;
     private HashMap<String, HashMap<String, Object>> microNutrients;
     private HashMap<String, HashMap<String, Object>> macroNutrients;
+   /* private HashMap<String, Object> protein;
+    private HashMap<String, Object> carbs;
+    private HashMap<String, Object> fat;*/
+
+
 
     public double getTotalFat() {
         return totalFat;
@@ -26,6 +31,9 @@ public class Food {
         calories = new HashMap<>();
         microNutrients = new HashMap<>();
         macroNutrients = new HashMap<>();
+        /*this.protein = new HashMap<>();
+        this.carbs = new HashMap<>();
+        this.fat = new HashMap<>();*/
     }
 
     public Food(String name, float weight, HashMap<String, Object> calories) {
@@ -35,6 +43,16 @@ public class Food {
         this.microNutrients = new HashMap<>();  // could also just put in the nutrients right from the constructor
         this.macroNutrients = new HashMap<>();  // depends on how API calls work! Check back after API calls do smth
     }
+
+/*    public Food(String name, float weight, HashMap<String, Object> calories, HashMap<String, Object> protein,
+                HashMap<String, Object> carbs, HashMap<String, Object> fat) {
+        this.description = name;
+        this.weight = weight;
+        this.calories = calories;
+        this.protein = protein;
+        this.carbs = carbs;
+        this.fat = fat;
+    }*/
 
     public String getDescription() {
         return this.description;

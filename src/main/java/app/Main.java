@@ -12,12 +12,14 @@ public class Main {
         final AppBuilder appBuilder = new AppBuilder();
         final JFrame application = appBuilder
                 .addMainView()
+                .addDisplayOptionsView()
+                .addDisplayOptionsUseCase()
                 .addDailyValueRecsUseCase()
+                .selectFromFoodOptionsUseCase()
                 .addFoodLoggingUseCase()
                 .build();
 
         application.pack();
         application.setVisible(true);
     }
-
 }
