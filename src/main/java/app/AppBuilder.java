@@ -229,7 +229,8 @@ public class AppBuilder {
     }
 
     public AppBuilder selectFromFoodOptionsUseCase() {
-        this.foodDataCentralSearchDAO2 = new FoodDataCentralSearchDAO(ApiKeyReader
+        final ApiKeyReader apiKeyReader = new ApiKeyReader();
+        this.foodDataCentralSearchDAO2 = new FoodDataCentralSearchDAO(apiKeyReader
                 .genMyApiKey("myFDCApiKey.txt"));
         final SelectFromFoodOptionsOutputBoundary selectFromFoodOptionsPresenter = new SelectFromFoodOptionsPresenter(
                 viewManagerModel);
@@ -245,9 +246,10 @@ public class AppBuilder {
     }
 
     public AppBuilder addDisplayOptionsUseCase() {
+        final ApiKeyReader apiKeyReader = new ApiKeyReader();
 
         this.inMemoryFoodSelectionDAO = new InMemoryFoodSelectionDAO();
-        this.foodDataCentralSearchDAO = new FoodDataCentralSearchDAO(ApiKeyReader
+        this.foodDataCentralSearchDAO = new FoodDataCentralSearchDAO(apiKeyReader
                 .genMyApiKey("myFDCApiKey.txt"));
         final DisplayFoodOptionsOutputBoundary displayFoodOptionsOutputBoundary = new DisplayFoodOptionsPresenter(
                 viewManagerModel, this.displayOptionsViewModel);
