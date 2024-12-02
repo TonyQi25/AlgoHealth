@@ -45,4 +45,8 @@ public class HistoryController {
 
         historyUseCaseInteractor.removeHighlightedFood(input);
     }
+
+    public void goBack(){
+        historyUseCaseInteractor.goBack();
+    }
 }

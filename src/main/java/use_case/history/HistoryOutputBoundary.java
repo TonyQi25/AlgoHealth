@@ -10,4 +10,6 @@ public interface HistoryOutputBoundary {
     void prepareFailView(String errorMessage);
 
     void prepareRemoveFoodView(RemoveFoodInputData response);
+
+    void prepareMainView();
 }

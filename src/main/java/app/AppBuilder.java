@@ -166,7 +166,7 @@ public class AppBuilder {
         this.removeFoodViewModel = new RemoveFoodViewModel();
 
         HistoryOutputBoundary historyPresenter = new HistoryPresenter(
-                this.historyViewModel, this.removeFoodViewModel, this.viewManagerModel);
+                this.historyViewModel, this.removeFoodViewModel, this.viewManagerModel, this.mainViewModel);
         this.tempHistoryDAO = new TempHistoryDAO();
         HistoryInputBoundary historyInteractor = new HistoryInteractor(historyPresenter, tempHistoryDAO);
         HistoryController historyController = new HistoryController(historyInteractor);

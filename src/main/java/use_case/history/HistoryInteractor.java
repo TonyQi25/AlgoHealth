@@ -74,4 +74,8 @@ public class HistoryInteractor implements HistoryInputBoundary{
     public void removeHighlightedFood (RemoveFoodInputData input) {
         historyOutputBoundary.prepareRemoveFoodView(input);
     }
+
+    public void goBack() {
+        historyOutputBoundary.prepareMainView();
+    }
 }
