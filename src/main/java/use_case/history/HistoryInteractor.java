@@ -48,6 +48,8 @@ public class HistoryInteractor implements HistoryInputBoundary{
 //        day3.addToFoodLog(new Food("Cheery", 200.0F, cal6));
 //        sample.put(day3.getDate().toString(), day3);
 
+        System.out.println("calling history usecase for " + input.getUsername() + " " + input.getDate());
+
         if (historyDataAccessInterface.DayExists(input.getDate().toString(), input.getUsername())) {
             JSONObject idToInfo = historyDataAccessInterface.loadFoodInfo(input.getUsername(), input.getDate().toString());
 
@@ -57,21 +59,22 @@ public class HistoryInteractor implements HistoryInputBoundary{
                 String info = "";
 
                 info += idToInfo.getJSONObject(id).getString("name") + ": ";
-                info += idToInfo.getJSONObject(id).getString("weight") + "(g/ml)";
+                info += idToInfo.getJSONObject(id).getDouble("weight") + "(g/ml)";
 
                 returning.add(info);
             }
 
-            System.out.println(returning);
+            System.out.println("Here is the foodlist recieved" + returning);
             final HistoryOutputData output = new HistoryOutputData(returning, input.getDate().toString(), input.getDate(), false);
             historyOutputBoundary.prepareSuccessView(output);
         }   else {
-            System.out.println("Day not found!");
+            System.out.println("DAO RETURNING NO DAY FOUND");
             historyOutputBoundary.prepareFailView("Day Not Found");
         }
     }
 
     public void removeHighlightedFood (RemoveFoodInputData input) {
+        System.out.println("IN HISTORY USECASE password: " + input.getPassword());
         historyOutputBoundary.prepareRemoveFoodView(input);
     }
 

@@ -33,7 +33,7 @@ public class HistoryController {
         double weight;
 
         if (line != null) {
-            String[] split = line.split("(:)|(,)|(\\()|(\\))");
+            String[] split = line.split("(:)|(\\()");
             name = split[0];
             weight = Double.parseDouble(split[1]);
         } else {
