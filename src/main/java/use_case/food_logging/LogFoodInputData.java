@@ -1,5 +1,9 @@
 package use_case.food_logging;
 
+/**
+ * The Input Data for the Log Food Use Case.
+ */
+
 public class LogFoodInputData {
 
     private final Integer fdcId;
@@ -21,7 +25,7 @@ public class LogFoodInputData {
         return foodWeight;
     }
 
-    public String getUsername(){ return username; }
+    public String getUsername() { return username; }
 
     public String getPassword(){ return password; }
 }

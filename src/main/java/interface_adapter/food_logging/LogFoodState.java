@@ -2,6 +2,9 @@ package interface_adapter.food_logging;
 
 import java.util.HashMap;
 
+/**
+ * The state for the Log Food View Model.
+ */
 public class LogFoodState {
     private String foodName = "";
     private double weightNumber = 0;
@@ -75,7 +78,8 @@ public class LogFoodState {
         this.totalFat = totalFat;
     }
 
-    public String toString(){
+    @Override
+    public String toString() {
         return "LogFoodState{"
                 + "foodName='" + foodName + '\''
                 + ", foodWeight='" + weightNumber + '\''
@@ -106,6 +110,7 @@ public class LogFoodState {
     public void setFoodSearchInput(String foodSearchInput) {
         this.foodSearchInput = foodSearchInput;
     }
+
     public String getUsername() {
         return username;
     }
