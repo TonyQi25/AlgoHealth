@@ -64,12 +64,16 @@ public class HistoryPresenter implements HistoryOutputBoundary {
         final RemoveFoodState removeFoodState = removeFoodViewModel.getState();
 
         removeFoodState.setUsername(inputData.getUsername());
+
+        System.out.println("In HistoryPresenter: " + inputData.getUsername());
+        removeFoodState.setPassword(inputData.getPassword());
         removeFoodState.setViewingDate(inputData.getViewingDate());
         removeFoodState.setFoodName(inputData.getFoodName());
         removeFoodState.setWeight(inputData.getWeight());
         removeFoodState.setRemoveFoodError("");
         removeFoodState.setOutputMessage("");
         removeFoodState.setCompleted(false);
+
 
         this.removeFoodViewModel.setState(removeFoodState);
         this.removeFoodViewModel.firePropertyChanged();

@@ -7,15 +7,17 @@ import data.Food;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
 import use_case.food_logging.LogFoodDataAccessInterface;
+import use_case.history.HistoryDataAccessInterface;
 import use_case.login.LoginDataAccessInterface;
 import use_case.logout.LogoutDataAccessInterface;
+import use_case.removeFood.RemoveFoodDataAccessInterface;
 import use_case.signup.SignupDataAccessInterface;
 
 import java.time.LocalDate;
 import java.util.List;
 
 public class GradeAccountDAO implements SignupDataAccessInterface, LoginDataAccessInterface,
-        LogoutDataAccessInterface, LogFoodDataAccessInterface {
+        LogoutDataAccessInterface, LogFoodDataAccessInterface, HistoryDataAccessInterface, RemoveFoodDataAccessInterface {
 
     public void createAccount(String username, String password) {
         GradeHelper.postUser(username, password);
@@ -127,10 +129,16 @@ public class GradeAccountDAO implements SignupDataAccessInterface, LoginDataAcce
     //loads the food information for requested date
     @Override
     public JSONObject loadFoodInfo(String username, String date){
+        System.out.println("TRYING TO LOAD FOOD INFO for day "+date);
         if(this.DayExists(date, username)){
             JSONObject dayFoodLog = GradeHelper.getSingleDayJSONFoodLog(username, date);
+
+            System.out.println(dayFoodLog.toString());
+
             return dayFoodLog;
         }
+
+
         return null;
     }
 

@@ -17,8 +17,8 @@ public class TempHistoryDAO implements HistoryDataAccessInterface, RemoveFoodDat
     }
 
     @Override
-    public Integer foodExists(String viewingDate, String username, String foodName) {
-        return 123123;
+    public Integer FoodExists(String viewingDate, String username, String foodName) {
+        return 0;
     }
 
     @Override

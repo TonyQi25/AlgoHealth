@@ -224,11 +224,22 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
             public void actionPerformed(ActionEvent e) {
                 MainViewState mainState = mainViewModel.getState();
                 HistoryState historyState = historyViewModel.getState();
+
                 historyState.setCompleted(false);
-                historyViewModel.setState(historyState);
+                historyState.setUsername(mainState.getUsername());
+                historyState.setPassword(mainState.getPassword());
+                historyState.setViewingDate(LocalDate.now());
+                historyState.setHistoryError("");
+                historyState.setDate("");
+                historyState.setDayDetails(null);
+
+                System.out.println("From MainView: " + mainState.getUsername());
+
+                HistoryState testingState = historyViewModel.getState();
+
                 historyViewModel.firePropertyChanged();
 
-                System.out.println("clicked");
+
 
                 historyController.execute(LocalDate.now(), 0, mainState.getUsername(), mainState.getPassword());
             }
