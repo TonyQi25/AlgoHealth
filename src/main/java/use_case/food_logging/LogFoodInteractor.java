@@ -51,7 +51,7 @@ public class LogFoodInteractor implements LogFoodInputBoundary {
         final ArrayList<Object> fatWUnit = new ArrayList<>();
         fatWUnit.add(String.valueOf(food.getTotalFat()));
         proteinWUnit.add("g");
-        foodLoggingDAO.saveFood(LocalDate.now().toString(), logFoodInputData.getUsername(),
+        foodLoggingDAO.saveFood(LocalDate.now().minusDays(2).toString(), logFoodInputData.getUsername(),
                 logFoodInputData.getPassword(), food, fdcID);
         final LogFoodOutputData logFoodOutputData = new LogFoodOutputData(food.getDescription(),
                 food.getWeight(),

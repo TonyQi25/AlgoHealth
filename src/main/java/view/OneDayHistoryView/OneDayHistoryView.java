@@ -122,7 +122,6 @@ public class OneDayHistoryView extends JPanel implements PropertyChangeListener 
         if(!state.getCompleted()) {
             updateHistoryTotalsController.execute(username, viewingDate, password);
         }   else {
-            System.out.println("putting up the values: " + state.getCalories());
             setDisplay(state);
         }
     }

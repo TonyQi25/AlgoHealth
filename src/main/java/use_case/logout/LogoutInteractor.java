@@ -1,7 +1,5 @@
 package use_case.logout;
 
-import data.AccountInfo;
-
 public class LogoutInteractor implements LogoutInputBoundary {
 
     private final LogoutDataAccessInterface logoutDataAccessInterface;
@@ -15,12 +13,13 @@ public class LogoutInteractor implements LogoutInputBoundary {
 
     @Override
     public void execute(LogoutInputData logoutInputData) {
-        String currentUsername = logoutInputData.getCurrentUsername();
-        AccountInfo currentAccount = logoutDataAccessInterface.get(currentUsername);
-        logoutDataAccessInterface.save(currentAccount);
+        final String currentUsername = logoutInputData.getCurrentUsername();
 
-        logoutDataAccessInterface.setCurrentUsername(null);
-        LogoutOutputData logoutOutputData = new LogoutOutputData("", "");
+        if (currentUsername != null) {
+            logoutDataAccessInterface.setCurrentUsername(null);
+        }
+
+        final LogoutOutputData logoutOutputData = new LogoutOutputData("", "");
         logoutPresenter.prepareSuccessView(logoutOutputData);
     }
 }

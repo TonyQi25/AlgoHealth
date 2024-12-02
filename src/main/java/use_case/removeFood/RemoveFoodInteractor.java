@@ -26,9 +26,7 @@ public class RemoveFoodInteractor implements RemoveFoodInputBoundary{
     @Override
     public void execute(RemoveFoodInputData input) {
 
-        System.out.println("removing food");
         if (input.getFoodName().isEmpty()) {
-            System.out.println("error No food selected");
             outputBoundary.prepareFailView("No Food Selected");
         }   else {
 

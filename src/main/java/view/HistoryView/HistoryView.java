@@ -201,9 +201,7 @@ public class HistoryView extends JPanel implements ActionListener, PropertyChang
     public void propertyChange(PropertyChangeEvent evt) {
         final HistoryState state = (HistoryState) evt.getNewValue();
         username = state.getUsername();
-        System.out.println("In HistoryView: " + username);
         password = state.getPassword();
-        System.out.println("In HistoryView Password: " + password);
         if (state.getHistoryError().isEmpty()) {
             if (!state.getCompleted()) {
                 historyController.execute(state.getViewingDate(), 0, state.getUsername(), password);
@@ -217,7 +215,6 @@ public class HistoryView extends JPanel implements ActionListener, PropertyChang
     }
 
     private void setFields(HistoryState state) {
-        System.out.println("Hit set property change");
         List<String> info = state.getDayDetails();
         DefaultListModel<String> tempList = new DefaultListModel<>();
 
