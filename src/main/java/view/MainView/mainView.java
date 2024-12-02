@@ -3,10 +3,13 @@ package view.MainView;
 import interface_adapter.daily_value_recs.DailyValueRecsController;
 import interface_adapter.daily_value_recs.MainViewModel;
 import interface_adapter.daily_value_recs.MainViewState;
+import interface_adapter.display_food_options.DisplayOptionsViewModel;
+import interface_adapter.display_food_options.DisplayOptionsViewState;
 import interface_adapter.food_logging.LogFoodController;
 import interface_adapter.food_logging.LogFoodState;
 import interface_adapter.food_logging.LogFoodViewModel;
 import interface_adapter.display_food_options.DisplayFoodOptionsController;
+import view.DisplayOptionsView;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -44,7 +47,8 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
 
     private LogFoodController logFoodController;
 
-    public mainView(MainViewModel mainViewModel, LogFoodViewModel logFoodViewModel) {
+    public mainView(MainViewModel mainViewModel,
+                    LogFoodViewModel logFoodViewModel) {
 
         this.mainViewModel = mainViewModel;
         this.logFoodViewModel = logFoodViewModel;
@@ -66,6 +70,10 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
                 final LogFoodState currentMVState = logFoodViewModel.getState();
                 currentMVState.setFoodSearchInput(foodInputField.getText());
                 logFoodViewModel.setState(currentMVState);
+
+                final MainViewState mainViewState = mainViewModel.getState();
+                mainViewState.setFoodSearchInput(foodInputField.getText());
+                mainViewModel.setState(mainViewState);
             }
 
             @Override
@@ -90,7 +98,7 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
                     public void actionPerformed(ActionEvent evt) {
                         // Change reading direct from field to mediated through a view model.
                         if (evt.getSource().equals(searchFoodButton)) {
-                            displayFoodOptionsController.execute(foodInputField.getText());
+                            displayFoodOptionsController.execute(mainViewModel.getState().getFoodSearchInput());
                         }
                     }
                 });

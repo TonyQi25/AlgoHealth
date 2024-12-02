@@ -10,6 +10,7 @@ public class DisplayFoodOptionsInputData {
 
         userFoodSearchInput = inputFood;
         //this.userBrandInput = userBrandInput;
+
     }
 
     public String getUserFoodSearchInput() {

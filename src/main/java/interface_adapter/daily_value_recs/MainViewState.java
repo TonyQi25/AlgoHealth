@@ -106,4 +106,5 @@ public class MainViewState {
     public void setFdcIDofSelection(int fdcIDofSelection) {
         this.fdcIDofSelection = fdcIDofSelection;
     }
+
 }

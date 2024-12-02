@@ -10,8 +10,8 @@ public class SelectFromFoodOptionsController {
         this.selectFromFoodOptionsInteractor = selectFromFoodOptionsInteractor;
     }
 
-    public void execute(String selection) {
-        SelectFromFoodOptionsInputData selectFromFoodOptionsInputData = new SelectFromFoodOptionsInputData(selection);
+    public void execute(String selection, String errorMessage) {
+        SelectFromFoodOptionsInputData selectFromFoodOptionsInputData = new SelectFromFoodOptionsInputData(selection, errorMessage);
         selectFromFoodOptionsInteractor.execute(selectFromFoodOptionsInputData);
     }
 }
