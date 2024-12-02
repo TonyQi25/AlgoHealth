@@ -11,6 +11,8 @@ import java.util.stream.IntStream;
 
 public class DOBSelectorListener implements ActionListener {
 
+    private final int febDays = 28;
+
     private final SignupViewModel signupViewModel;
 
     private final JComboBox<String> yearField;
@@ -27,17 +29,17 @@ public class DOBSelectorListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        int selectedYear = LocalDate.now().getYear() - yearField.getSelectedIndex();
-        int selectedMonth = monthField.getSelectedIndex() + 1;
+        final int selectedYear = LocalDate.now().getYear() - yearField.getSelectedIndex();
+        final int selectedMonth = monthField.getSelectedIndex() + 1;
         int selectedDayIndex = dayField.getSelectedIndex();
 
-        int maxDay = LocalDate.of(selectedYear, selectedMonth, 1).lengthOfMonth(); // 1 is arbitrary
+        int maxDay = LocalDate.of(selectedYear, selectedMonth, 1).lengthOfMonth();
         if (!LocalDate.now().withYear(selectedYear).isLeapYear() && selectedMonth == 2) {
-            maxDay = 28;
+            maxDay = this.febDays;
         }
 
-        String options = Arrays.toString(IntStream.rangeClosed(1, maxDay).toArray());
-        String[] optionsArray = options.substring(1, options.length() - 1).split(", ");
+        final String options = Arrays.toString(IntStream.rangeClosed(1, maxDay).toArray());
+        final String[] optionsArray = options.substring(1, options.length() - 1).split(", ");
 
         dayField.removeAllItems();
 
@@ -56,7 +58,5 @@ public class DOBSelectorListener implements ActionListener {
                 LocalDate.of(selectedYear, selectedMonth, selectedDayIndex + 1));
 
         System.out.println(LocalDate.of(selectedYear, selectedMonth, selectedDayIndex + 1));
-
-        // set state here, need to add viewmodel(s)
     }
 }

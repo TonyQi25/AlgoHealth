@@ -35,7 +35,7 @@ public class SignupInteractor implements SignupInputBoundary {
                     signupInputData.getGoal(), signupInputData.getUsername(), signupInputData.getPassword(),
                     signupInputData.getDietaryRestrictions());
 
-            List<DayInfo> newDays = new ArrayList<>();
+            final List<DayInfo> newDays = new ArrayList<>();
             newDays.add(new DayInfo(LocalDate.now()));
             accountInfo.setDays(newDays);
 
@@ -44,7 +44,7 @@ public class SignupInteractor implements SignupInputBoundary {
             signupDataAccessObject.setCurrentUsername(accountInfo.getUsername());    // currently does nothing
 
             SignupOutputData signupOutputData = new SignupOutputData(
-                    accountInfo.getUsername(), accountInfo.getPassword(), accountInfo.getDays());
+                    accountInfo.getUsername(), accountInfo.getPassword());
             signupPresenter.prepareSuccessView(signupOutputData);
         }
     }

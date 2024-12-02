@@ -1,11 +1,11 @@
 package use_case.login;
 
+import java.util.List;
+
 import data.AccountInfo;
 import data.Food;
 import data_access.GradeAccountDAO;
 import helpers.UseCaseHelpers;
-
-import java.util.List;
 
 /**
  * The Login Interactor.
@@ -39,17 +39,17 @@ public class LoginInteractor implements LoginInputBoundary {
                 System.out.println("reached interactor");
                 loginDataAccessObject.setCurrentUsername(account.getUsername());
 
-                List<Food> currFoods = account.getDays().get(account.getDays().size() - 1).getFoodLog();
-                double[] currNutrients = UseCaseHelpers.getNutrientsFromFoods(currFoods);
+                final List<Food> currFoods = account.getDays().get(account.getDays().size() - 1).getFoodLog();
+                final double[] currNutrients = UseCaseHelpers.getNutrientsFromFoods(currFoods);
 
-                final int CALORIE_INDEX = 0;
-                final int PROTEIN_INDEX = 1;
-                final int CARB_INDEX = 2;
-                final int FAT_INDEX = 3;
+                final int calorieIndex = 0;
+                final int proteinIndex = 1;
+                final int carbIndex = 2;
+                final int fatIndex = 3;
                 final LoginOutputData loginOutputData = new LoginOutputData(account.getUsername(),
-                        account.getPassword(), currNutrients[CALORIE_INDEX],
-                        currNutrients[PROTEIN_INDEX], currNutrients[CARB_INDEX],
-                        currNutrients[FAT_INDEX]);
+                        account.getPassword(), currNutrients[calorieIndex],
+                        currNutrients[proteinIndex], currNutrients[carbIndex],
+                        currNutrients[fatIndex]);
 
                 loginPresenter.prepareSuccessView(loginOutputData);
                 System.out.println("past presenter");

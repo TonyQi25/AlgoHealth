@@ -22,14 +22,14 @@ public class LoginController {
      * @param password the password of the user logging in
      */
     public void execute(String username, String password) {
-        System.out.println("reached controller");
         final LoginInputData loginInputData = new LoginInputData(username, password);
         loginUseCaseInteractor.execute(loginInputData);
-        System.out.println("past controller execute");
     }
 
+    /**
+     * Switches to signup view.
+     */
     public void switchToSignup() {
         this.loginUseCaseInteractor.switchToSignup();
-        System.out.println("switch to signup controller");
     }
 }
