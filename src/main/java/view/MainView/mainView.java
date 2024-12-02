@@ -43,7 +43,7 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
     private JTextField unitInputField = new JTextField(5);
 
     private DailyValueRecsController dailyValueRecsController;
-    private DisplayFoodOptionsController displayFoodOptionsController;
+    //private DisplayFoodOptionsController displayFoodOptionsController;
 
     private LogFoodController logFoodController;
 
