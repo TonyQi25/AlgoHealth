@@ -2,6 +2,10 @@ package use_case.food_logging;
 
 import java.util.ArrayList;
 
+/**
+ * Output Data for the Log Food Use Case.
+ */
+
 public class LogFoodOutputData {
     private final String foodName;
 
@@ -13,7 +17,7 @@ public class LogFoodOutputData {
     private final ArrayList<Object> carbs;
     private final ArrayList<Object> fat;
 
-    //output food name and calories calculated based on amount consumed.
+    // output food name and calories calculated based on amount consumed.
     public LogFoodOutputData(String foodName, double foodWeight, String weightUnit, ArrayList<Object> calories,
                              ArrayList<Object> protein, ArrayList<Object> carbs, ArrayList<Object> fat) {
         this.foodName = foodName;
