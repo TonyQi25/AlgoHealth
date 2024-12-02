@@ -16,6 +16,9 @@ public class LogFoodState {
     private double totalCarbs;
     private double totalFat;
 
+    private String username;
+    private String password;
+
     public String getFoodName() {
         return foodName;
     }
@@ -102,5 +105,20 @@ public class LogFoodState {
 
     public void setFoodSearchInput(String foodSearchInput) {
         this.foodSearchInput = foodSearchInput;
+    }
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

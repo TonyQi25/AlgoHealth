@@ -2,22 +2,24 @@ package use_case.food_logging;
 import api.FoodDataCentralPopulateDAO;
 import api.FoodDataCentralSearchDAO;
 import data.Food;
+import data_access.GradeAccountDAO;
 import org.json.JSONObject;
 import use_case.display_food_options.InMemoryFoodSelectionDataAccessInterface;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class LogFoodInteractor implements LogFoodInputBoundary {
-    //private final FoodDataCentralPopulateDAO logFoodDataAccessObject;
+    private final LogFoodDataAccessInterface foodLoggingDAO;
     private final LogFoodOutputBoundary logFoodPresenter;
     private InMemoryFoodSelectionDataAccessInterface inMemoryFoodSelectionDAO;
 
 
-    public LogFoodInteractor(LogFoodOutputBoundary logFoodPresenter,
-                             InMemoryFoodSelectionDataAccessInterface inMemoryFoodSelectionDAO) {
+    public LogFoodInteractor(InMemoryFoodSelectionDataAccessInterface inMemoryFoodSelectionDAO, LogFoodDataAccessInterface foodLoggingDAO ,LogFoodOutputBoundary logFoodPresenter) {
         this.logFoodPresenter = logFoodPresenter;
         this.inMemoryFoodSelectionDAO = inMemoryFoodSelectionDAO;
+        this.foodLoggingDAO = foodLoggingDAO;
     }
 
    //@Override
@@ -47,7 +49,8 @@ public class LogFoodInteractor implements LogFoodInputBoundary {
         final ArrayList<Object> fatWUnit = new ArrayList<>();
         fatWUnit.add(String.valueOf(food.getTotalFat()));
         proteinWUnit.add("g");
-
+        foodLoggingDAO.saveFood(LocalDate.now().toString(), logFoodInputData.getUsername(),
+                logFoodInputData.getPassword(), food, logFoodInputData.getFdcId());
         final LogFoodOutputData logFoodOutputData = new LogFoodOutputData(food.getDescription(), food.getWeight(),
                 food.getStandardUnit(), calWUnit, proteinWUnit, carbsWUnit, fatWUnit);
         logFoodPresenter.prepareLogFoodView(logFoodOutputData);

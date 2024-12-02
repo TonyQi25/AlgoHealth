@@ -14,8 +14,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class TempDAOInMemory implements LoginDataAccessInterface, LogoutDataAccessInterface, SignupDataAccessInterface,
-        LogFoodDataAccessInterface {
+public class TempDAOInMemory implements LoginDataAccessInterface, LogoutDataAccessInterface, SignupDataAccessInterface
+{
 
     private final Map<String, AccountInfo> accounts = new HashMap<>();
     private String currentUsername;
@@ -31,12 +31,19 @@ public class TempDAOInMemory implements LoginDataAccessInterface, LogoutDataAcce
 
     }
 
-    public AccountInfo get(String username) {
-        return new AccountInfo(LocalDate.now(), 0, 0,
-                new String[]{""}, "", "", "", new ArrayList<>());
+    @Override
+    public void createAccount(String username, String password) {
+
     }
 
-    public void put(String username, AccountInfo accountInfo) {
+    public AccountInfo get(String username) {
+        //return accounts.get(username);
+        return new AccountInfo(LocalDate.now(), 175, 60, new String[0],
+                "nothing", "username", "password", new ArrayList<>());
+    }
+
+    @Override
+    public void put(String username, String password, AccountInfo accountInfo) {
 
     }
 

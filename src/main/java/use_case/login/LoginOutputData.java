@@ -10,18 +10,43 @@ import java.util.List;
 public class LoginOutputData {
 
     private final String username;
-    private final List<DayInfo> days;
+    private final String password;
+    private final double calories;
+    private final double protein;
+    private final double carbs;
+    private final double fat;
 
-    public LoginOutputData(String username, List<DayInfo> days) {
+    public LoginOutputData(String username, String password, double calories,
+                           double protein, double carbs, double fat) {
         this.username = username;
-        this.days = days;
+        this.password = password;
+        this.calories = calories;
+        this.protein = protein;
+        this.carbs = carbs;
+        this.fat = fat;
     }
 
     public String getUsername() {
-        return this.username;
+        return username;
     }
 
-    public List<DayInfo> getDays() {
-        return this.days;
+    public String getPassword() {
+        return password;
+    }
+
+    public double getCalories() {
+        return calories;
+    }
+
+    public double getProtein() {
+        return protein;
+    }
+
+    public double getCarbs() {
+        return carbs;
+    }
+
+    public double getFat() {
+        return fat;
     }
 }
