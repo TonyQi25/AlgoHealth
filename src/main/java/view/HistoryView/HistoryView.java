@@ -48,6 +48,7 @@ public class HistoryView extends JPanel implements ActionListener, PropertyChang
     private JButton backButton;
 
     private JButton removeFoodButton;
+    private JButton oneDayButton;
 
     private HistoryController historyController;
 
@@ -111,6 +112,22 @@ public class HistoryView extends JPanel implements ActionListener, PropertyChang
         return backButton;
     }
 
+    private JButton createOneDayStatsButton() {
+        oneDayButton = new JButton("Day Details");
+        oneDayButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        oneDayButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                historyController.viewOneDay(username, viewingDate.toString(), password);
+
+            }
+        });
+
+        return oneDayButton;
+    }
+
     private JButton createPrevDayButton() {
         // calls to controller
         prevButton = new JButton("Previous Day");
@@ -165,6 +182,7 @@ public class HistoryView extends JPanel implements ActionListener, PropertyChang
         setHeaderPanel();
         setDataPanel();
         this.add(createBackButton());
+        this.add(createOneDayStatsButton());
     }
 
     public String getViewName() {

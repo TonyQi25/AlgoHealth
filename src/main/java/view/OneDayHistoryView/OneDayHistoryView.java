@@ -7,6 +7,7 @@ import interface_adapter.delete_food.DeleteFoodController;
 import interface_adapter.delete_food.DeleteFoodViewModel;
 import interface_adapter.food_logging.LogFoodState;
 import interface_adapter.food_logging.LogFoodViewModel;
+import interface_adapter.history.HistoryState;
 import interface_adapter.one_day_history.UpdateHistoryTotalsController;
 import interface_adapter.one_day_history.UpdateHistoryTotalsState;
 import interface_adapter.one_day_history.UpdateHistoryTotalsViewModel;
@@ -28,6 +29,10 @@ public class OneDayHistoryView extends JPanel implements PropertyChangeListener 
     private final UpdateHistoryTotalsViewModel updateHistoryTotalsViewModel;
     private final UpdateHistoryTotalsController updateHistoryTotalsController;
     private final String viewName = "one day history";
+
+    private String username;
+    private String password;
+    private String viewingDate;
 
     private JProgressBar progressBarCalories = new JProgressBar(0, 100);
     private JProgressBar progressBarProtein = new JProgressBar(0, 100);
@@ -104,9 +109,18 @@ public class OneDayHistoryView extends JPanel implements PropertyChangeListener 
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        final UpdateHistoryTotalsState updateHistoryTotalsState = (UpdateHistoryTotalsState) evt.getNewValue();
-        this.setDisplay(updateHistoryTotalsState);
+        final UpdateHistoryTotalsState state = (UpdateHistoryTotalsState) evt.getNewValue();
+        username = state.getUsername();
+        password = state.getPassword();
+        viewingDate = state.getDate();
+
+        if(!state.getCompleted()) {
+            updateHistoryTotalsController.execute(username, viewingDate, password);
+        }   else {
+            setDisplay(state);
+        }
     }
+
 
     public String getViewName() {
         return this.viewName;

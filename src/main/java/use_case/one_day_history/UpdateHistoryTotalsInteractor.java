@@ -100,7 +100,7 @@ public class UpdateHistoryTotalsInteractor implements UpdateHistoryTotalsInputBo
     }
 
     public void switchToHistory() {
-
+        updateHistoryTotalsPresenter.switchToHistory();
     }
 }
 

@@ -10,6 +10,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * The Log Food Interactor.
+ */
+
 public class LogFoodInteractor implements LogFoodInputBoundary {
     private final LogFoodDataAccessInterface foodLoggingDAO;
     private final LogFoodOutputBoundary logFoodPresenter;
@@ -21,6 +25,11 @@ public class LogFoodInteractor implements LogFoodInputBoundary {
         this.inMemoryFoodSelectionDAO = inMemoryFoodSelectionDAO;
         this.foodLoggingDAO = foodLoggingDAO;
     }
+
+    /**
+     * Executes the Log Food use case.
+     * @param logFoodInputData the input data
+     */
 
     public void execute(LogFoodInputData logFoodInputData) {
         Food food = inMemoryFoodSelectionDAO.getCurrFoodEntity();

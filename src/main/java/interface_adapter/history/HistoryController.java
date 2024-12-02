@@ -2,6 +2,7 @@ package interface_adapter.history;
 
 import use_case.history.HistoryInputBoundary;
 import use_case.history.HistoryInputData;
+import use_case.one_day_history.UpdateHistoryTotalsInputData;
 import use_case.removeFood.RemoveFoodInputData;
 
 import java.time.LocalDate;
@@ -48,5 +49,12 @@ public class HistoryController {
 
     public void goBack(){
         historyUseCaseInteractor.goBack();
+    }
+
+    public void viewOneDay(String username, String viewingDate, String password) {
+
+        final UpdateHistoryTotalsInputData input = new UpdateHistoryTotalsInputData(username, viewingDate, password);
+
+        historyUseCaseInteractor.viewOneDay(input);
     }
 }
