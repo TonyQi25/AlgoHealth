@@ -56,8 +56,6 @@ public class UpdateHistoryTotalsInteractor implements UpdateHistoryTotalsInputBo
         // it has an instance variable which can store a list of Foods generated in execute.
 
         // layout:  {ids: {"name": name, "weight": double ... }
-
-        System.out.println("OneDay interator called");
         JSONObject info = gradeAccountDAO.loadFoodInfo(updateHistoryTotalsInputData.getUsername(),
                 updateHistoryTotalsInputData.getDate());
 
@@ -66,8 +64,6 @@ public class UpdateHistoryTotalsInteractor implements UpdateHistoryTotalsInputBo
         for (String key : info.keySet()) {
             idToWeight.put(Integer.parseInt(key), info.getJSONObject(key).getDouble("weight"));
         }
-
-        System.out.println("HERE IS THE HASHMAP REQUESTED"+idToWeight);
 
         Food[] outputFoodList = new Food[idToWeight.keySet().size()];
         int i = 0;
@@ -80,8 +76,6 @@ public class UpdateHistoryTotalsInteractor implements UpdateHistoryTotalsInputBo
             freshFood.setTotalCalories();
             outputFoodList[i] = freshFood;
             i += 1;
-            System.out.println("#1 "+ freshFood.getDescription());
-            System.out.println("#1.5 "+ freshFood.getWeight());
         }
 
 
@@ -98,10 +92,6 @@ public class UpdateHistoryTotalsInteractor implements UpdateHistoryTotalsInputBo
             grandTotalCarbs += food.getTotalCarb();
             grandTotalProtein += food.getTotalCarb();
             grandTotalFat += food.getTotalFat();
-            System.out.println("#2 "+ grandTotalCalories);
-            System.out.println("#2 "+ grandTotalCarbs);
-            System.out.println("#2 "+ grandTotalProtein);
-            System.out.println("#2 "+ grandTotalFat);
         }
         double grandTotalDVCalories = (grandTotalCalories / DVcals) * 100;
         double grandTotalDVProtein = (grandTotalProtein / DVprot) * 100;
@@ -116,8 +106,6 @@ public class UpdateHistoryTotalsInteractor implements UpdateHistoryTotalsInputBo
                 grandTotalDVCarbs,
                 grandTotalDVProtein,
                 grandTotalDVFat);
-
-        System.out.println("HERE IS CALROIES CALCUALTED:" + grandTotalCalories);
 
         updateHistoryTotalsPresenter.prepareSuccessView(outputData);
 

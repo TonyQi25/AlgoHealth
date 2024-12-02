@@ -233,8 +233,6 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
                 historyState.setDate("");
                 historyState.setDayDetails(null);
 
-                System.out.println("From MainView: " + mainState.getUsername());
-
                 HistoryState testingState = historyViewModel.getState();
 
                 historyViewModel.firePropertyChanged();
