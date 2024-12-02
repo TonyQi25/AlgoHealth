@@ -207,6 +207,13 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
         mainPanel.add(totalsAndRecPanel);
         mainPanel.add(logoutPanel);
 
+        JButton history = new JButton("History");
+        JPanel logoutAndHistory = new JPanel();
+        logoutAndHistory.add(logoutPanel);
+        logoutAndHistory.add(history);
+
+        mainPanel.add(logoutAndHistory);
+
         this.add(mainPanel);
 
     }
