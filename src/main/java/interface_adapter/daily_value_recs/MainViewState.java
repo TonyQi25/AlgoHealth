@@ -7,18 +7,18 @@ public class MainViewState {
     private String username = "";
     private String password = "";
 
-    private double percent_cals = 0;
-    private double percent_prot = 0;
-    private double percent_carbs = 0;
-    private double percent_fat = 0;
+    private double percentCals;
+    private double percentProt;
+    private double percentCarbs;
+    private double percentFat;
 
-    private double calories = 0;
-    private double protein = 0;
-    private double carbs = 0;
-    private double fat = 0;
+    private double calories;
+    private double protein;
+    private double carbs;
+    private double fat;
 
     private HashMap<String, Integer> foodOptionsMap;
-    private int fdcIDofSelection;
+    private int fdcIdOfSelection;
 
     private String foodSearchInput;
 
@@ -30,36 +30,36 @@ public class MainViewState {
         this.username = username;
     }
 
-    public double getPercent_cals() {
-        return percent_cals;
+    public double getPercentCals() {
+        return percentCals;
     }
 
-    public void setPercent_cals(double percent_cals) {
-        this.percent_cals = percent_cals;
+    public void setPercentCals(double percentCals) {
+        this.percentCals = percentCals;
     }
 
-    public double getPercent_prot() {
-        return percent_prot;
+    public double getPercentProt() {
+        return percentProt;
     }
 
-    public void setPercent_prot(double percent_prot) {
-        this.percent_prot = percent_prot;
+    public void setPercentProt(double percentProt) {
+        this.percentProt = percentProt;
     }
 
-    public double getPercent_carbs() {
-        return percent_carbs;
+    public double getPercentCarbs() {
+        return percentCarbs;
     }
 
-    public void setPercent_carbs(double percent_carbs) {
-        this.percent_carbs = percent_carbs;
+    public void setPercentCarbs(double percentCarbs) {
+        this.percentCarbs = percentCarbs;
     }
 
-    public double getPercent_fat() {
-        return percent_fat;
+    public double getPercentFat() {
+        return percentFat;
     }
 
-    public void setPercent_fat(double percent_fat) {
-        this.percent_fat = percent_fat;
+    public void setPercentFat(double percentFat) {
+        this.percentFat = percentFat;
     }
 
     public double getCalories() {
@@ -110,12 +110,12 @@ public class MainViewState {
         this.foodOptionsMap = foodOptionsMap;
     }
 
-    public int getFdcIDofSelection() {
-        return fdcIDofSelection;
+    public int getFdcIdOfSelection() {
+        return fdcIdOfSelection;
     }
 
-    public void setFdcIDofSelection(int fdcIDofSelection) {
-        this.fdcIDofSelection = fdcIDofSelection;
+    public void setFdcIdOfSelection(int fdcIdOfSelection) {
+        this.fdcIdOfSelection = fdcIdOfSelection;
     }
 
     public String getPassword() {
