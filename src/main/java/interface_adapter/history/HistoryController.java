@@ -33,7 +33,7 @@ public class HistoryController {
         double weight;
 
         if (line != null) {
-            String[] split = line.split("(:)|(,)|(\\()|(\\))");
+            String[] split = line.split("(:)|(\\()");
             name = split[0];
             weight = Double.parseDouble(split[1]);
         } else {
@@ -44,5 +44,9 @@ public class HistoryController {
         final RemoveFoodInputData input = new RemoveFoodInputData(name, weight, username, viewingDate, password);
 
         historyUseCaseInteractor.removeHighlightedFood(input);
+    }
+
+    public void goBack(){
+        historyUseCaseInteractor.goBack();
     }
 }
