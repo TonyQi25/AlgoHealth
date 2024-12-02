@@ -205,7 +205,7 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
 
         // totalsAndRecPanel complete so add it and logout to mainPanel and wrap everything up.
         mainPanel.add(totalsAndRecPanel);
-        mainPanel.add(logoutPanel);
+        // mainPanel.add(logoutPanel);
 
         JButton history = new JButton("History");
         JPanel logoutAndHistory = new JPanel();
