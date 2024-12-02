@@ -39,7 +39,9 @@ public class SignupUseCaseTests {
         signupInteractor.execute(signupInputData);
     }
 
-    // method taken from https://stackoverflow.com/questions/20536566/creating-a-random-string-with-a-z-and-0-9-in-java
+    // Code adapted from StackOverflow
+    // https://stackoverflow.com/questions/20536566/creating-a-random-string-with-a-z-and-0-9-in-java
+    // 2024-12-01
     private String generateRandomUsername() {
         String charChoices = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
         StringBuilder randomString = new StringBuilder();
