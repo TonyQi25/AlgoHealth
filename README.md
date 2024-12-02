@@ -13,12 +13,20 @@ daily consumption of food and view a summary of the macronutrients and calories 
 receive feedback on if they have reached the daily recommended amount of consumption.
 
 **Features**
+-
+**History**
+- view previously logged foods from user's past
+- In this view you can remove or view one day's progress
+- you can select food from the list provided to remove
 
-- the user can view their logged consumptions of their past.
+**Remove Food**
+- Select food from history to remove it from user's food log
+- removal is saved into the local database
 
-- the user can select food from their history to remove it from their food log
+**One Day's Progress**
+- view progress of calories, carbs, protein and fats of any day user has logged.
+- shows progress bars and recommended values
 
-- the user can view their progress of calories, carbs, protein and fats of any day they have logged.
 
 **Feedback**
 
