@@ -50,6 +50,12 @@ public class HistoryPresenter implements HistoryOutputBoundary {
         final HistoryState historyState = historyViewModel.getState();
         historyState.setHistoryError(errorMessage);
         historyViewModel.firePropertyChanged();
+
+        System.out.println("history fail view called");
+
+        this.viewManagerModel.setState(historyViewModel.getViewName());
+        this.viewManagerModel.firePropertyChanged();
+
     }
 
     @Override

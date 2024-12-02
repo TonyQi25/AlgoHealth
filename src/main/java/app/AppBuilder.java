@@ -115,7 +115,8 @@ public class AppBuilder {
     public AppBuilder addMainView() {
         mainViewModel = new MainViewModel();
         logFoodViewModel = new LogFoodViewModel();
-        mainView = new mainView(mainViewModel, logFoodViewModel);
+        historyViewModel = new HistoryViewModel();
+        mainView = new mainView(mainViewModel, logFoodViewModel, historyViewModel);
         cardPanel.add(mainView, mainView.getViewName());
         return this;
     }
@@ -174,6 +175,8 @@ public class AppBuilder {
         historyView = new HistoryView(this.historyViewModel, historyController);
 
         cardPanel.add(historyView.getViewName(), historyView);
+
+        mainView.setHistoryController(historyController);
         return this;
     }
 
