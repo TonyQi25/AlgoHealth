@@ -1,12 +1,15 @@
-/*package use_case.one_day_history;
+package use_case.one_day_history;
 
 import data.Food;
-import use_case.daily_value_recs.DailyValueCalculationStrategy;
+//import use_case.daily_value_recs.DailyValueCalculationStrategy;
 import use_case.select_from_food_options.SelectSearchDataAccessInterface;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 
 import static api.PopulateUtility.createFood;
 
-public class UpdateHistoryTotalsInteractor implements UpdateHistoryTotalsOutputBoundary {
+public class UpdateHistoryTotalsInteractor implements UpdateHistoryTotalsInputBoundary {
 
 
     // constants for DVs based on https://www.canada.ca/en/health-canada/services/food-nutrition/
@@ -25,14 +28,16 @@ public class UpdateHistoryTotalsInteractor implements UpdateHistoryTotalsOutputB
 
     private UpdateHistoryTotalsOutputBoundary updateHistoryTotalsPresenter;
     private SelectSearchDataAccessInterface foodDataCentralSearchDAO;
-    DailyValueCalculationStrategy dailyValueCalculationStrategy;
+    private GradeAccountDAO gradeAccountDAO;
+    //private DailyValueCalculationStrategy dailyValueCalculationStrategy;
 
     public UpdateHistoryTotalsInteractor(UpdateHistoryTotalsOutputBoundary updateHistoryTotalsPresenter,
                                          SelectSearchDataAccessInterface foodDataCentralSearchDAO,
-                                         DailyValueCalculationStrategy dailyValueCalculationStrategy) {
+                                         GradeAccountDAO gradeAccountDAO) {
         this.updateHistoryTotalsPresenter = updateHistoryTotalsPresenter;
         this.foodDataCentralSearchDAO = foodDataCentralSearchDAO;
-        this.dailyValueCalculationStrategy = dailyValueCalculationStrategy;
+        this.gradeAccountDAO = gradeAccountDAO;
+        //this.dailyValueCalculationStrategy = dailyValueCalculationStrategy;
     }
 
     @Override
@@ -41,11 +46,23 @@ public class UpdateHistoryTotalsInteractor implements UpdateHistoryTotalsOutputB
         // Probably will be a HashMap<String, Double> so I'm using that here. Will update as necessary.
         // Implementation in mind for UpdateHistoryTotalsOutputData is that
         // it has an instance variable which can store a list of Foods generated in execute.
-        Food[] outputFoodList = new Food[UpdateHistoryTotalsInputData.getFDCidToWeightMap().keySet().length()];
+
+        // layout:  {ids: {"name": name, "weight": double ... }
+
+        JSONObject info = gradeAccountDAO.loadFoodInfo(updateHistoryTotalsInputData.getUsername(),
+                updateHistoryTotalsInputData.getDate());
+
+        HashMap<Integer, Double> idToWeight = new HashMap<>();
+
+        for (String key : info.keySet()) {
+            idToWeight.put(Integer.parseInt(key), info.getJSONObject(key).getDouble("weight"));
+        }
+
+        Food[] outputFoodList = new Food[idToWeight.keySet().size()];
         int i = 0;
-        for (Integer fdcId: UpdateHistoryTotalsInputData.getFDCidToWeightMap().keySet()) {
+        for (Integer fdcId: idToWeight.keySet()) {
             Food freshFood = createFood(foodDataCentralSearchDAO.getFoodByFdcId(fdcId, MACRO_SPECIFIER_1));
-            freshFood.setWeight(UpdateHistoryTotalsInputData.getFDCidtoWeightMap().get(fdcId));
+            freshFood.setWeight(idToWeight.get(fdcId));
             outputFoodList[i] = freshFood;
             i += 1;
         }
@@ -80,4 +97,5 @@ public class UpdateHistoryTotalsInteractor implements UpdateHistoryTotalsOutputB
         updateHistoryTotalsPresenter.prepareSuccessView(outputData);
 
     }
-}*/
+}
+

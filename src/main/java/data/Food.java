@@ -5,7 +5,7 @@ import java.util.HashMap;
 public class Food {
     private String description;
     private String standardUnit;
-    private float weight;
+    private double weight;
     private HashMap<String, Object> calories;
     private HashMap<String, HashMap<String, Object>> microNutrients;
     private HashMap<String, HashMap<String, Object>> macroNutrients;
@@ -36,7 +36,7 @@ public class Food {
         this.fat = new HashMap<>();*/
     }
 
-    public Food(String name, float weight, HashMap<String, Object> calories) {
+    public Food(String name, double weight, HashMap<String, Object> calories) {
         this.description = name;
         this.weight = weight;
         this.calories = calories;
@@ -58,7 +58,7 @@ public class Food {
         return this.description;
     }
 
-    public float getWeight() {
+    public double getWeight() {
         return this.weight;
     }
 
@@ -94,7 +94,7 @@ public class Food {
         this.standardUnit = standardUnit;
     }
 
-    public void setWeight(float weight) {
+    public void setWeight(double weight) {
         this.weight = weight;
     }
 
