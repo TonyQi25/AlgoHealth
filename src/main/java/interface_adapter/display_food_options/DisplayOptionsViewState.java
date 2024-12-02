@@ -1,6 +1,5 @@
 package interface_adapter.display_food_options;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class DisplayOptionsViewState {
@@ -8,7 +7,7 @@ public class DisplayOptionsViewState {
     private String currSelection;
     private HashMap<String, Integer> selectionMap;
     private String[] selectionList;
-
+    private String errorMessage;
 
     public String getCurrSelection() {
         return currSelection;
@@ -36,5 +35,13 @@ public class DisplayOptionsViewState {
 
     public void setSelectionList(String[] selectionList) {
         this.selectionList = selectionList;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
     }
 }

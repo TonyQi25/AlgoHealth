@@ -193,7 +193,7 @@ public class PopulateUtility {
         JSONObject result = usdaObj.getFoodByFdcId(2514744, array);
         Food newFood = createFood(result);
         int i7 = 7;*/
-        FoodDataCentralSearchDAO usdaObj = new FoodDataCentralSearchDAO(genMyApiKey("myFDCApiKey.txt"));
+/*        FoodDataCentralSearchDAO usdaObj = new FoodDataCentralSearchDAO(genMyApiKey("myFDCApiKey.txt"));
         // Menaquinone-4=428
         Integer[] MACRO_AND_ESSENTIAL_MICROS = {203, 204, 205, 208, 268, 957, 318, 401, 324, 323, 430, 428};
         JSONObject result = usdaObj.getFoodByFdcId(2514744, MACRO_AND_ESSENTIAL_MICROS);
@@ -201,7 +201,7 @@ public class PopulateUtility {
         HashMap<String, Integer> foodMap = usdaObj.searchComplexFood("kale");
         JSONObject result2 = usdaObj.getFoodByFdcId(174730, MACRO_AND_ESSENTIAL_MICROS);
         JSONObject result23 = usdaObj.getFoodByFdcId(168421, MACRO_AND_ESSENTIAL_MICROS);
-        int yyyy = 6;
+        int yyyy = 6;*/
     }
     }
 

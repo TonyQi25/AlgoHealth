@@ -107,8 +107,4 @@ public class AccountInfo {
     public void setDietaryRestrictions(List<String> dietaryRestrictions) {
         this.dietaryRestrictions = dietaryRestrictions;
     }
-
-    public void addToDays(DayInfo days) {
-        this.days.add(days);
-    }
 }

@@ -1,107 +1,118 @@
 package interface_adapter.one_day_history;
 
+import java.util.HashMap;
+
 public class UpdateHistoryTotalsState {
 
-    private double percentCalories = 0;
-    private double percentProtein = 0;
-    private double percentCarbs = 0;
-    private double percentFat = 0;
-    private double totalCalories = 0;
-    private double totalProtein = 0;
-    private double totalCarbs = 0;
-    private double totalFat = 0;
+    private HashMap<String, Double> foodList;
+    private String username;
+    private String date;
+    private boolean completed;
 
-    private String username = "";
-    private String password = "";
+    private double calories;
+    private double protein;
+    private double carbs;
+    private double fat;
 
-    private String date = "";
+    private double recCalories;
+    private double recProtein;
+    private double recCarbs;
+    private double recFat;
 
-    public double getPercentCalories() {
-        return percentCalories;
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
     }
 
-    public void setPercentCalories(double percentCalories) {
-        this.percentCalories = percentCalories;
-    }
-
-    public double getPercentProtein() {
-        return percentProtein;
-    }
-
-    public void setPercentProtein(double percentProtein) {
-        this.percentProtein = percentProtein;
-    }
-
-    public double getPercentCarbs() {
-        return percentCarbs;
-    }
-
-    public void setPercentCarbs(double percentCarbs) {
-        this.percentCarbs = percentCarbs;
-    }
-
-    public double getPercentFat() {
-        return percentFat;
-    }
-
-    public void setPercentFat(double percentFat) {
-        this.percentFat = percentFat;
-    }
-
-    public double getTotalCalories() {
-        return totalCalories;
-    }
-
-    public void setTotalCalories(double totalCalories) {
-        this.totalCalories = totalCalories;
-    }
-
-    public double getTotalProtein() {
-        return totalProtein;
-    }
-
-    public void setTotalProtein(double totalProtein) {
-        this.totalProtein = totalProtein;
-    }
-
-    public double getTotalCarbs() {
-        return totalCarbs;
-    }
-
-    public void setTotalCarbs(double totalCarbs) {
-        this.totalCarbs = totalCarbs;
-    }
-
-    public double getTotalFat() {
-        return totalFat;
-    }
-
-    public void setTotalFat(double totalFat) {
-        this.totalFat = totalFat;
-    }
-
-    public String getUsername() {
-        return username;
+    public boolean getCompleted() {
+        return completed;
     }
 
     public void setUsername(String username) {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
+    public void setDate(String date) {
+        this.date = date;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setFoodList(HashMap<String, Double> foodList) {
+        this.foodList = foodList;
+    }
+
+    public String getUsername() {
+        return username;
     }
 
     public String getDate() {
         return date;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public HashMap<String, Double> getFoodList() {
+        return foodList;
+    }
+
+    public void setCalories(double calories) {
+        this.calories = calories;
+    }
+
+    public void setCarbs(double carbs) {
+        this.carbs = carbs;
+    }
+
+    public void setFat(double fat) {
+        this.fat = fat;
+    }
+
+    public void setProtein(double protein) {
+        this.protein = protein;
+    }
+
+    public void setRecCalories(double recCalories) {
+        this.recCalories = recCalories;
+    }
+
+    public void setRecCarbs(double recCarbs) {
+        this.recCarbs = recCarbs;
+    }
+
+    public void setRecFat(double recFat) {
+        this.recFat = recFat;
+    }
+
+    public void setRecProtein(double recProtein) {
+        this.recProtein = recProtein;
+    }
+
+    public double getRecFat() {
+        return recFat;
+    }
+
+    public double getRecCarbs() {
+        return recCarbs;
+    }
+
+    public double getRecProtein() {
+        return recProtein;
+    }
+
+    public double getCalories() {
+        return calories;
+    }
+
+    public double getFat() {
+        return fat;
+    }
+
+    public double getCarbs() {
+        return carbs;
+    }
+
+    public double getProtein() {
+        return protein;
+    }
+
+    public double getRecCalories() {
+        return recCalories;
     }
 }
 

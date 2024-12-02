@@ -20,6 +20,8 @@ import java.util.Scanner;
 
 public class FoodDataCentralSearchDAO implements DisplayFoodOptionsDataAccessInterface,
         SelectSearchDataAccessInterface {
+
+    private static final int SUCCESS_CODE = 200;
     public String apiKey;
 
     public FoodDataCentralSearchDAO(String apiKey) {
@@ -212,7 +214,7 @@ public class FoodDataCentralSearchDAO implements DisplayFoodOptionsDataAccessInt
     }
 
     @Override
-    public HashMap<String, Integer> searchComplexFood(String food) {
+    public HashMap<String, Integer> searchComplexFood(String food) throws DataAccessException {
         final OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         final Request request = new Request.Builder()
@@ -223,17 +225,23 @@ public class FoodDataCentralSearchDAO implements DisplayFoodOptionsDataAccessInt
         try {
             final Response response = client.newCall(request).execute();
             final JSONObject responseBody = new JSONObject(response.body().string());
-            JSONArray foodsArray = responseBody.getJSONArray("foods");
-            HashMap<String, Integer> description2fdcId = new HashMap<>();
-            int i = 0;
-            while (i < 100 && i < foodsArray.length()) {
-                String key1 = ((JSONObject) foodsArray.get(i)).getString("description");
-                Integer value1 = ((JSONObject) foodsArray.get(i)).getInt("fdcId");
-                description2fdcId.put(key1, value1);
-                i += 1;
+            if (responseBody.getInt("totalHits") >= 1) {
+                JSONArray foodsArray = responseBody.getJSONArray("foods");
+                HashMap<String, Integer> description2fdcId = new HashMap<>();
+                int i = 0;
+                while (i < 100 && i < foodsArray.length()) {
+                    String key1 = ((JSONObject) foodsArray.get(i)).getString("description");
+                    Integer value1 = ((JSONObject) foodsArray.get(i)).getInt("fdcId");
+                    description2fdcId.put(key1, value1);
+                    i += 1;
+                }
+                return description2fdcId;
             }
-            return description2fdcId;
-        } catch (IOException | JSONException event) {
+            else {
+                throw new DataAccessException("No food found.");
+            }
+        }
+        catch (IOException | JSONException event) {
             throw new RuntimeException(event);
         }
     }

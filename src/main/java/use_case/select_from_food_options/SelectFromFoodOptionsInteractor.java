@@ -40,16 +40,18 @@ public class SelectFromFoodOptionsInteractor implements SelectFromFoodOptionsInp
     @Override
     public void execute(SelectFromFoodOptionsInputData selectFromFoodOptionsInputData) {
         // update inmemoryDAO and get fdcId. Update again with created Food.
-        inMemoryFoodSelectionDAO.setCurrSelection(selectFromFoodOptionsInputData.getCurrSelection());
-        Integer fdcId = inMemoryFoodSelectionDAO.getCurrOptionsMap().get(selectFromFoodOptionsInputData
-                .getCurrSelection());
-        JSONObject result = foodDataCentralSearchDAO.getFoodByFdcId(fdcId, MACRO_SPECIFIER_1);
-        inMemoryFoodSelectionDAO.setCurrFoodEntity(PopulateUtility.createFood(result));
-        // print calls for debugging/sanity check.
-        System.out.println(inMemoryFoodSelectionDAO.getCurrFoodEntity().getDescription());
-        System.out.println(inMemoryFoodSelectionDAO.getCurrFoodEntity().getMacroNutrients());
-        System.out.println(inMemoryFoodSelectionDAO.getCurrFoodEntity().getCalories());
-        // Now we flip back to mainView. Make output data for updating mainView as well.
+        if (selectFromFoodOptionsInputData.getErrorMessage().equals("")) {
+            inMemoryFoodSelectionDAO.setCurrSelection(selectFromFoodOptionsInputData.getCurrSelection());
+            Integer fdcId = inMemoryFoodSelectionDAO.getCurrOptionsMap().get(selectFromFoodOptionsInputData
+                    .getCurrSelection());
+            JSONObject result = foodDataCentralSearchDAO.getFoodByFdcId(fdcId, MACRO_SPECIFIER_1);
+            inMemoryFoodSelectionDAO.setCurrFoodEntity(PopulateUtility.createFood(result));
+            // print calls for debugging/sanity check.
+            System.out.println(inMemoryFoodSelectionDAO.getCurrFoodEntity().getDescription());
+            System.out.println(inMemoryFoodSelectionDAO.getCurrFoodEntity().getMacroNutrients());
+            System.out.println(inMemoryFoodSelectionDAO.getCurrFoodEntity().getCalories());
+            // Now we flip back to mainView. Make output data for updating mainView as well.
+        }
         SelectFromFoodOptionsOutputData selectFromFoodOptionsOutputData = new SelectFromFoodOptionsOutputData(
                 selectFromFoodOptionsInputData.getCurrSelection());
         selectFromFoodOptionsPresenter.prepareSuccessView(selectFromFoodOptionsOutputData);

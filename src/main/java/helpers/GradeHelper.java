@@ -56,13 +56,14 @@ public class GradeHelper {
         return newAccountInfo;
     }
 
-    public static void setUserInfo(String username, String password, AccountInfo accountInfo, JSONObject foodLog) {
+    public static void addFoodUserInfo(String username, String password, AccountInfo accountInfo, JSONObject foodLog,
+                                   String date) {
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
 
         MediaType mediaType = MediaType.parse("application/json");
         JSONObject newAccountInfo = GradeHelper.makeJSONAccountInfo(username, password, accountInfo);
-        newAccountInfo.put("currentDayFoodLog", foodLog);
+        newAccountInfo.put("foodLog", foodLog);
         JSONObject newAccountBody = new JSONObject();
         newAccountBody.put("username", AccountInfo.USERNAME_PREFIX + username);
         newAccountBody.put("password", password);
@@ -97,9 +98,9 @@ public class GradeHelper {
 
 
         JSONObject newAccountInfo = GradeHelper.makeJSONAccountInfo(username, password, accountInfo);
-        JSONObject foodLog = new JSONObject();
-        newAccountInfo.put("currentDayFoodLog", foodLog);
         JSONObject newAccountBody = new JSONObject();
+        JSONObject emptyFoodLog = new JSONObject();
+        newAccountInfo.put("foodLog", emptyFoodLog);
         newAccountBody.put("username", AccountInfo.USERNAME_PREFIX + username);
         newAccountBody.put("password", password);
         newAccountBody.put("info", newAccountInfo);
@@ -162,8 +163,8 @@ public class GradeHelper {
         try (Response userResponse = client.newCall(userRequest).execute()) {
             if (userResponse.isSuccessful() && userResponse.body() != null) {
                 JSONObject userObject = (JSONObject) new JSONObject(userResponse.body().string()).get("user");
-                JSONObject user = (JSONObject) userObject.get("info");
-                return user;
+                JSONObject userInfo = (JSONObject) userObject.get("info");
+                return userInfo;
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -181,17 +182,48 @@ public class GradeHelper {
     }
 
     public static JSONObject getJSONFoodLog(String username) {
-        JSONObject user = GradeHelper.getUserInfo(username);
-        JSONObject JSONFoodLog = user.getJSONObject("currentDayFoodLog");
+        JSONObject userInfo = GradeHelper.getUserInfo(username);
+        JSONObject JSONFoodLog = userInfo.getJSONObject("foodLog");
         return JSONFoodLog;
     }
 
-    public static JSONObject copyJSONFoodLog(JSONObject foodLog) {
+    public static JSONObject getSingleDayJSONFoodLog(String username, String date) {
+        JSONObject JSONFoodLog = GradeHelper.getJSONFoodLog(username);
+        JSONObject JSONDayLog = JSONFoodLog.getJSONObject(date);
+        return JSONDayLog;
+    }
+
+    public static JSONObject copySingleDayJSONFoodLog(JSONObject SingleFoodLog) {
         JSONObject copyFoodLog = new JSONObject();
-//        String[] fdcIDs = JSONObject.getNames(foodLog);
-//        for (String fdcID: fdcIDs){
-//            copyFoodLog.put(fdcID, foodLog.get(fdcID));
-//        }
+        String[] fdcIDs = JSONObject.getNames(SingleFoodLog);
+        if (fdcIDs == null){
+            return copyFoodLog;
+        }
+        for (String fdcID: fdcIDs){
+            JSONObject foodInfo = SingleFoodLog.getJSONObject(fdcID);
+            JSONObject copyFoodInfo = new JSONObject();
+            copyFoodInfo.put("name", foodInfo.getString("name"));
+            copyFoodInfo.put("weight", foodInfo.getFloat("weight"));
+            copyFoodInfo.put("totalCalories", foodInfo.getFloat("totalCalories"));
+            copyFoodInfo.put("totalFat", foodInfo.getFloat("totalFat"));
+            copyFoodInfo.put("totalCarb", foodInfo.getFloat("totalCarb"));
+            copyFoodInfo.put("totalProtein", foodInfo.getFloat("totalProtein"));
+            copyFoodLog.put(fdcID, copyFoodInfo);
+        }
         return copyFoodLog;
     }
+
+    public static JSONObject copyEntireFoodLog(JSONObject entireFoodLog){
+        JSONObject copyFoodLog = new JSONObject();
+        String[] days = JSONObject.getNames(entireFoodLog);
+        if (days == null){
+            return  copyFoodLog;
+        }
+        for (String day: days){
+            JSONObject copyDayLog = copySingleDayJSONFoodLog(entireFoodLog.getJSONObject(day));
+            copyFoodLog.put(day, copyDayLog);
+        }
+        return copyFoodLog;
+    }
+
 }

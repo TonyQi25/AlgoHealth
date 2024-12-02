@@ -13,10 +13,9 @@ public class Main {
         final JFrame application = appBuilder
                 .addMainView()
                 .addDisplayOptionsView()
+                .addDisplayOptionsUseCase()
                 .addLoginView()
                 .addSignupView()
-                .addDeleteFoodView()
-                .addDisplayOptionsUseCase()
                 .addDailyValueRecsUseCase()
                 .selectFromFoodOptionsUseCase()
                 .addFoodLoggingUseCase()

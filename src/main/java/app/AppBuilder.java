@@ -2,28 +2,26 @@ package app;
 
 import api.ApiKeyReader;
 import api.FoodDataCentralSearchDAO;
-import data_access.GradeAccountDAO;
 import data_access.InMemoryFoodSelectionDAO;
 //import data_access.UserFoodSearchInMemoryDAO;
+import data_access.GradeAccountDAO;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.daily_value_recs.DailyValueRecsController;
 import interface_adapter.daily_value_recs.DailyValueRecsPresenter;
 import interface_adapter.daily_value_recs.MainViewModel;
-import interface_adapter.delete_food.DeleteFoodController;
-import interface_adapter.delete_food.DeleteFoodViewModel;
 import interface_adapter.display_food_options.DisplayFoodOptionsController;
 import interface_adapter.display_food_options.DisplayFoodOptionsPresenter;
 import interface_adapter.display_food_options.DisplayOptionsViewModel;
 import interface_adapter.food_logging.LogFoodController;
 import interface_adapter.food_logging.LogFoodPresenter;
 import interface_adapter.food_logging.LogFoodViewModel;
+import interface_adapter.select_from_food_options.SelectFromFoodOptionsController;
+import interface_adapter.select_from_food_options.SelectFromFoodOptionsPresenter;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logout.LogoutPresenter;
-import interface_adapter.select_from_food_options.SelectFromFoodOptionsController;
-import interface_adapter.select_from_food_options.SelectFromFoodOptionsPresenter;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
@@ -31,9 +29,15 @@ import use_case.daily_value_recs.DailyValueRecsInputBoundary;
 import use_case.daily_value_recs.DailyValueRecsInteractor;
 import use_case.daily_value_recs.DailyValueRecsOutputBoundary;
 import use_case.display_food_options.*;
+import use_case.food_logging.LogFoodDataAccessInterface;
 import use_case.food_logging.LogFoodInputBoundary;
 import use_case.food_logging.LogFoodInteractor;
 import use_case.food_logging.LogFoodOutputBoundary;
+import use_case.select_from_food_options.SelectFromFoodOptionsInputBoundary;
+import use_case.select_from_food_options.SelectFromFoodOptionsInteractor;
+import use_case.select_from_food_options.SelectFromFoodOptionsOutputBoundary;
+import use_case.select_from_food_options.SelectSearchDataAccessInterface;
+import view.DisplayOptionsView;
 import use_case.login.LoginInputBoundary;
 import use_case.login.LoginInteractor;
 import use_case.login.LoginOutputBoundary;
@@ -41,15 +45,9 @@ import use_case.logout.LogoutDataAccessInterface;
 import use_case.logout.LogoutInputBoundary;
 import use_case.logout.LogoutInteractor;
 import use_case.logout.LogoutOutputBoundary;
-import use_case.select_from_food_options.SelectFromFoodOptionsInputBoundary;
-import use_case.select_from_food_options.SelectFromFoodOptionsInteractor;
-import use_case.select_from_food_options.SelectFromFoodOptionsOutputBoundary;
-import use_case.select_from_food_options.SelectSearchDataAccessInterface;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
-import view.DeleteFoodView.DeleteFoodView;
-import view.DisplayOptionsView;
 import view.LoginView.LoginView;
 import view.SignupView.SignupView;
 import view.ViewManager;
@@ -69,19 +67,17 @@ public class AppBuilder {
     private DisplayOptionsView displayOptionsView;
     private LoginView loginView;
     private SignupView signupView;
-    private DeleteFoodView deleteFoodView;
 
     private MainViewModel mainViewModel;
     private LogFoodViewModel logFoodViewModel;
     private DisplayOptionsViewModel displayOptionsViewModel;
-    private LoginViewModel loginViewModel;
-    private SignupViewModel signupViewModel;
-    private DeleteFoodViewModel deleteFoodViewModel;
 
     private InMemoryFoodSelectionDataAccessInterface inMemoryFoodSelectionDAO;
     private DisplayFoodOptionsDataAccessInterface foodDataCentralSearchDAO;
     private SelectSearchDataAccessInterface foodDataCentralSearchDAO2;
 
+    private LoginViewModel loginViewModel;
+    private SignupViewModel signupViewModel;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -100,6 +96,7 @@ public class AppBuilder {
         cardPanel.add(displayOptionsView, displayOptionsView.getViewName());
         return this;
     }
+
 
     public AppBuilder addLoginView() {
         this.loginViewModel = new LoginViewModel();
@@ -132,18 +129,6 @@ public class AppBuilder {
                 dietOptions, restrictionOptions, goalOptions);
 
         cardPanel.add(signupView.getViewName(), signupView);
-        return this;
-    }
-
-    public AppBuilder addDeleteFoodView() {
-        this.deleteFoodViewModel = new DeleteFoodViewModel();
-
-        // come back here when things are implemented
-        DeleteFoodController deleteFoodController = new DeleteFoodController();
-
-        this.deleteFoodView = new DeleteFoodView(this.deleteFoodViewModel, deleteFoodController);
-
-        cardPanel.add(this.deleteFoodView.getViewName(), this.deleteFoodView);
         return this;
     }
 
@@ -207,7 +192,10 @@ public class AppBuilder {
     public AppBuilder addFoodLoggingUseCase(){
         final LogFoodOutputBoundary logFoodOutputBoundary = new LogFoodPresenter(logFoodViewModel, mainViewModel,
                 viewManagerModel);
-        final LogFoodInputBoundary logFoodInteractor = new LogFoodInteractor(logFoodOutputBoundary, inMemoryFoodSelectionDAO);
+        final LogFoodDataAccessInterface logFoodDataAccessInterface = new GradeAccountDAO();
+        final LogFoodInputBoundary logFoodInteractor = new LogFoodInteractor(inMemoryFoodSelectionDAO,
+                logFoodDataAccessInterface,
+                logFoodOutputBoundary);
         final LogFoodController logFoodController = new LogFoodController(logFoodInteractor);
         mainView.setLogFoodController(logFoodController);
         return this;
@@ -222,4 +210,5 @@ public class AppBuilder {
         mainView.setLogoutController(logoutController);
         return this;
     }
+
 }

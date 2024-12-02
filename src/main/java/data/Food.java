@@ -5,20 +5,10 @@ import java.util.HashMap;
 public class Food {
     private String description;
     private String standardUnit;
-    private float weight;
+    private double weight;
     private HashMap<String, Object> calories;
     private HashMap<String, HashMap<String, Object>> microNutrients;
     private HashMap<String, HashMap<String, Object>> macroNutrients;
-   /* private HashMap<String, Object> protein;
-    private HashMap<String, Object> carbs;
-    private HashMap<String, Object> fat;*/
-
-
-
-    public double getTotalFat() {
-        return totalFat;
-    }
-
     private double totalCalories;
     private double totalProtein;
 
@@ -31,12 +21,9 @@ public class Food {
         calories = new HashMap<>();
         microNutrients = new HashMap<>();
         macroNutrients = new HashMap<>();
-        /*this.protein = new HashMap<>();
-        this.carbs = new HashMap<>();
-        this.fat = new HashMap<>();*/
     }
 
-    public Food(String name, float weight, HashMap<String, Object> calories) {
+    public Food(String name, double weight, HashMap<String, Object> calories) {
         this.description = name;
         this.weight = weight;
         this.calories = calories;
@@ -44,21 +31,11 @@ public class Food {
         this.macroNutrients = new HashMap<>();  // depends on how API calls work! Check back after API calls do smth
     }
 
-/*    public Food(String name, float weight, HashMap<String, Object> calories, HashMap<String, Object> protein,
-                HashMap<String, Object> carbs, HashMap<String, Object> fat) {
-        this.description = name;
-        this.weight = weight;
-        this.calories = calories;
-        this.protein = protein;
-        this.carbs = carbs;
-        this.fat = fat;
-    }*/
-
     public String getDescription() {
         return this.description;
     }
 
-    public float getWeight() {
+    public double getWeight() {
         return this.weight;
     }
 
@@ -94,7 +71,7 @@ public class Food {
         this.standardUnit = standardUnit;
     }
 
-    public void setWeight(float weight) {
+    public void setWeight(double weight) {
         this.weight = weight;
     }
 
@@ -127,6 +104,10 @@ public class Food {
                 "amount per 100")/100*this.weight;
     }
 
+    public double getTotalFat() {
+        return totalFat;
+    }
+
     public double getTotalCalories() {
         return totalCalories;
     }
@@ -137,5 +118,15 @@ public class Food {
 
     public double getTotalCarb() {
         return totalCarb;
+    }
+
+    public void setNutritionFacts(HashMap<String, HashMap<String, Object>> microNutrients,
+                                   HashMap<String, HashMap<String, Object>> macroNutrients){
+        this.setMacroNutrients(macroNutrients);
+        this.setMicroNutrients(microNutrients);
+        this.setTotalProtein();
+        this.setTotalFat();
+        this.setTotalCalories();
+        this.setTotalCarb();
     }
 }

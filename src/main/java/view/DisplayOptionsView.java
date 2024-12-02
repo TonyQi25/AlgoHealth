@@ -18,6 +18,7 @@ public class DisplayOptionsView extends JPanel implements ActionListener, Proper
     private DisplayFoodOptionsController displayFoodOptionsController;
     private SelectFromFoodOptionsController selectFromFoodOptionsController;
     private JComboBox dropdown = new JComboBox();
+    private JLabel errorMessage = new JLabel("");
 
     private DisplayOptionsViewModel displayFoodOptionsViewModel;
 
@@ -29,7 +30,13 @@ public class DisplayOptionsView extends JPanel implements ActionListener, Proper
         JButton selectAndReturn = new JButton("Select and Return");
         mainPanel.add(dropdown);
         mainPanel.add(selectAndReturn);
-        this.add(mainPanel);
+
+        JPanel actualMainPanel = new JPanel();
+        actualMainPanel.setLayout(new BoxLayout(actualMainPanel, BoxLayout.Y_AXIS));
+        actualMainPanel.add(mainPanel);
+        actualMainPanel.add(errorMessage);
+
+        this.add(actualMainPanel);
 
         dropdown.addActionListener(
                 new ActionListener() {
@@ -38,6 +45,8 @@ public class DisplayOptionsView extends JPanel implements ActionListener, Proper
                         if (evt.getSource().equals(dropdown)) {
                             JComboBox comboBox = (JComboBox) evt.getSource();
                             String selected = (String) comboBox.getSelectedItem();
+                            DisplayOptionsViewState displayOptionsViewState = displayOptionsViewModel.getState();
+                            displayOptionsViewState.setCurrSelection(selected);
                             /*int i = 0;
                             currentState.setFdcIDofSelection(currentState.getFoodOptionsMap().get(selected));*/
                         }
@@ -48,7 +57,9 @@ public class DisplayOptionsView extends JPanel implements ActionListener, Proper
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        selectFromFoodOptionsController.execute((String) dropdown.getSelectedItem());
+                        // selectFromFoodOptionsController.execute((String) dropdown.getSelectedItem());
+                        selectFromFoodOptionsController.execute(displayOptionsViewModel.getState().getCurrSelection(),
+                                displayOptionsViewModel.getState().getErrorMessage());
                     }
                 }
         );
@@ -67,6 +78,7 @@ public class DisplayOptionsView extends JPanel implements ActionListener, Proper
             for (String foodDesc: currState.getSelectionList()) {
                 dropdown.addItem(foodDesc);
             }
+            this.errorMessage.setText(currState.getErrorMessage());
         }
 
     }

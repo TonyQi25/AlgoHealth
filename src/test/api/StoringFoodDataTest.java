@@ -63,12 +63,97 @@ public class StoringFoodDataTest {
         pineapple.setTotalCalories();
         pineapple.setTotalFat();
         pineapple.setTotalProtein();
-        gradeAccountDAO.saveFood("testSaveAccount", "12345", pineapple, 12345);
+        gradeAccountDAO.saveFood(LocalDate.now().toString(), "testSaveAccount","12345", pineapple, 12345);
+    }
+    @Test
+    void testSavingNewFoodToAPI() {
+        HashMap<String, Object> calories = new HashMap<>();
+        calories.put("amount per 100", 0.10);
+        HashMap<String, Object> proteins = new HashMap<>();
+        proteins.put("amount per 100", 0.93);
+        HashMap<String, Object> carbs = new HashMap<>();
+        carbs.put("amount per 100", 0.38);
+        HashMap<String, Object> fat = new HashMap<>();
+        fat.put("amount per 100", 0.19);
+        Food banana = new Food("banana", 120, calories);
+        HashMap<String, HashMap<String, Object>> macros = new HashMap<>();
+        macros.put("Protein", proteins);
+        macros.put("Carbohydrate", carbs);
+        macros.put("Fat", fat);
+        banana.setMacroNutrients(macros);
+        banana.setTotalCarb();
+        banana.setTotalCalories();
+        banana.setTotalFat();
+        banana.setTotalProtein();
+        gradeAccountDAO.saveFood(LocalDate.now().toString(), "testSaveAccount","12345", banana, 6789);
+    }
+    @Test
+    void testSavingNewWeightFoodToAPI() {
+        HashMap<String, Object> calories = new HashMap<>();
+        calories.put("amount per 100", 0.10);
+        HashMap<String, Object> proteins = new HashMap<>();
+        proteins.put("amount per 100", 0.93);
+        HashMap<String, Object> carbs = new HashMap<>();
+        carbs.put("amount per 100", 0.38);
+        HashMap<String, Object> fat = new HashMap<>();
+        fat.put("amount per 100", 0.19);
+        Food banana = new Food("banana", 320, calories);
+        HashMap<String, HashMap<String, Object>> macros = new HashMap<>();
+        macros.put("Protein", proteins);
+        macros.put("Carbohydrate", carbs);
+        macros.put("Fat", fat);
+        banana.setMacroNutrients(macros);
+        banana.setTotalCarb();
+        banana.setTotalCalories();
+        banana.setTotalFat();
+        banana.setTotalProtein();
+        gradeAccountDAO.saveFood(LocalDate.now().toString(), "testSaveAccount","12345", banana, 6789);
+    }
+    @Test
+    void testSavingNewDayFoodToAPI() {
+        HashMap<String, Object> calories = new HashMap<>();
+        calories.put("amount per 100", 0.89);
+        HashMap<String, Object> proteins = new HashMap<>();
+        proteins.put("amount per 100", 0.38);
+        HashMap<String, Object> carbs = new HashMap<>();
+        carbs.put("amount per 100", 0.28);
+        HashMap<String, Object> fat = new HashMap<>();
+        fat.put("amount per 100", 0.10);
+        Food potato = new Food("potato", 150, calories);
+        HashMap<String, HashMap<String, Object>> macros = new HashMap<>();
+        macros.put("Protein", proteins);
+        macros.put("Carbohydrate", carbs);
+        macros.put("Fat", fat);
+        potato.setMacroNutrients(macros);
+        potato.setTotalCarb();
+        potato.setTotalCalories();
+        potato.setTotalFat();
+        potato.setTotalProtein();
+        gradeAccountDAO.saveFood("2024-10-09", "testSaveAccount","12345", potato, 91234);
     }
     @Test
     void loadingFoodTest() {
-        JSONObject food = GradeHelper.getJSONFoodLog ("testSaveAccount");
-        assertEquals("12345", JSONObject.getNames(food)[0]);
-        assertEquals(100, food.get("12345"));
+        JSONObject dayFoodLog = gradeAccountDAO.loadFoodInfo("testSaveAccount", "2024-10-09");
+        JSONObject foodInfo = dayFoodLog.getJSONObject("91234");
+        assertEquals("potato", foodInfo.get("name"));
+
+        //JSONObject todayLog = GradeHelper.getJSONFoodLog("testSaveAccount", LocalDate.now().toString());
+        JSONObject OctLog = (JSONObject) GradeHelper.getJSONFoodLog("testSaveAccount");
+        //JSONObject OctLogFoodInfo = (JSONObject) OctLog.get("32380");
+        //assertEquals("apple", OctLog.get("name"));
+        //assertEquals(800, OctLog.get("weight"));
+        Integer foodExistBeforeDelete = gradeAccountDAO.FoodExists("2024-10-09", "testSaveAccount",
+                "potato");
+        assertEquals(91234, (int)foodExistBeforeDelete);
+    }
+
+    @Test
+    void DeletingFoodTest(){
+        boolean foodRemove = gradeAccountDAO.removeFood("2024-10-09", "testSaveAccount",
+                "12345", "91234");
+        assertEquals(true, foodRemove);
+        Integer foodExist = gradeAccountDAO.FoodExists("2024-10-09", "testSaveAccount",
+                "potato");
+        assertEquals(null, foodExist);
     }
 }

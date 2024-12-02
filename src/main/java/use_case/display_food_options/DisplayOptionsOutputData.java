@@ -6,6 +6,11 @@ public class DisplayOptionsOutputData {
 
     // private HashMap<String, Integer> foodMap;
     private String[] foodList;
+    private String message;
+
+    public DisplayOptionsOutputData(String message) {
+        this.message = message;
+    }
 
     public DisplayOptionsOutputData(String[] foodList) {
         this.foodList = foodList;
