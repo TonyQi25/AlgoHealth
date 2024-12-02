@@ -1,6 +1,7 @@
 package use_case.history;
 
 import org.json.JSONObject;
+import use_case.one_day_history.UpdateHistoryTotalsInputData;
 import use_case.removeFood.RemoveFoodInputData;
 
 import java.util.ArrayList;
@@ -80,5 +81,9 @@ public class HistoryInteractor implements HistoryInputBoundary{
 
     public void goBack() {
         historyOutputBoundary.prepareMainView();
+    }
+
+    public void viewOneDay(UpdateHistoryTotalsInputData input) {
+        historyOutputBoundary.viewOneDay(input);
     }
 }

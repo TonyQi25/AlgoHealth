@@ -4,8 +4,8 @@ import java.util.HashMap;
 
 public class UpdateHistoryTotalsState {
 
-    private HashMap<String, Double> foodList;
     private String username;
+    private String password;
     private String date;
     private boolean completed;
 
@@ -35,9 +35,6 @@ public class UpdateHistoryTotalsState {
         this.date = date;
     }
 
-    public void setFoodList(HashMap<String, Double> foodList) {
-        this.foodList = foodList;
-    }
 
     public String getUsername() {
         return username;
@@ -45,10 +42,6 @@ public class UpdateHistoryTotalsState {
 
     public String getDate() {
         return date;
-    }
-
-    public HashMap<String, Double> getFoodList() {
-        return foodList;
     }
 
     public void setCalories(double calories) {
@@ -81,6 +74,14 @@ public class UpdateHistoryTotalsState {
 
     public void setRecProtein(double recProtein) {
         this.recProtein = recProtein;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public double getRecFat() {

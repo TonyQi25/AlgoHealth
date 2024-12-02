@@ -5,15 +5,21 @@ import java.util.HashMap;
 public class UpdateHistoryTotalsInputData {
 
     String username;
+    String password;
     String date;
 
-    public UpdateHistoryTotalsInputData(String username, String date) {
+    public UpdateHistoryTotalsInputData(String username, String date, String password) {
         this.username = username;
         this.date = date;
+        this.password = password;
     }
 
     public String getUsername() {
         return username;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public String getDate() {
