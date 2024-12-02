@@ -351,7 +351,12 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
 
             private void documentListenerHelper() {
                 final LogFoodState currentState = logFoodViewModel.getState();
-                currentState.setWeightNumber(Float.valueOf(foodAmountField.getText()));
+                if (!foodAmountField.getText().equals("")) {
+                    currentState.setWeightNumber(Float.valueOf(foodAmountField.getText()));
+                }
+                else {
+                    currentState.setWeightNumber(0);
+                }
                 logFoodViewModel.setState(currentState);
             }
 
