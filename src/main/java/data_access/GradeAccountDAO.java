@@ -129,11 +129,8 @@ public class GradeAccountDAO implements SignupDataAccessInterface, LoginDataAcce
     //loads the food information for requested date
     @Override
     public JSONObject loadFoodInfo(String username, String date){
-        System.out.println("TRYING TO LOAD FOOD INFO for day "+date);
         if(this.DayExists(date, username)){
             JSONObject dayFoodLog = GradeHelper.getSingleDayJSONFoodLog(username, date);
-
-            System.out.println(dayFoodLog.toString());
 
             return dayFoodLog;
         }

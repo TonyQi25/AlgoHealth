@@ -1,5 +1,6 @@
 package use_case.history;
 
+import use_case.one_day_history.UpdateHistoryTotalsInputData;
 import use_case.removeFood.RemoveFoodInputData;
 import use_case.removeFood.RemoveFoodInteractor;
 
@@ -12,4 +13,6 @@ public interface HistoryOutputBoundary {
     void prepareRemoveFoodView(RemoveFoodInputData response);
 
     void prepareMainView();
+
+    void viewOneDay(UpdateHistoryTotalsInputData input);
 }

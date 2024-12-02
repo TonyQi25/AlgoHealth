@@ -30,6 +30,7 @@ public class UpdateHistoryTotalsPresenter implements UpdateHistoryTotalsOutputBo
         state.setRecFat(output.getRecFat());
         state.setRecProtein(output.getRecProtein());
         state.setRecCarbs(output.getRecCarbs());
+        state.setCompleted(true);
 
         this.viewModel.setState(state);
         this.viewModel.firePropertyChanged();

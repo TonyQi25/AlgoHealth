@@ -14,9 +14,9 @@ public class UpdateHistoryTotalsController {
         this.inputBoundary = inputBoundary;
     }
 
-    public void execute(String username, String date) {
+    public void execute(String username, String date, String password) {
 
-        UpdateHistoryTotalsInputData input = new UpdateHistoryTotalsInputData(username, date);
+        UpdateHistoryTotalsInputData input = new UpdateHistoryTotalsInputData(username, date, password);
         inputBoundary.execute(input);
 
     }
