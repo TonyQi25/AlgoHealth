@@ -7,6 +7,9 @@ import use_case.history.HistoryInputData;
 import use_case.removeFood.RemoveFoodOutputBoundary;
 import use_case.removeFood.RemoveFoodOutputData;
 
+/**
+ * presenter for remove food use case
+ */
 public class RemoveFoodPresenter implements RemoveFoodOutputBoundary {
 
     private RemoveFoodViewModel viewModel;
@@ -19,6 +22,10 @@ public class RemoveFoodPresenter implements RemoveFoodOutputBoundary {
         this.historyViewModel = historyViewModel;
     }
 
+    /**
+     * prepare success view for remove food use case
+     * @param data input data for use case
+     */
     @Override
     public void prepareSuccessView(RemoveFoodOutputData data) {
         RemoveFoodState state = viewModel.getState();
@@ -37,6 +44,10 @@ public class RemoveFoodPresenter implements RemoveFoodOutputBoundary {
         this.viewManagerModel.firePropertyChanged();
     }
 
+    /**
+     * prepare fail view for use case
+     * @param errorMessage error message from interactor
+     */
     @Override
     public void prepareFailView(String errorMessage) {
         RemoveFoodState state = viewModel.getState();
@@ -44,6 +55,10 @@ public class RemoveFoodPresenter implements RemoveFoodOutputBoundary {
         viewModel.firePropertyChanged();
     }
 
+    /**
+     * prepare history view for returning to history
+     * @param data history input data
+     */
     @Override
     public void prepareHistoryView(HistoryInputData data) {
         System.out.println("transition from remove to history called");

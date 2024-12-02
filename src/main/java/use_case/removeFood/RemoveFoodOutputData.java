@@ -1,5 +1,8 @@
 package use_case.removeFood;
 
+/**
+ * output data for remove food use case
+ */
 public class RemoveFoodOutputData {
 
     private String resultMessage;
