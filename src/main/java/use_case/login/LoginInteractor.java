@@ -1,15 +1,10 @@
 package use_case.login;
 
-import api.FoodDataCentralPopulateDAO;
 import data.AccountInfo;
-import data.DayInfo;
 import data.Food;
 import data_access.GradeAccountDAO;
-import data_access.TempDAOInMemory;
-import use_case.Helpers.UseCaseHelpers;
+import helpers.UseCaseHelpers;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 /**

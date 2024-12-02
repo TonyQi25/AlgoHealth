@@ -20,4 +20,8 @@ public class UpdateHistoryTotalsController {
         inputBoundary.execute(input);
 
     }
+
+    public void switchToHistory() {
+        inputBoundary.switchToHistory();
+    }
 }

@@ -101,7 +101,7 @@ public class GradeAccountDAO implements SignupDataAccessInterface, LoginDataAcce
         JSONObject newFoodInfo = new JSONObject();
         newFoodInfo.put("name", foodIntake.getDescription());
         JSONObject newDayFoodLog = new JSONObject();
-        float newWeight = foodIntake.getWeight();
+        double newWeight = foodIntake.getWeight();
 
         if (this.DayExists(date, username)){
             JSONObject DayFoodLog = GradeHelper.getSingleDayJSONFoodLog(username, date.toString());

@@ -114,5 +114,21 @@ public class UpdateHistoryTotalsState {
     public double getRecCalories() {
         return recCalories;
     }
+
+    public double getPercentCalories() {
+        return this.getCalories() / this.getRecCalories();
+    }
+
+    public double getPercentProtein() {
+        return this.getProtein() / this.getRecProtein();
+    }
+
+    public double getPercentCarbs() {
+        return this.getCarbs() / this.getRecCarbs();
+    }
+
+    public double getPercentFat() {
+        return this.getFat() / this.getRecFat();
+    }
 }
 

@@ -4,9 +4,9 @@ package view.SignupView;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupState;
 import interface_adapter.signup.SignupViewModel;
-import view.Helpers.DOBSelectorListener;
-import view.Helpers.NumericFilter;
-import view.Helpers.ViewHelpers;
+import helpers.DOBSelectorListener;
+import helpers.NumericFilter;
+import helpers.ViewHelpers;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -90,7 +90,7 @@ public class SignupView extends JPanel implements PropertyChangeListener {
         JTextField passwordShowField = new JTextField(15);
         JPasswordField passwordHideField = new JPasswordField(15);
         JButton togglePasswordButton = ViewHelpers.getPasswordToggleButton(this.passwordPanel, passwordShowField,
-                passwordHideField);
+                passwordHideField, 1);
 
         passwordShowField.getDocument().addDocumentListener(new DocumentListener() {
             @Override

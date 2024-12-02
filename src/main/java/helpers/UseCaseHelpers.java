@@ -1,4 +1,4 @@
-package use_case.Helpers;
+package helpers;
 
 import data.Food;
 

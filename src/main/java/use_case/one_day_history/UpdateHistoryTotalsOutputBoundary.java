@@ -4,4 +4,5 @@ public interface UpdateHistoryTotalsOutputBoundary {
 
     void prepareSuccessView(UpdateHistoryTotalsOutputData output);
 
+    void switchToHistory();
 }

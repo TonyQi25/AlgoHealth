@@ -2,6 +2,7 @@ package use_case.one_day_history;
 
 import data.Food;
 //import use_case.daily_value_recs.DailyValueCalculationStrategy;
+import data_access.GradeAccountDAO;
 import use_case.select_from_food_options.SelectSearchDataAccessInterface;
 import org.json.JSONObject;
 
@@ -95,6 +96,10 @@ public class UpdateHistoryTotalsInteractor implements UpdateHistoryTotalsInputBo
                 grandTotalDVFat);
 
         updateHistoryTotalsPresenter.prepareSuccessView(outputData);
+
+    }
+
+    public void switchToHistory() {
 
     }
 }

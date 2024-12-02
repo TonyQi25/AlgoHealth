@@ -21,6 +21,10 @@ public class SignupInteractor implements SignupInputBoundary {
     public void execute(SignupInputData signupInputData) {
         if (signupDataAccessObject.existsByName(signupInputData.getUsername())) {
             signupPresenter.prepareFailView("Username is taken.");
+        } else if (signupInputData.getUsername().isEmpty()) {
+            signupPresenter.prepareFailView("Username cannot be empty.");
+        } else if (signupInputData.getPassword().isEmpty()) {
+            signupPresenter.prepareFailView("Password cannot be empty.");
         } else if (signupInputData.getHeight() <= 0) {
             signupPresenter.prepareFailView("Invalid height.");
         } else if (signupInputData.getWeight() <= 0) {
