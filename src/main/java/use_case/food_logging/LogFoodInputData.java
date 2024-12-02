@@ -21,14 +21,6 @@ public class LogFoodInputData {
         return foodWeight;
     }
 
-    public String getWeightUnit() {
-        return weightUnit;
-    }
-
-    public Integer getFdcId() {
-        return fdcId;
-    }
-
     public String getUsername(){ return username; }
 
     public String getPassword(){ return password; }
