@@ -22,15 +22,7 @@ public class LogFoodInteractor implements LogFoodInputBoundary {
         this.foodLoggingDAO = foodLoggingDAO;
     }
 
-   //@Override
     public void execute(LogFoodInputData logFoodInputData) {
-        /*final FoodDataCentralSearchDAO usdaObject = new FoodDataCentralSearchDAO(FoodDataCentralSearchDAO
-                .genMyApiKey("myFDCApiKey.txt"));*/
-        //JSONObject result = usdaObject.getFoodByFdcId(logFoodInputData.getFdcId());
-        // final Food food = FoodDataCentralPopulateDAO.foodFromFirstResultUsda(
-                // logFoodInputData.getFoodName(), usdaObject);
-        /*final Food food = FoodDataCentralPopulateDAO.foodFromResultUsda(
-                result, usdaObject);*/
         Food food = inMemoryFoodSelectionDAO.getCurrFoodEntity();
         Integer fdcID = inMemoryFoodSelectionDAO.getCurrOptionsMap().get(food.getDescription());
         food.setWeight(logFoodInputData.getFoodWeight());
@@ -53,7 +45,7 @@ public class LogFoodInteractor implements LogFoodInputBoundary {
         foodLoggingDAO.saveFood(LocalDate.now().toString(), logFoodInputData.getUsername(),
                 logFoodInputData.getPassword(), food, fdcID);
         final LogFoodOutputData logFoodOutputData = new LogFoodOutputData(food.getDescription(),
-                (float) food.getWeight(),
+                food.getWeight(),
                 food.getStandardUnit(), calWUnit, proteinWUnit, carbsWUnit, fatWUnit);
         logFoodPresenter.prepareLogFoodView(logFoodOutputData);
     }

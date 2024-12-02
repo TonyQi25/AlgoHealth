@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class LogFoodState {
     private String foodName = "";
-    private float weightNumber = 0;
+    private double weightNumber = 0;
     private String weightUnit = "";
 
     private HashMap<String, Integer> foodOptionsMap;
@@ -51,7 +51,7 @@ public class LogFoodState {
         this.foodName = foodName;
     }
 
-    public void setWeightNumber(float weightNumber) {
+    public void setWeightNumber(double weightNumber) {
         this.weightNumber = weightNumber;
     }
 
