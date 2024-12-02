@@ -15,6 +15,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * view for remove food use case
+ */
 public class RemoveFoodView extends JPanel implements ActionListener, PropertyChangeListener {
 
     private final String viewName = "remove food";
@@ -52,7 +55,6 @@ public class RemoveFoodView extends JPanel implements ActionListener, PropertyCh
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("return clicked");
 
                 controller.returnToHistory(date, username, password);
 
@@ -80,7 +82,6 @@ public class RemoveFoodView extends JPanel implements ActionListener, PropertyCh
             if (!state.getCompleted()) {
                 controller.execute(state.getFoodName(), state.getWeight(), state.getUsername(), state.getViewingDate(), password);
             } else {
-                System.out.println("State completed and property change called");
                 responseLabel.setText(state.getOutputMessage());
             }
         }   else {

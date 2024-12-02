@@ -7,6 +7,9 @@ import use_case.removeFood.RemoveFoodInputData;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * use case interactor for history view use case
+ */
 public class HistoryInteractor implements HistoryInputBoundary{
 
     private final HistoryOutputBoundary historyOutputBoundary;
@@ -19,8 +22,11 @@ public class HistoryInteractor implements HistoryInputBoundary{
         this.historyDataAccessInterface = dataAccessInterface;
     }
 
+    /**
+     * runs the use case
+     * @param input input data
+     */
     public void execute(HistoryInputData input) {
-
         if (historyDataAccessInterface.DayExists(input.getDate().toString(), input.getUsername())) {
             JSONObject idToInfo = historyDataAccessInterface.loadFoodInfo(input.getUsername(), input.getDate().toString());
 
@@ -42,14 +48,25 @@ public class HistoryInteractor implements HistoryInputBoundary{
         }
     }
 
+    /**
+     * runs remove food use case
+     * @param input input data
+     */
     public void removeHighlightedFood (RemoveFoodInputData input) {
         historyOutputBoundary.prepareRemoveFoodView(input);
     }
 
+    /**
+     * goes back to main view
+     */
     public void goBack() {
         historyOutputBoundary.prepareMainView();
     }
 
+    /**
+     * runs view one day use case
+     * @param input input data
+     */
     public void viewOneDay(UpdateHistoryTotalsInputData input) {
         historyOutputBoundary.viewOneDay(input);
     }

@@ -27,6 +27,9 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.time.LocalDate;
 
+/**
+ * view for history use case
+ */
 public class HistoryView extends JPanel implements ActionListener, PropertyChangeListener {
 
     private final String viewName = "history";
@@ -189,53 +192,6 @@ public class HistoryView extends JPanel implements ActionListener, PropertyChang
         return viewName;
     }
 
-//    public static void main(String[] args) {
-//        final JFrame application = new JFrame("Example");
-//        application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-//
-//        final CardLayout cardLayout = new CardLayout();
-//
-//        // The various View objects. Only one view is visible at a time.
-//        final JPanel views = new JPanel(cardLayout);
-//        application.add(views);
-//
-//        final ViewManagerModel viewManagerModel = new ViewManagerModel();
-//        new ViewManager(views, cardLayout, viewManagerModel);
-//
-//
-//        final HistoryViewModel historyViewModel = new HistoryViewModel();
-//        final RemoveFoodViewModel removeFoodViewModel = new RemoveFoodViewModel();
-//
-//        final TempHistoryDAO historyDAO = new TempHistoryDAO();
-//        final TempHistoryDAO removeFoodDAO = new TempHistoryDAO(); // have its own
-//
-//        //final HistoryView historyView = HistoryUseCaseFactory.create(viewManagerModel, historyViewModel, historyDAO);
-//        //final RemoveFoodView removeFoodView = RemoveFoodUseCaseFactory.create(viewManagerModel, removeFoodViewModel, removeFoodDAO);
-//
-//        final HistoryOutputBoundary historyOutputBoundary = new HistoryPresenter(historyViewModel, removeFoodViewModel, viewManagerModel);
-//        final HistoryInputBoundary historyInteractor = new HistoryInteractor(historyOutputBoundary, historyDAO);
-//        final HistoryController historyController = new HistoryController(historyInteractor);
-//        HistoryView historyView = new HistoryView(historyViewModel, historyController);
-//
-//        final RemoveFoodOutputBoundary removeFoodOutputBoundary = new RemoveFoodPresenter(removeFoodViewModel, viewManagerModel, historyViewModel);
-//        final RemoveFoodInputBoundary removeFoodInteractor = new RemoveFoodInteractor(removeFoodOutputBoundary, historyDAO);
-//        final RemoveFoodController removeFoodController = new RemoveFoodController(removeFoodInteractor);
-//        RemoveFoodView removeFoodView = new RemoveFoodView(removeFoodViewModel, removeFoodController);
-//
-//        //========================================================================================
-//
-//        views.add(historyView, historyView.getViewName());
-//        views.add(removeFoodView, removeFoodView.getViewName());
-//
-//        viewManagerModel.setState(historyView.getViewName());
-//        viewManagerModel.firePropertyChanged();
-//
-//        application.pack();
-//        application.setVisible(true);
-//
-//    }
-
-
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -245,9 +201,7 @@ public class HistoryView extends JPanel implements ActionListener, PropertyChang
     public void propertyChange(PropertyChangeEvent evt) {
         final HistoryState state = (HistoryState) evt.getNewValue();
         username = state.getUsername();
-        System.out.println("In HistoryView: " + username);
         password = state.getPassword();
-        System.out.println("In HistoryView Password: " + password);
         if (state.getHistoryError().isEmpty()) {
             if (!state.getCompleted()) {
                 historyController.execute(state.getViewingDate(), 0, state.getUsername(), password);
@@ -261,7 +215,6 @@ public class HistoryView extends JPanel implements ActionListener, PropertyChang
     }
 
     private void setFields(HistoryState state) {
-        System.out.println("Hit set property change");
         List<String> info = state.getDayDetails();
         DefaultListModel<String> tempList = new DefaultListModel<>();
 

@@ -1,12 +1,14 @@
 package data_access;
 
 import data.Food;
+import org.json.JSONObject;
 import use_case.display_food_options.InMemoryFoodSelectionDataAccessInterface;
+import use_case.food_logging.LogFoodDataAccessInterface;
 
 import java.util.HashMap;
 
 
-public class InMemoryFoodSelectionDAO implements InMemoryFoodSelectionDataAccessInterface {
+public class InMemoryFoodSelectionDAO implements InMemoryFoodSelectionDataAccessInterface, LogFoodDataAccessInterface {
 
     private String currSelection;
     private HashMap<String, Integer> currOptionsMap;
@@ -45,5 +47,15 @@ public class InMemoryFoodSelectionDAO implements InMemoryFoodSelectionDataAccess
 
     public Food getCurrFoodEntity() {
         return currFoodEntity;
+    }
+
+    @Override
+    public void saveFood(String date, String username, String password, Food foodIntake, Integer fdcID) {
+
+    }
+
+    @Override
+    public JSONObject loadFoodInfo(String userName, String date) {
+        return null;
     }
 }
