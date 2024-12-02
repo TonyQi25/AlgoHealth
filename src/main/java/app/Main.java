@@ -14,9 +14,12 @@ public class Main {
                 .addMainView()
                 .addDisplayOptionsView()
                 .addDisplayOptionsUseCase()
+                .addLoginView()
+                .addSignupView()
                 .addDailyValueRecsUseCase()
                 .selectFromFoodOptionsUseCase()
                 .addFoodLoggingUseCase()
+                .addLogoutUseCase()
                 .build();
 
         application.pack();

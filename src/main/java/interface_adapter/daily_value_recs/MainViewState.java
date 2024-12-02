@@ -4,6 +4,9 @@ import java.util.HashMap;
 
 public class MainViewState {
 
+    private String username = "";
+    private String password = "";
+
     private double percent_cals = 0;
     private double percent_prot = 0;
     private double percent_carbs = 0;
@@ -18,6 +21,14 @@ public class MainViewState {
     private int fdcIDofSelection;
 
     private String foodSearchInput;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     public double getPercent_cals() {
         return percent_cals;
@@ -107,4 +118,11 @@ public class MainViewState {
         this.fdcIDofSelection = fdcIDofSelection;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

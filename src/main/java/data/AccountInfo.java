@@ -1,11 +1,18 @@
 package data;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AccountInfo {
-    private final LocalDate dateOfBirth;  // change this to date of birth
-    private final float height;
+
+    public static final String USERNAME_PREFIX = "ALGOHEALTH_";
+
+    private LocalDate dateOfBirth;  // change this to date of birth
+    private float height;
     private float weight;
     private String[] diet;
     private String goal;
@@ -24,6 +31,9 @@ public class AccountInfo {
         this.username = username;
         this.password = password;
         this.dietaryRestrictions = dietaryRestrictions;
+
+        this.days = new ArrayList<>();
+        this.days.add(new DayInfo(LocalDate.now()));
     }
 
     public LocalDate getDateOfBirth() {
@@ -60,6 +70,14 @@ public class AccountInfo {
 
     public List<String> getDietaryRestrictions() {
         return dietaryRestrictions;
+    }
+
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public void setHeight(float height) {
+        this.height = height;
     }
 
     public void setWeight(float weight) {

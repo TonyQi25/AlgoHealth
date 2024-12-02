@@ -9,12 +9,10 @@ public class LoginInputData {
 
     private final String username;
     private final String password;
-    private final JFrame loginFrame;
 
-    public LoginInputData(String username, String password, JFrame loginFrame) {
+    public LoginInputData(String username, String password) {
         this.username = username;
         this.password = password;
-        this.loginFrame = loginFrame;
     }
 
     String getUsername() {
@@ -25,7 +23,4 @@ public class LoginInputData {
         return this.password;
     }
 
-    JFrame getLoginFrame() {
-        return this.loginFrame;
-    }
 }

@@ -4,9 +4,11 @@ import data.AccountInfo;
 
 public interface SignupDataAccessInterface {
 
+    void createAccount(String username, String password);
+
     AccountInfo get(String username);
 
-    void put(String username, AccountInfo accountInfo);
+    void put(String username, String password, AccountInfo accountInfo);
 
     boolean existsByName(String username);
 

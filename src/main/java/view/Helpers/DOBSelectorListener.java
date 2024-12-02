@@ -1,4 +1,7 @@
-package view.SignupView;
+package view.Helpers;
+
+import interface_adapter.signup.SignupState;
+import interface_adapter.signup.SignupViewModel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -9,11 +12,15 @@ import java.util.stream.IntStream;
 
 public class DOBSelectorListener implements ActionListener {
 
+    private final SignupViewModel signupViewModel;
+
     private final JComboBox<String> yearField;
     private final JComboBox<String> monthField;
     private final JComboBox<String> dayField;
 
-    public DOBSelectorListener(JComboBox<String> yearField, JComboBox<String> monthField, JComboBox<String> dayField) {
+    public DOBSelectorListener(SignupViewModel signupViewModel, JComboBox<String> yearField,
+                               JComboBox<String> monthField, JComboBox<String> dayField) {
+        this.signupViewModel = signupViewModel;
         this.yearField = yearField;
         this.monthField = monthField;
         this.dayField = dayField;
@@ -42,5 +49,12 @@ public class DOBSelectorListener implements ActionListener {
         if (selectedDayIndex < maxDay) {
             dayField.setSelectedIndex(selectedDayIndex);
         }
+
+        signupViewModel.getState().setDateOfBirth(
+                LocalDate.of(selectedYear, selectedMonth, selectedDayIndex + 1));
+
+        System.out.println(LocalDate.of(selectedYear, selectedMonth, selectedDayIndex + 1));
+
+        // set state here, need to add viewmodel(s)
     }
 }

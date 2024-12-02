@@ -21,4 +21,8 @@ public class SignupController {
                 goal, username, password, dietaryRestrictions);
         signupUseCaseInteractor.execute(signupInputData);
     }
+
+    public void switchToLogin() {
+        signupUseCaseInteractor.switchToLogin();
+    }
 }
