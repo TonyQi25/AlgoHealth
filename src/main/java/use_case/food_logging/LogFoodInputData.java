@@ -3,13 +3,13 @@ package use_case.food_logging;
 public class LogFoodInputData {
 
     private final Integer fdcId;
-    private final float foodWeight;
+    private final double foodWeight;
     private final String weightUnit;
 
     private final String username;
     private final String password;
 
-    public LogFoodInputData(Integer fdcId, float foodWeight, String weightUnit, String username, String password) {
+    public LogFoodInputData(Integer fdcId, double foodWeight, String weightUnit, String username, String password) {
         this.fdcId = fdcId;
         this.foodWeight = foodWeight;
         this.weightUnit = weightUnit;
@@ -17,8 +17,7 @@ public class LogFoodInputData {
         this.password = password;
     }
 
-
-    public float getFoodWeight() {
+    public double getFoodWeight() {
         return foodWeight;
     }
 
@@ -30,6 +29,7 @@ public class LogFoodInputData {
         return fdcId;
     }
 
-    public String getUsername(){return username;}
-    public String getPassword(){return password;}
+    public String getUsername(){ return username; }
+
+    public String getPassword(){ return password; }
 }

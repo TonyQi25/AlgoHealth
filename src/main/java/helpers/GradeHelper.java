@@ -203,11 +203,11 @@ public class GradeHelper {
             JSONObject foodInfo = SingleFoodLog.getJSONObject(fdcID);
             JSONObject copyFoodInfo = new JSONObject();
             copyFoodInfo.put("name", foodInfo.getString("name"));
-            copyFoodInfo.put("weight", foodInfo.getFloat("weight"));
-            copyFoodInfo.put("totalCalories", foodInfo.getFloat("totalCalories"));
-            copyFoodInfo.put("totalFat", foodInfo.getFloat("totalFat"));
-            copyFoodInfo.put("totalCarb", foodInfo.getFloat("totalCarb"));
-            copyFoodInfo.put("totalProtein", foodInfo.getFloat("totalProtein"));
+            copyFoodInfo.put("weight", foodInfo.getDouble("weight"));
+            copyFoodInfo.put("totalCalories", foodInfo.getDouble("totalCalories"));
+            copyFoodInfo.put("totalFat", foodInfo.getDouble("totalFat"));
+            copyFoodInfo.put("totalCarb", foodInfo.getDouble("totalCarb"));
+            copyFoodInfo.put("totalProtein", foodInfo.getDouble("totalProtein"));
             copyFoodLog.put(fdcID, copyFoodInfo);
         }
         return copyFoodLog;

@@ -109,7 +109,7 @@ public class GradeAccountDAO implements SignupDataAccessInterface, LoginDataAcce
             Integer foodExist = this.FoodExists(date, username, foodIntake.getDescription());
             if (foodExist != null){
                 JSONObject currFoodInfo = DayFoodLog.getJSONObject(Integer.toString(foodExist));
-                newWeight += currFoodInfo.getFloat("weight");
+                newWeight += currFoodInfo.getDouble("weight");
             }
         }
         newFoodInfo.put("weight", newWeight);

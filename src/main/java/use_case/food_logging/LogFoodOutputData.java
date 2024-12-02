@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class LogFoodOutputData {
     private final String foodName;
 
-    private final float foodWeight;
+    private final double foodWeight;
     private final String weightUnit;
 
     private final ArrayList<Object> calories;
@@ -14,7 +14,7 @@ public class LogFoodOutputData {
     private final ArrayList<Object> fat;
 
     //output food name and calories calculated based on amount consumed.
-    public LogFoodOutputData(String foodName, float foodWeight, String weightUnit, ArrayList<Object> calories,
+    public LogFoodOutputData(String foodName, double foodWeight, String weightUnit, ArrayList<Object> calories,
                              ArrayList<Object> protein, ArrayList<Object> carbs, ArrayList<Object> fat) {
         this.foodName = foodName;
         this.foodWeight = foodWeight;
@@ -44,7 +44,7 @@ public class LogFoodOutputData {
         return fat;
     }
 
-    public float getFoodWeight() {
+    public double getFoodWeight() {
         return foodWeight;
     }
 
