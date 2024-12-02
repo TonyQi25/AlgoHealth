@@ -1,5 +1,8 @@
 package interface_adapter.remove_food;
 
+/**
+ * state for remove food use case
+ */
 public class RemoveFoodState {
 
     private String foodName;

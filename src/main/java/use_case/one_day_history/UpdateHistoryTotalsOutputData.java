@@ -1,5 +1,8 @@
 package use_case.one_day_history;
 
+/**
+ * output data for view one day use case
+ */
 public class UpdateHistoryTotalsOutputData {
 
     private double calories;

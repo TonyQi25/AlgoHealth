@@ -3,7 +3,7 @@ package use_case.history;
 import java.time.LocalDate;
 
 /**
- * The input data for the Calendar
+ * The input data for the history
  */
 public class HistoryInputData {
 

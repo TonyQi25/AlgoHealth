@@ -11,7 +11,9 @@ import use_case.history.HistoryOutputData;
 import use_case.one_day_history.UpdateHistoryTotalsInputData;
 import use_case.removeFood.RemoveFoodInputData;
 
-
+/**
+ * presenter for history use case
+ */
 public class HistoryPresenter implements HistoryOutputBoundary {
     private final HistoryViewModel historyViewModel;
     private final RemoveFoodViewModel removeFoodViewModel;
@@ -31,6 +33,10 @@ public class HistoryPresenter implements HistoryOutputBoundary {
         this.updateHistoryTotalsViewModel = updateHistoryTotalsViewModel;
     }
 
+    /**
+     * prepares the success view
+     * @param response the output data from the interactor
+     */
     @Override
     public void prepareSuccessView(HistoryOutputData response) {
         final HistoryState historyState = historyViewModel.getState();
@@ -50,6 +56,10 @@ public class HistoryPresenter implements HistoryOutputBoundary {
 
     }
 
+    /**
+     * prepare the failing view
+     * @param errorMessage the error message given by interactor
+     */
     @Override
     public void prepareFailView(String errorMessage) {
         final HistoryState historyState = historyViewModel.getState();
@@ -62,6 +72,10 @@ public class HistoryPresenter implements HistoryOutputBoundary {
 
     }
 
+    /**
+     * process of switching to remove food use case
+     * @param inputData input for the use case
+     */
     @Override
     public void prepareRemoveFoodView(RemoveFoodInputData inputData) {
         final RemoveFoodState removeFoodState = removeFoodViewModel.getState();
@@ -83,11 +97,18 @@ public class HistoryPresenter implements HistoryOutputBoundary {
         this.viewManagerModel.firePropertyChanged();
     }
 
+    /**
+     * process of switching to main view use case
+     */
     public void prepareMainView() {
         this.viewManagerModel.setState(mainViewModel.getViewName());
         this.viewManagerModel.firePropertyChanged();
     }
 
+    /**
+     * process of switching to the one-day history use case
+     * @param input input for the one-day history
+     */
     public void viewOneDay(UpdateHistoryTotalsInputData input) {
         final UpdateHistoryTotalsState updateHistoryTotalsState = updateHistoryTotalsViewModel.getState();
 

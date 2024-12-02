@@ -24,6 +24,9 @@ import java.util.List;
 
 import static view.MainView.ViewFormattingUtility.truncateString2Places;
 
+/**
+ * view for one day history use case
+ */
 public class OneDayHistoryView extends JPanel implements PropertyChangeListener {
 
     private final UpdateHistoryTotalsViewModel updateHistoryTotalsViewModel;
@@ -44,6 +47,8 @@ public class OneDayHistoryView extends JPanel implements PropertyChangeListener 
     private JLabel totalCarbs = new JLabel("0g");
     private JLabel totalFat = new JLabel("0g");
 
+    private JLabel header = new JLabel();
+
     public OneDayHistoryView(UpdateHistoryTotalsViewModel updateHistoryTotalsViewModel,
                              UpdateHistoryTotalsController updateHistoryTotalsController) {
         this.updateHistoryTotalsViewModel = updateHistoryTotalsViewModel;
@@ -54,8 +59,8 @@ public class OneDayHistoryView extends JPanel implements PropertyChangeListener 
         UpdateHistoryTotalsState updateHistoryTotalsState = updateHistoryTotalsViewModel.getState();
 
         JPanel overviewPanel = new JPanel();
-        JLabel overviewLabel = new JLabel("Food Nutrient Details for " + updateHistoryTotalsState.getDate());
-        overviewPanel.add(overviewLabel);
+        this.header = new JLabel();
+        overviewPanel.add(header);
 
         JPanel totalsAndRecPanel = new JPanel();
         totalsAndRecPanel.setBorder(BorderFactory.createRaisedBevelBorder());
@@ -117,6 +122,7 @@ public class OneDayHistoryView extends JPanel implements PropertyChangeListener 
         if(!state.getCompleted()) {
             updateHistoryTotalsController.execute(username, viewingDate, password);
         }   else {
+            System.out.println("putting up the values: " + state.getCalories());
             setDisplay(state);
         }
     }
@@ -127,6 +133,8 @@ public class OneDayHistoryView extends JPanel implements PropertyChangeListener 
     }
 
     private void setDisplay(UpdateHistoryTotalsState updateHistoryTotalsState) {
+        header.setText("Food Nutritions Details For "+updateHistoryTotalsState.getDate());
+
         totalCalories.setText(truncateString2Places((updateHistoryTotalsState.getCalories()) + "Kcal"));
         totalProtein.setText(truncateString2Places(String.valueOf(updateHistoryTotalsState.getProtein())) + "g");
         totalCarbs.setText(truncateString2Places(String.valueOf(updateHistoryTotalsState.getCarbs())) + "g");

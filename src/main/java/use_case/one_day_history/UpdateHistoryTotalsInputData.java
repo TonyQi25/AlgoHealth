@@ -2,6 +2,9 @@ package use_case.one_day_history;
 
 import java.util.HashMap;
 
+/**
+ * input data for view one day use case
+ */
 public class UpdateHistoryTotalsInputData {
 
     String username;

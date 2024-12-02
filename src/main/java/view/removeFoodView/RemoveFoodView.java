@@ -15,6 +15,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * view for remove food use case
+ */
 public class RemoveFoodView extends JPanel implements ActionListener, PropertyChangeListener {
 
     private final String viewName = "remove food";

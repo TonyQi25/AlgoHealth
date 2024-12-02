@@ -10,6 +10,9 @@ import java.util.HashMap;
 
 import static api.PopulateUtility.createFood;
 
+/**
+ * use case interactor for view one day usecase
+ */
 public class UpdateHistoryTotalsInteractor implements UpdateHistoryTotalsInputBoundary {
 
 
@@ -41,6 +44,10 @@ public class UpdateHistoryTotalsInteractor implements UpdateHistoryTotalsInputBo
         //this.dailyValueCalculationStrategy = dailyValueCalculationStrategy;
     }
 
+    /**
+     * executes the use case
+     * @param updateHistoryTotalsInputData input
+     */
     @Override
     public void execute(UpdateHistoryTotalsInputData updateHistoryTotalsInputData) {
         // assuming UpdateHistoryTotalsInputData will provide me with a list of fdcIds mapped to weight in some form.
@@ -50,6 +57,7 @@ public class UpdateHistoryTotalsInteractor implements UpdateHistoryTotalsInputBo
 
         // layout:  {ids: {"name": name, "weight": double ... }
 
+        System.out.println("OneDay interator called");
         JSONObject info = gradeAccountDAO.loadFoodInfo(updateHistoryTotalsInputData.getUsername(),
                 updateHistoryTotalsInputData.getDate());
 
@@ -59,14 +67,24 @@ public class UpdateHistoryTotalsInteractor implements UpdateHistoryTotalsInputBo
             idToWeight.put(Integer.parseInt(key), info.getJSONObject(key).getDouble("weight"));
         }
 
+        System.out.println("HERE IS THE HASHMAP REQUESTED"+idToWeight);
+
         Food[] outputFoodList = new Food[idToWeight.keySet().size()];
         int i = 0;
         for (Integer fdcId: idToWeight.keySet()) {
             Food freshFood = createFood(foodDataCentralSearchDAO.getFoodByFdcId(fdcId, MACRO_SPECIFIER_1));
             freshFood.setWeight(idToWeight.get(fdcId));
+            freshFood.setTotalCarb();
+            freshFood.setTotalProtein();
+            freshFood.setTotalFat();
+            freshFood.setTotalCalories();
             outputFoodList[i] = freshFood;
             i += 1;
+            System.out.println("#1 "+ freshFood.getDescription());
+            System.out.println("#1.5 "+ freshFood.getWeight());
         }
+
+
         // Total the macronutrients of all Foods in outputFoodList.
         // Currently calculating DV values in same way as in daily value recs use case. Another option for
         // both is put DV calculation directly in Food entity.
@@ -80,6 +98,10 @@ public class UpdateHistoryTotalsInteractor implements UpdateHistoryTotalsInputBo
             grandTotalCarbs += food.getTotalCarb();
             grandTotalProtein += food.getTotalCarb();
             grandTotalFat += food.getTotalFat();
+            System.out.println("#2 "+ grandTotalCalories);
+            System.out.println("#2 "+ grandTotalCarbs);
+            System.out.println("#2 "+ grandTotalProtein);
+            System.out.println("#2 "+ grandTotalFat);
         }
         double grandTotalDVCalories = (grandTotalCalories / DVcals) * 100;
         double grandTotalDVProtein = (grandTotalProtein / DVprot) * 100;
@@ -95,10 +117,15 @@ public class UpdateHistoryTotalsInteractor implements UpdateHistoryTotalsInputBo
                 grandTotalDVProtein,
                 grandTotalDVFat);
 
+        System.out.println("HERE IS CALROIES CALCUALTED:" + grandTotalCalories);
+
         updateHistoryTotalsPresenter.prepareSuccessView(outputData);
 
     }
 
+    /**
+     * goes back to history view
+     */
     public void switchToHistory() {
         updateHistoryTotalsPresenter.switchToHistory();
     }

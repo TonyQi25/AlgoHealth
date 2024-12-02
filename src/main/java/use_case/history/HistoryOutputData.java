@@ -5,6 +5,9 @@ import data.DayInfo;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * output data for history use case
+ */
 public class HistoryOutputData {
 
     List<String> foodInfo;
