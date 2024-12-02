@@ -1,4 +1,4 @@
-package use_case.one_day_history;
+/*package use_case.one_day_history;
 
 import data.Food;
 //import use_case.daily_value_recs.DailyValueCalculationStrategy;
@@ -97,5 +97,5 @@ public class UpdateHistoryTotalsInteractor implements UpdateHistoryTotalsInputBo
         updateHistoryTotalsPresenter.prepareSuccessView(outputData);
 
     }
-}
+}*/
 
