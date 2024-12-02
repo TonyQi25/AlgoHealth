@@ -4,6 +4,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * State for history use case
+ */
 public class HistoryState {
     private List<String> dayDetails = new ArrayList<>();
     private String date;
