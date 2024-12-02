@@ -62,10 +62,10 @@ public class OneDayHistoryView extends JPanel implements PropertyChangeListener 
         Dimension size = caloriesLabel.getPreferredSize();
         totalsAndRecPanel.setPreferredSize(new Dimension((int) 500, (int) size.getHeight() + 200));
 
-        totalCalories.setText(truncateString2Places((updateHistoryTotalsState.getTotalCalories()) + "Kcal"));
-        totalProtein.setText(truncateString2Places(String.valueOf(updateHistoryTotalsState.getTotalProtein())) + "g");
-        totalCarbs.setText(truncateString2Places(String.valueOf(updateHistoryTotalsState.getTotalCarbs())) + "g");
-        totalFat.setText(truncateString2Places(String.valueOf(updateHistoryTotalsState.getTotalFat())) + "g");
+        totalCalories.setText(truncateString2Places((updateHistoryTotalsState.getCalories()) + "Kcal"));
+        totalProtein.setText(truncateString2Places(String.valueOf(updateHistoryTotalsState.getProtein())) + "g");
+        totalCarbs.setText(truncateString2Places(String.valueOf(updateHistoryTotalsState.getCarbs())) + "g");
+        totalFat.setText(truncateString2Places(String.valueOf(updateHistoryTotalsState.getFat())) + "g");
 
         progressBarCalories.setValue((int) Math.floor(updateHistoryTotalsState.getPercentCalories()));
         String valueString = truncateString2Places(String.valueOf(updateHistoryTotalsState.getPercentCalories()));
@@ -84,7 +84,7 @@ public class OneDayHistoryView extends JPanel implements PropertyChangeListener 
 
         progressBarFat.setValue((int) Math.floor(updateHistoryTotalsState.getPercentFat()));
         valueString = truncateString2Places(String.valueOf(updateHistoryTotalsState.getPercentFat()));
-        progressBarFat.setString(valueString+ "% of DV");
+        progressBarFat.setString(valueString + "% of DV");
         progressBarFat.setStringPainted(true);
 
         totalsAndRecPanel.add(caloriesLabel);

@@ -3,17 +3,12 @@ package view.MainView;
 import interface_adapter.daily_value_recs.DailyValueRecsController;
 import interface_adapter.daily_value_recs.MainViewModel;
 import interface_adapter.daily_value_recs.MainViewState;
-import interface_adapter.display_food_options.DisplayOptionsViewModel;
-import interface_adapter.display_food_options.DisplayOptionsViewState;
 import interface_adapter.food_logging.LogFoodController;
 import interface_adapter.food_logging.LogFoodState;
 import interface_adapter.food_logging.LogFoodViewModel;
 import interface_adapter.display_food_options.DisplayFoodOptionsController;
-import view.DisplayOptionsView;
-import interface_adapter.login.LoginViewModel;
 import interface_adapter.logout.LogoutController;
 import org.jetbrains.annotations.NotNull;
-import view.Helpers.ViewHelpers;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -176,7 +171,6 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
         // Add to main panel.
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-        mainPanel.add(logoutPanel);
         mainPanel.add(searchAndWeightSBSPanel);
 
         JPanel totalsAndRecPanel = new JPanel();
@@ -209,8 +203,9 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
         totalsAndRecPanel.add(new JLabel(""));
         totalsAndRecPanel.add(getDVrecs);
 
-        // totalsAndRecPanel complete so add it to mainPanel and wrap everything up.
+        // totalsAndRecPanel complete so add it and logout to mainPanel and wrap everything up.
         mainPanel.add(totalsAndRecPanel);
+        mainPanel.add(logoutPanel);
 
         this.add(mainPanel);
 

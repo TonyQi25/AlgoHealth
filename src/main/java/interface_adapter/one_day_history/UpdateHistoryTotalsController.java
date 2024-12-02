@@ -22,6 +22,6 @@ public class UpdateHistoryTotalsController {
     }
 
     public void switchToHistory() {
-
+        inputBoundary.switchToHistory();
     }
 }

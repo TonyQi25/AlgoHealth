@@ -4,5 +4,5 @@ public interface UpdateHistoryTotalsInputBoundary {
 
     void execute(UpdateHistoryTotalsInputData input);
 
-    //void returnToHistory()
+    void switchToHistory();
 }
