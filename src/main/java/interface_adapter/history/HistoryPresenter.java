@@ -45,7 +45,6 @@ public class HistoryPresenter implements HistoryOutputBoundary {
 
         this.viewManagerModel.setState(historyViewModel.getViewName());
 
-        System.out.println("firePropertyChanged called");
         this.viewManagerModel.firePropertyChanged();
 
 
@@ -57,7 +56,6 @@ public class HistoryPresenter implements HistoryOutputBoundary {
         historyState.setHistoryError(errorMessage);
         historyViewModel.firePropertyChanged();
 
-        System.out.println("history fail view called");
 
         this.viewManagerModel.setState(historyViewModel.getViewName());
         this.viewManagerModel.firePropertyChanged();
@@ -66,12 +64,9 @@ public class HistoryPresenter implements HistoryOutputBoundary {
 
     @Override
     public void prepareRemoveFoodView(RemoveFoodInputData inputData) {
-        System.out.println("transition from history to remove called");
         final RemoveFoodState removeFoodState = removeFoodViewModel.getState();
 
         removeFoodState.setUsername(inputData.getUsername());
-
-        System.out.println("In HistoryPresenter: " + inputData.getUsername());
         removeFoodState.setPassword(inputData.getPassword());
         removeFoodState.setViewingDate(inputData.getViewingDate());
         removeFoodState.setFoodName(inputData.getFoodName());
