@@ -32,6 +32,8 @@ public class UpdateHistoryTotalsPresenter implements UpdateHistoryTotalsOutputBo
         state.setRecCarbs(output.getRecCarbs());
         state.setCompleted(true);
 
+        System.out.println("Oneday completed triggered");
+
         this.viewModel.setState(state);
         this.viewModel.firePropertyChanged();
 

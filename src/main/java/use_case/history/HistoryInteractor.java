@@ -21,11 +21,13 @@ public class HistoryInteractor implements HistoryInputBoundary{
 
     public void execute(HistoryInputData input) {
 
+        System.out.println("HELLO" +input.getUsername()+ input.getPassword() + input.getDate());
         if (historyDataAccessInterface.DayExists(input.getDate().toString(), input.getUsername())) {
             JSONObject idToInfo = historyDataAccessInterface.loadFoodInfo(input.getUsername(), input.getDate().toString());
 
             List<String> returning = new ArrayList<>();
 
+            System.out.println("found day");
             for (String id : idToInfo.keySet()) {
                 String info = "";
 
