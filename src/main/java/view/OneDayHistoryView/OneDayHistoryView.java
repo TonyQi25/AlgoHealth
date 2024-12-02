@@ -67,30 +67,7 @@ public class OneDayHistoryView extends JPanel implements PropertyChangeListener 
         Dimension size = caloriesLabel.getPreferredSize();
         totalsAndRecPanel.setPreferredSize(new Dimension((int) 500, (int) size.getHeight() + 200));
 
-        totalCalories.setText(truncateString2Places((updateHistoryTotalsState.getCalories()) + "Kcal"));
-        totalProtein.setText(truncateString2Places(String.valueOf(updateHistoryTotalsState.getProtein())) + "g");
-        totalCarbs.setText(truncateString2Places(String.valueOf(updateHistoryTotalsState.getCarbs())) + "g");
-        totalFat.setText(truncateString2Places(String.valueOf(updateHistoryTotalsState.getFat())) + "g");
-
-        progressBarCalories.setValue((int) Math.floor(updateHistoryTotalsState.getPercentCalories()));
-        String valueString = truncateString2Places(String.valueOf(updateHistoryTotalsState.getPercentCalories()));
-        progressBarCalories.setString(valueString + "% of DV");
-        progressBarCalories.setStringPainted(true);
-
-        progressBarProtein.setValue((int) Math.floor(updateHistoryTotalsState.getPercentProtein()));
-        valueString = truncateString2Places(String.valueOf(updateHistoryTotalsState.getPercentProtein()));
-        progressBarProtein.setString(valueString + "% of DV");
-        progressBarProtein.setStringPainted(true);
-
-        progressBarCarbs.setValue((int) Math.floor(updateHistoryTotalsState.getPercentCarbs()));
-        valueString = truncateString2Places(String.valueOf(updateHistoryTotalsState.getPercentCarbs()));
-        progressBarCarbs.setString(valueString + "% of DV");
-        progressBarCarbs.setStringPainted(true);
-
-        progressBarFat.setValue((int) Math.floor(updateHistoryTotalsState.getPercentFat()));
-        valueString = truncateString2Places(String.valueOf(updateHistoryTotalsState.getPercentFat()));
-        progressBarFat.setString(valueString + "% of DV");
-        progressBarFat.setStringPainted(true);
+        this.setDisplay(updateHistoryTotalsState);
 
         totalsAndRecPanel.add(caloriesLabel);
         totalsAndRecPanel.add(totalCalories);
@@ -140,15 +117,39 @@ public class OneDayHistoryView extends JPanel implements PropertyChangeListener 
         if(!state.getCompleted()) {
             updateHistoryTotalsController.execute(username, viewingDate, password);
         }   else {
-            updateValues(state);
+            setDisplay(state);
         }
     }
 
-    public void updateValues(UpdateHistoryTotalsState state) {
-
-    }
 
     public String getViewName() {
         return this.viewName;
+    }
+
+    private void setDisplay(UpdateHistoryTotalsState updateHistoryTotalsState) {
+        totalCalories.setText(truncateString2Places((updateHistoryTotalsState.getCalories()) + "Kcal"));
+        totalProtein.setText(truncateString2Places(String.valueOf(updateHistoryTotalsState.getProtein())) + "g");
+        totalCarbs.setText(truncateString2Places(String.valueOf(updateHistoryTotalsState.getCarbs())) + "g");
+        totalFat.setText(truncateString2Places(String.valueOf(updateHistoryTotalsState.getFat())) + "g");
+
+        progressBarCalories.setValue((int) Math.floor(updateHistoryTotalsState.getPercentCalories()));
+        String valueString = truncateString2Places(String.valueOf(updateHistoryTotalsState.getPercentCalories()));
+        progressBarCalories.setString(valueString + "% of DV");
+        progressBarCalories.setStringPainted(true);
+
+        progressBarProtein.setValue((int) Math.floor(updateHistoryTotalsState.getPercentProtein()));
+        valueString = truncateString2Places(String.valueOf(updateHistoryTotalsState.getPercentProtein()));
+        progressBarProtein.setString(valueString + "% of DV");
+        progressBarProtein.setStringPainted(true);
+
+        progressBarCarbs.setValue((int) Math.floor(updateHistoryTotalsState.getPercentCarbs()));
+        valueString = truncateString2Places(String.valueOf(updateHistoryTotalsState.getPercentCarbs()));
+        progressBarCarbs.setString(valueString + "% of DV");
+        progressBarCarbs.setStringPainted(true);
+
+        progressBarFat.setValue((int) Math.floor(updateHistoryTotalsState.getPercentFat()));
+        valueString = truncateString2Places(String.valueOf(updateHistoryTotalsState.getPercentFat()));
+        progressBarFat.setString(valueString + "% of DV");
+        progressBarFat.setStringPainted(true);
     }
 }

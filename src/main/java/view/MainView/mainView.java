@@ -285,24 +285,24 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
         }
         else if (evt.getSource() instanceof MainViewModel) {
             final MainViewState state = (MainViewState) evt.getNewValue();
-            progressBarCalories.setValue((int) Math.floor(state.getPercent_cals()));
-            String valueString = truncateString2Places(String.valueOf(state.getPercent_cals()));
+            progressBarCalories.setValue((int) Math.floor(state.getPercentCals()));
+            String valueString = truncateString2Places(String.valueOf(state.getPercentCals()));
             progressBarCalories.setString(valueString + "% of DV");
             progressBarCalories.setStringPainted(true);
 
-            progressBarProtein.setValue((int) Math.floor(state.getPercent_prot()));
-            valueString = truncateString2Places(String.valueOf(state.getPercent_prot()));
+            progressBarProtein.setValue((int) Math.floor(state.getPercentProt()));
+            valueString = truncateString2Places(String.valueOf(state.getPercentProt()));
             progressBarProtein.setString(valueString + "% of DV");
             progressBarProtein.setStringPainted(true);
 
-            progressBarCarbs.setValue((int) Math.floor(state.getPercent_carbs()));
-            valueString = truncateString2Places(String.valueOf(state.getPercent_carbs()));
+            progressBarCarbs.setValue((int) Math.floor(state.getPercentCarbs()));
+            valueString = truncateString2Places(String.valueOf(state.getPercentCarbs()));
             progressBarCarbs.setString(valueString + "% of DV");
             progressBarCarbs.setStringPainted(true);
 
-            progressBarFat.setValue((int) Math.floor(state.getPercent_fat()));
-            valueString = truncateString2Places(String.valueOf(state.getPercent_fat()));
-            progressBarFat.setString(valueString+ "% of DV");
+            progressBarFat.setValue((int) Math.floor(state.getPercentFat()));
+            valueString = truncateString2Places(String.valueOf(state.getPercentFat()));
+            progressBarFat.setString(valueString + "% of DV");
             progressBarFat.setStringPainted(true);
         }
     }
@@ -372,7 +372,7 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
         });
     }
 
-    private void addUnitInputFieldListener(){
+    private void addUnitInputFieldListener() {
         unitInputField.getDocument().addDocumentListener(new DocumentListener() {
 
             private void documentListenerHelper() {
