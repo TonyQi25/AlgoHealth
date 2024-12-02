@@ -8,4 +8,5 @@ public interface HistoryInputBoundary {
 
     void removeHighlightedFood(RemoveFoodInputData input);
 
+    void goBack();
 }
