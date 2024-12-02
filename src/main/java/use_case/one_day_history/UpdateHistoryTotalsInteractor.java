@@ -64,6 +64,10 @@ public class UpdateHistoryTotalsInteractor implements UpdateHistoryTotalsInputBo
         for (Integer fdcId: idToWeight.keySet()) {
             Food freshFood = createFood(foodDataCentralSearchDAO.getFoodByFdcId(fdcId, MACRO_SPECIFIER_1));
             freshFood.setWeight(idToWeight.get(fdcId));
+            freshFood.setTotalCarb();
+            freshFood.setTotalProtein();
+            freshFood.setTotalFat();
+            freshFood.setTotalCalories();
             outputFoodList[i] = freshFood;
             i += 1;
         }
