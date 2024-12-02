@@ -10,6 +10,9 @@ import java.util.HashMap;
 
 import static api.PopulateUtility.createFood;
 
+/**
+ * use case interactor for view one day usecase
+ */
 public class UpdateHistoryTotalsInteractor implements UpdateHistoryTotalsInputBoundary {
 
 
@@ -41,6 +44,10 @@ public class UpdateHistoryTotalsInteractor implements UpdateHistoryTotalsInputBo
         //this.dailyValueCalculationStrategy = dailyValueCalculationStrategy;
     }
 
+    /**
+     * executes the use case
+     * @param updateHistoryTotalsInputData input
+     */
     @Override
     public void execute(UpdateHistoryTotalsInputData updateHistoryTotalsInputData) {
         // assuming UpdateHistoryTotalsInputData will provide me with a list of fdcIds mapped to weight in some form.
@@ -112,6 +119,9 @@ public class UpdateHistoryTotalsInteractor implements UpdateHistoryTotalsInputBo
 
     }
 
+    /**
+     * goes back to history view
+     */
     public void switchToHistory() {
         updateHistoryTotalsPresenter.switchToHistory();
     }

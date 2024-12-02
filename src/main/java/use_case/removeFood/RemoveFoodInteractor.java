@@ -2,6 +2,9 @@ package use_case.removeFood;
 
 import use_case.history.HistoryInputData;
 
+/**
+ * use case interactor for remove food
+ */
 public class RemoveFoodInteractor implements RemoveFoodInputBoundary{
 
     private final RemoveFoodOutputBoundary outputBoundary;
@@ -16,6 +19,10 @@ public class RemoveFoodInteractor implements RemoveFoodInputBoundary{
 
     }
 
+    /**
+     * executes the use case
+     * @param input input
+     */
     @Override
     public void execute(RemoveFoodInputData input) {
 
@@ -33,6 +40,10 @@ public class RemoveFoodInteractor implements RemoveFoodInputBoundary{
         }
     }
 
+    /**
+     * returns to history view
+     * @param input input
+     */
     public void returnToHistory(HistoryInputData input) {
         outputBoundary.prepareHistoryView(input);
     }

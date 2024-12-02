@@ -1,5 +1,8 @@
 package use_case.removeFood;
 
+/**
+ * input data for remove food use case
+ */
 public class RemoveFoodInputData {
 
     private String foodName;

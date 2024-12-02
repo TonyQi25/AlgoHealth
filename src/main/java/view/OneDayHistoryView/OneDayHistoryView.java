@@ -24,6 +24,9 @@ import java.util.List;
 
 import static view.MainView.ViewFormattingUtility.truncateString2Places;
 
+/**
+ * view for one day history use case
+ */
 public class OneDayHistoryView extends JPanel implements PropertyChangeListener {
 
     private final UpdateHistoryTotalsViewModel updateHistoryTotalsViewModel;
