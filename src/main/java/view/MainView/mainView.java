@@ -1,5 +1,6 @@
 package view.MainView;
 
+import interface_adapter.ViewManagerModel;
 import interface_adapter.daily_value_recs.DailyValueRecsController;
 import interface_adapter.daily_value_recs.MainViewModel;
 import interface_adapter.daily_value_recs.MainViewState;
@@ -7,6 +8,9 @@ import interface_adapter.food_logging.LogFoodController;
 import interface_adapter.food_logging.LogFoodState;
 import interface_adapter.food_logging.LogFoodViewModel;
 import interface_adapter.display_food_options.DisplayFoodOptionsController;
+import interface_adapter.history.HistoryController;
+import interface_adapter.history.HistoryState;
+import interface_adapter.history.HistoryViewModel;
 import interface_adapter.logout.LogoutController;
 import org.jetbrains.annotations.NotNull;
 
@@ -18,6 +22,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.HashMap;
 
@@ -29,6 +34,7 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
     private final String viewName = "main view";
     private final MainViewModel mainViewModel;
     private final LogFoodViewModel logFoodViewModel;
+    private final HistoryViewModel historyViewModel;
 
     private JProgressBar progressBarCalories = new JProgressBar(0, 100);
     private JProgressBar progressBarProtein = new JProgressBar(0, 100);
@@ -49,14 +55,18 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
 
     private LogFoodController logFoodController;
     private LogoutController logoutController;
+    private HistoryController historyController;
 
     public mainView(MainViewModel mainViewModel,
-                    LogFoodViewModel logFoodViewModel) {
+                    LogFoodViewModel logFoodViewModel,
+                    HistoryViewModel historyViewModel) {
 
         this.mainViewModel = mainViewModel;
         this.logFoodViewModel = logFoodViewModel;
         this.mainViewModel.addPropertyChangeListener(this);
         this.logFoodViewModel.addPropertyChangeListener(this);
+        this.historyViewModel = historyViewModel;
+        this.historyViewModel.addPropertyChangeListener(this);
 
         // Input fields and labels part.
         JLabel enterFood = new JLabel("Enter food:");
@@ -208,6 +218,33 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
         // mainPanel.add(logoutPanel);
 
         JButton history = new JButton("History");
+
+        history.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MainViewState mainState = mainViewModel.getState();
+                HistoryState historyState = historyViewModel.getState();
+
+                historyState.setCompleted(false);
+                historyState.setUsername(mainState.getUsername());
+                historyState.setPassword(mainState.getPassword());
+                historyState.setViewingDate(LocalDate.now());
+                historyState.setHistoryError("");
+                historyState.setDate("");
+                historyState.setDayDetails(null);
+
+                System.out.println("From MainView: " + mainState.getUsername());
+
+                HistoryState testingState = historyViewModel.getState();
+
+                historyViewModel.firePropertyChanged();
+
+
+
+                historyController.execute(LocalDate.now(), 0, mainState.getUsername(), mainState.getPassword());
+            }
+        });
+
         JPanel logoutAndHistory = new JPanel();
         logoutAndHistory.add(logoutPanel);
         logoutAndHistory.add(history);
@@ -281,6 +318,10 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
 
     public void setLogoutController(LogoutController logoutController) {
         this.logoutController = logoutController;
+    }
+
+    public void setHistoryController(HistoryController historyController) {
+        this.historyController = historyController;
     }
 
     /*    private void addFoodListener (){

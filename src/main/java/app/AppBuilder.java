@@ -106,7 +106,6 @@ public class AppBuilder {
     private DisplayFoodOptionsDataAccessInterface foodDataCentralSearchDAO;
     private SelectSearchDataAccessInterface foodDataCentralSearchDAO2;
     private GradeAccountDAO gradeAccountDAO;
-    private TempHistoryDAO tempHistoryDAO;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -115,7 +114,8 @@ public class AppBuilder {
     public AppBuilder addMainView() {
         mainViewModel = new MainViewModel();
         logFoodViewModel = new LogFoodViewModel();
-        mainView = new mainView(mainViewModel, logFoodViewModel);
+        historyViewModel = new HistoryViewModel();
+        mainView = new mainView(mainViewModel, logFoodViewModel, historyViewModel);
         cardPanel.add(mainView, mainView.getViewName());
         return this;
     }
@@ -162,18 +162,18 @@ public class AppBuilder {
     }
 
     public AppBuilder addHistoryView() {
-        this.historyViewModel = new HistoryViewModel();
         this.removeFoodViewModel = new RemoveFoodViewModel();
 
         HistoryOutputBoundary historyPresenter = new HistoryPresenter(
                 this.historyViewModel, this.removeFoodViewModel, this.viewManagerModel, this.mainViewModel);
-        this.tempHistoryDAO = new TempHistoryDAO();
-        HistoryInputBoundary historyInteractor = new HistoryInteractor(historyPresenter, tempHistoryDAO);
+        HistoryInputBoundary historyInteractor = new HistoryInteractor(historyPresenter, gradeAccountDAO);
         HistoryController historyController = new HistoryController(historyInteractor);
 
         historyView = new HistoryView(this.historyViewModel, historyController);
 
         cardPanel.add(historyView.getViewName(), historyView);
+
+        mainView.setHistoryController(historyController);
         return this;
     }
 
@@ -181,7 +181,7 @@ public class AppBuilder {
         RemoveFoodOutputBoundary removeFoodPresenter = new RemoveFoodPresenter(
                 this.removeFoodViewModel, this.viewManagerModel, this.historyViewModel);
         RemoveFoodInputBoundary removeFoodInteractor = new RemoveFoodInteractor(
-                removeFoodPresenter, this.tempHistoryDAO);
+                removeFoodPresenter, this.gradeAccountDAO);
         RemoveFoodController removeFoodController = new RemoveFoodController(removeFoodInteractor);
 
         removeFoodView = new RemoveFoodView(this.removeFoodViewModel, removeFoodController);

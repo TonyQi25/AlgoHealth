@@ -25,8 +25,12 @@ public class RemoveFoodInteractor implements RemoveFoodInputBoundary{
             outputBoundary.prepareFailView("No Food Selected");
         }   else {
 
+            System.out.println(input.getViewingDate()+ "----" + input.getUsername() + "----" + input.getFoodName() + "----" + input.getPassword() +
+                    "----" + String.valueOf(removeFoodDataAccessInterface.FoodExists(input.getViewingDate(), input.getUsername(), input.getFoodName())));
+
             removeFoodDataAccessInterface.removeFood(input.getViewingDate(), input.getUsername(), input.getPassword(),
-                    String.valueOf(removeFoodDataAccessInterface.foodExists(input.getViewingDate(), input.getUsername(), input.getFoodName())));
+                    String.valueOf(removeFoodDataAccessInterface.FoodExists(input.getViewingDate(), input.getUsername(), input.getFoodName())));
+
 
             RemoveFoodOutputData output = new RemoveFoodOutputData(input.getFoodName() + " is removed", input.getUsername(), input.getViewingDate());
             outputBoundary.prepareSuccessView(output);
