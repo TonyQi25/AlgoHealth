@@ -193,8 +193,9 @@ public class AppBuilder {
         final LogFoodOutputBoundary logFoodOutputBoundary = new LogFoodPresenter(logFoodViewModel, mainViewModel,
                 viewManagerModel);
         final LogFoodDataAccessInterface logFoodDataAccessInterface = new GradeAccountDAO();
-        final LogFoodInputBoundary logFoodInteractor = new LogFoodInteractor(logFoodDataAccessInterface,
-                logFoodOutputBoundary, inMemoryFoodSelectionDAO);
+        final LogFoodInputBoundary logFoodInteractor = new LogFoodInteractor(inMemoryFoodSelectionDAO,
+                logFoodDataAccessInterface,
+                logFoodOutputBoundary);
         final LogFoodController logFoodController = new LogFoodController(logFoodInteractor);
         mainView.setLogFoodController(logFoodController);
         return this;

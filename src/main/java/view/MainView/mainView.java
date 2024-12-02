@@ -174,8 +174,6 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
         // Add to main panel.
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-        mainPanel.add(panel1);
-        mainPanel.add(sbsPanel);
         mainPanel.add(logoutPanel);
         mainPanel.add(searchAndWeightSBSPanel);
 

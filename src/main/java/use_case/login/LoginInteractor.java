@@ -6,7 +6,6 @@ import data.DayInfo;
 import data.Food;
 import data_access.GradeAccountDAO;
 import data_access.TempDAOInMemory;
-import data_access.UserFoodSearchInMemoryDAO;
 import use_case.Helpers.UseCaseHelpers;
 
 import java.time.LocalDate;

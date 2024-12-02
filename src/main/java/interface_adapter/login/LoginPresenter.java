@@ -35,6 +35,7 @@ public class LoginPresenter implements LoginOutputBoundary {
 
         final MainViewState mainViewState = mainViewModel.getState();
         mainViewState.setUsername(loginOutputData.getUsername());
+        mainViewState.setPassword(loginOutputData.getPassword());
         mainViewState.setCalories(loginOutputData.getCalories());
         mainViewState.setProtein(loginOutputData.getProtein());
         mainViewState.setCarbs(loginOutputData.getCarbs());
