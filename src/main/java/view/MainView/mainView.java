@@ -26,6 +26,7 @@ import java.beans.PropertyChangeListener;
 import java.util.Collection;
 import java.util.HashMap;
 
+import static view.MainView.ViewFormattingUtility.main;
 import static view.MainView.ViewFormattingUtility.truncateString2Places;
 
 public class mainView extends JPanel implements ActionListener, PropertyChangeListener {
@@ -117,7 +118,8 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
                 evt -> {
                     if (evt.getSource().equals(submitButton)) {
                         final LogFoodState currentState = logFoodViewModel.getState();
-
+                        currentState.setPassword(mainViewModel.getState().getPassword());
+                        currentState.setUsername(mainViewModel.getState().getUsername());
                         logFoodController.execute(currentState.getFdcIDofSelection(),
                                 (float) currentState.getWeightNumber(),
                                 currentState.getWeightUnit(), currentState.getUsername(), currentState.getPassword());
