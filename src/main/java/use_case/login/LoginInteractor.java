@@ -60,6 +60,5 @@ public class LoginInteractor implements LoginInputBoundary {
     @Override
     public void switchToSignup() {
         this.loginPresenter.switchToSignup();
-        System.out.println("switch to signup interactor");
     }
 }
