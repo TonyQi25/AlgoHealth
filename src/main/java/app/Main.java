@@ -16,14 +16,9 @@ public class Main {
                 .addDisplayOptionsUseCase()
                 .addLoginView()
                 .addSignupView()
-
-
-
                 .addDailyValueRecsUseCase()
                 .selectFromFoodOptionsUseCase()
-
                 .addOneDayHistoryView() // has to be after select
-
                 .addHistoryView() // has to be after add one day
                 .addRemoveFoodView() // has to be after add history view
                 .addFoodLoggingUseCase()
