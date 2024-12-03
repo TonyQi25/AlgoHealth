@@ -41,7 +41,7 @@ public class SignupInteractor implements SignupInputBoundary {
 
             signupDataAccessObject.createAccount(accountInfo.getUsername(), accountInfo.getPassword());
             signupDataAccessObject.put(accountInfo.getUsername(), accountInfo.getPassword(), accountInfo);
-            signupDataAccessObject.setCurrentUsername(accountInfo.getUsername());    // currently does nothing
+            signupDataAccessObject.setCurrentUsername(accountInfo.getUsername());
 
             SignupOutputData signupOutputData = new SignupOutputData(
                     accountInfo.getUsername(), accountInfo.getPassword());

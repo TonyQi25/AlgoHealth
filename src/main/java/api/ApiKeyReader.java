@@ -11,7 +11,7 @@ public class ApiKeyReader {
      *
      * @param textFile the file name containing the API key for the FDC api.
      */
-    public static String genMyApiKey(String textFile) {
+    public String genMyApiKey(String textFile) {
         String key;
 
         try {
