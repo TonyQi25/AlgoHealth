@@ -26,11 +26,14 @@ public class UpdateHistoryTotalsPresenter implements UpdateHistoryTotalsOutputBo
         state.setFat(output.getFat());
         state.setProtein(output.getProtein());
         state.setCarbs(output.getCarbs());
+        state.setCalories(output.getCalories());
         state.setRecCalories(output.getRecCalories());
         state.setRecFat(output.getRecFat());
         state.setRecProtein(output.getRecProtein());
         state.setRecCarbs(output.getRecCarbs());
         state.setCompleted(true);
+
+        System.out.println("Oneday completed triggered");
 
         this.viewModel.setState(state);
         this.viewModel.firePropertyChanged();

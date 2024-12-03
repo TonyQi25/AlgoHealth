@@ -1,8 +1,9 @@
 package api;
-package helpers;
+
 import data.AccountInfo;
 import data.Food;
 import data_access.GradeAccountDAO;
+import helpers.GradeHelper;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +15,6 @@ import java.util.List;
 import static junit.framework.TestCase.assertEquals;
 
 public class StoringFoodDataTest {
-    private final GradeHelper helper = new GradeHelper();
     private final GradeAccountDAO gradeAccountDAO = new GradeAccountDAO();
     @Test
     void testSingup() {

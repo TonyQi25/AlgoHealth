@@ -10,6 +10,9 @@ import java.util.HashMap;
 
 import static api.PopulateUtility.createFood;
 
+/**
+ * use case interactor for view one day usecase
+ */
 public class UpdateHistoryTotalsInteractor implements UpdateHistoryTotalsInputBoundary {
 
 
@@ -41,6 +44,10 @@ public class UpdateHistoryTotalsInteractor implements UpdateHistoryTotalsInputBo
         //this.dailyValueCalculationStrategy = dailyValueCalculationStrategy;
     }
 
+    /**
+     * executes the use case
+     * @param updateHistoryTotalsInputData input
+     */
     @Override
     public void execute(UpdateHistoryTotalsInputData updateHistoryTotalsInputData) {
         // assuming UpdateHistoryTotalsInputData will provide me with a list of fdcIds mapped to weight in some form.
@@ -49,7 +56,6 @@ public class UpdateHistoryTotalsInteractor implements UpdateHistoryTotalsInputBo
         // it has an instance variable which can store a list of Foods generated in execute.
 
         // layout:  {ids: {"name": name, "weight": double ... }
-
         JSONObject info = gradeAccountDAO.loadFoodInfo(updateHistoryTotalsInputData.getUsername(),
                 updateHistoryTotalsInputData.getDate());
 
@@ -64,9 +70,15 @@ public class UpdateHistoryTotalsInteractor implements UpdateHistoryTotalsInputBo
         for (Integer fdcId: idToWeight.keySet()) {
             Food freshFood = createFood(foodDataCentralSearchDAO.getFoodByFdcId(fdcId, MACRO_SPECIFIER_1));
             freshFood.setWeight(idToWeight.get(fdcId));
+            freshFood.setTotalCarb();
+            freshFood.setTotalProtein();
+            freshFood.setTotalFat();
+            freshFood.setTotalCalories();
             outputFoodList[i] = freshFood;
             i += 1;
         }
+
+
         // Total the macronutrients of all Foods in outputFoodList.
         // Currently calculating DV values in same way as in daily value recs use case. Another option for
         // both is put DV calculation directly in Food entity.
@@ -99,6 +111,9 @@ public class UpdateHistoryTotalsInteractor implements UpdateHistoryTotalsInputBo
 
     }
 
+    /**
+     * goes back to history view
+     */
     public void switchToHistory() {
         updateHistoryTotalsPresenter.switchToHistory();
     }
