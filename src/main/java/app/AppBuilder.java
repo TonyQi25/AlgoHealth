@@ -35,9 +35,7 @@ import interface_adapter.logout.LogoutPresenter;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
-import use_case.daily_value_recs.DailyValueRecsInputBoundary;
-import use_case.daily_value_recs.DailyValueRecsInteractor;
-import use_case.daily_value_recs.DailyValueRecsOutputBoundary;
+import use_case.daily_value_recs.*;
 import use_case.display_food_options.*;
 import use_case.food_logging.LogFoodDataAccessInterface;
 import use_case.food_logging.LogFoodInputBoundary;
@@ -106,6 +104,7 @@ public class AppBuilder {
     private DisplayFoodOptionsDataAccessInterface foodDataCentralSearchDAO;
     private SelectSearchDataAccessInterface foodDataCentralSearchDAO2;
     private GradeAccountDAO gradeAccountDAO;
+
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -220,8 +219,9 @@ public class AppBuilder {
     public AppBuilder addDailyValueRecsUseCase() {
         final DailyValueRecsOutputBoundary dailyValueRecsOutputBoundary = new DailyValueRecsPresenter(viewManagerModel,
                 this.mainViewModel);
+        final DailyValueCalculationStrategy DVconstantsAlgo = new HealthCanadaDVstrategy();
         final DailyValueRecsInputBoundary dailyValueRecsInteractor = new DailyValueRecsInteractor(
-                dailyValueRecsOutputBoundary);
+                dailyValueRecsOutputBoundary, DVconstantsAlgo);
 
         final DailyValueRecsController dailyValueRecsController = new DailyValueRecsController(dailyValueRecsInteractor);
         mainView.setDailyValueRecsController(dailyValueRecsController);
