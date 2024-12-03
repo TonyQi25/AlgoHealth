@@ -1,6 +1,6 @@
 package data_access;
 
-import api.GradeHelper;
+import helpers.GradeHelper;
 import data.AccountInfo;
 import data.DayInfo;
 import data.Food;

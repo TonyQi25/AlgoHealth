@@ -1,6 +1,5 @@
 package view.MainView;
 
-import interface_adapter.ViewManagerModel;
 import interface_adapter.daily_value_recs.DailyValueRecsController;
 import interface_adapter.daily_value_recs.MainViewModel;
 import interface_adapter.daily_value_recs.MainViewState;
@@ -23,10 +22,7 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.HashMap;
 
-import static view.MainView.ViewFormattingUtility.main;
 import static view.MainView.ViewFormattingUtility.truncateString2Places;
 
 public class mainView extends JPanel implements ActionListener, PropertyChangeListener {
@@ -411,7 +407,7 @@ public class mainView extends JPanel implements ActionListener, PropertyChangeLi
         logoutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                logoutController.execute(mainViewModel.getState().getUsername());
+                logoutController.execute();
             }
         });
         logoutPanel.add(logoutButton);

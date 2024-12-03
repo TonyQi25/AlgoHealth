@@ -43,6 +43,19 @@ receive feedback on if they have reached the daily recommended amount of consump
 **Logout**
 - Logs out of a logged in AlgoHealth account from the main view and goes back to the login view
 
+**History**
+- view previously logged foods from user's past
+- In this view you can remove or view one day's progress
+- you can select food from the list provided to remove
+
+**Remove Food**
+- Select food from history to remove it from user's food log
+- removal is saved into the local database
+
+**One Day's Progress**
+- view progress of calories, carbs, protein and fats of any day user has logged.
+- shows progress bars and recommended values
+
 **Feedback**
 -
 
