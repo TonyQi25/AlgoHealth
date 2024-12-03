@@ -56,7 +56,8 @@ receive feedback on if they have reached the daily recommended amount of consump
 - view progress of calories, carbs, protein and fats of any day user has logged.
 - shows progress bars and recommended values
 
+
 **Feedback**
 -
 
-If you have any feedback for the program, please fill out the google form at: https://forms.gle/1XztLeTQXUtwM2GRA
+If you have any feedback for the program, please fill out the Google form at: https://forms.gle/1XztLeTQXUtwM2GRA
