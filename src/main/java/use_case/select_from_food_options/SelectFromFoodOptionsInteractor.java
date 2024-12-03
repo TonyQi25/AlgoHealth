@@ -12,11 +12,11 @@ public class SelectFromFoodOptionsInteractor implements SelectFromFoodOptionsInp
     // 203 is the specifier for "protein", 204 is the specifier for "total lipid (fat)",
     // 205 is the specifier for "carbohydrate, by difference", and 208 is the specifier
     // for "energy". 957, 958 for other "energies" (atwater general, atwater specific)"
-    private final Integer[] MACRO_SPECIFIER_1 = {203, 204, 205, 208, 268, 957, 958};
+    private static final Integer[] MACRO_SPECIFIER_1 = {203, 204, 205, 208, 268, 957, 958};
 
     // Vitamin A, IU=318, Vitamin C, total ascorbic acid=401, Vitamin D=324, Vitamin E (alpha- 5900 tocopherol)=323,
     // Vitamin K (phylloquinone)=430.
-    private final Integer[] MACROS_AND_MICROS = {203, 204, 205, 208, 268, 957, 318, 401, 324, 323, 430};
+    private static final Integer[] MACROS_AND_MICROS = {203, 204, 205, 208, 268, 957, 318, 401, 324, 323, 430};
 
     //we need to update the inmemoryDAO, then get the fdcId from it.
     //we need to create the food by calling popluateAPI.

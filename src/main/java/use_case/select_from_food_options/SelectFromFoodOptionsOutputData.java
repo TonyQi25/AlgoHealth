@@ -7,4 +7,8 @@ public class SelectFromFoodOptionsOutputData {
     public SelectFromFoodOptionsOutputData(String foodSelection) {
         this.foodSelection = foodSelection;
     }
+
+    public String getFoodSelection() {
+        return foodSelection;
+    }
 }
