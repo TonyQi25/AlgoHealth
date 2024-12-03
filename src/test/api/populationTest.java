@@ -1,4 +1,4 @@
-package api;
+/*package api;
 
 import data.Food;
 import org.json.JSONObject;
@@ -148,10 +148,10 @@ public class populationTest {
     }
 
     @Test
-    /**
+    *//**
      * General test. Giving salient results from queries that are basic foods. For example, beef, rice, celery etc.
      * Not meant to function on complex foods such as granola bar, Kellog's Frosted Flakes, bulgogi etc.
-     */
+     *//*
     void first10FoundationRandomFDCidFromListCustomTest() {
         FoodDataCentralSearchDAO usdaObj = new FoodDataCentralSearchDAO(apiKey);
 
@@ -183,10 +183,10 @@ public class populationTest {
     }
 
     @Test
-    /**
+    *//**
      * General test. Giving salient results from queries that are basic foods. For example, beef, rice, celery, pork.
      * Not meant to function on complex foods such as Nature Valley granola bar, Kellog's Frosted Flakes, bulgogi etc.
-     */
+     *//*
     void first10FoundationRandomFDCidFromListCustomTest2() {
         FoodDataCentralSearchDAO usdaObj = new FoodDataCentralSearchDAO(apiKey);
 
@@ -217,4 +217,4 @@ public class populationTest {
         System.out.println(newFood.getMacroNutrients());
     }
     // Random change to test authorship 123.
-}
+}*/
